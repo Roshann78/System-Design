@@ -1,830 +1,829 @@
-—#— —S—y—s—t—e—m— —D—e—s—i—g—n— ——— —D—e—t—a—i—l—e—d— —P—e—r—s—o—n—a—l— —N—o—t—e—s— —(—C—h—a—p—t—e—r— —1—)—
-—
-—*—*—T—o—p—i—c—s—:—*—*— —I—n—t—r—o—,— —S—e—r—v—e—r—s—,— —D—e—p—l—o—y—m—e—n—t—,— —L—a—t—e—n—c—y— —&— —T—h—r—o—u—g—h—p—u—t—
-—
-—T—h—e—s—e— —n—o—t—e—s— —a—r—e— —w—r—i—t—t—e—n— —f—o—r— —s—e—l—f—-—s—t—u—d—y— —a—n—d— —r—e—v—i—s—i—o—n—.— —E—v—e—r—y— —c—o—n—c—e—p—t— —i—s— —e—x—p—l—a—i—n—e—d— —f—r—o—m— —s—c—r—a—t—c—h— —w—i—t—h— —r—e—a—l—-—w—o—r—l—d— —a—n—a—l—o—g—i—e—s—,— —e—x—a—m—p—l—e—s—,— —d—i—a—g—r—a—m—s—,— —a—n—d— —e—d—g—e— —c—a—s—e—s— —s—o— —y—o—u— —n—e—v—e—r— —h—a—v—e— —t—o— —G—o—o—g—l—e— —t—h—e— —b—a—s—i—c—s— —a—g—a—i—n—.—
-—
-—*—*—N—e—x—t— —→—*—*— —[—C—h—a—p—t—e—r— —2—:— —S—c—a—l—i—n—g— —&— —E—s—t—i—m—a—t—i—o—n—]—(—<—0—2— —-— —S—c—a—l—i—n—g— —&— —B—a—c—k—-—o—f—-—t—h—e—-—E—n—v—e—l—o—p—e— —E—s—t—i—m—a—t—i—o—n—.—m—d—>—)—
-—
-—-—-—-—
-—
-—#—#— —S—e—c—t—i—o—n— —1— ——— —W—h—y— —S—t—u—d—y— —S—y—s—t—e—m— —D—e—s—i—g—n—?—
-—
-—#—#—#— —1—.—1— —T—h—e— —S—i—m—p—l—e— —A—r—c—h—i—t—e—c—t—u—r—e— —(—C—o—l—l—e—g—e— —L—e—v—e—l—)—
-—
-—W—h—e—n— —y—o—u— —b—u—i—l—d— —a— —p—r—o—j—e—c—t— —i—n— —c—o—l—l—e—g—e—,— —y—o—u—r— —s—e—t—u—p— —t—y—p—i—c—a—l—l—y— —l—o—o—k—s— —l—i—k—e— —t—h—i—s—:—
-—
-—`—`—`—
-—[— —C—l—i—e—n—t— —(—B—r—o—w—s—e—r— —/— —A—p—p—)— —]—
-— — — — — — — — — — —|—
-— — — — — — — — — — —|— — —H—T—T—P— —R—e—q—u—e—s—t—
-— — — — — — — — — — —↓—
-—[— —B—a—c—k—e—n—d— —S—e—r—v—e—r— —(—N—o—d—e—.—j—s— —/— —D—j—a—n—g—o— —/— —S—p—r—i—n—g—)— —]—
-— — — — — — — — — — —|—
-— — — — — — — — — — —|— — —C—R—U—D— —O—p—e—r—a—t—i—o—n—s— —(—C—r—e—a—t—e—,— —R—e—a—d—,— —U—p—d—a—t—e—,— —D—e—l—e—t—e—)—
-— — — — — — — — — — —↓—
-—[— —D—a—t—a—b—a—s—e— —(—M—y—S—Q—L— —/— —M—o—n—g—o—D—B— —/— —P—o—s—t—g—r—e—S—Q—L—)— —]—
-—`—`—`—
-—
-—`—`—`—m—e—r—m—a—i—d—
-—f—l—o—w—c—h—a—r—t— —T—D—
-— — — — —C—[—"—C—l—i—e—n—t— —(—B—r—o—w—s—e—r— —/— —A—p—p—)—"—]—
-— — — — —S—[—"—B—a—c—k—e—n—d— —S—e—r—v—e—r—"—]—
-— — — — —D—[—(—"—D—a—t—a—b—a—s—e—"—)—]—
-— — — — —C— —-—-—>—|—"—H—T—T—P— —R—e—q—u—e—s—t—"—|— —S—
-— — — — —S— —-—-—>—|—"—C—R—U—D—"—|— —D—
-— — — — —D— —-—-—>—|—"—D—a—t—a—"—|— —S—
-— — — — —S— —-—-—>—|—"—H—T—T—P— —R—e—s—p—o—n—s—e—"—|— —C—
-—`—`—`—
-—
-—-— —C—l—i—e—n—t— —s—e—n—d—s— —a— —r—e—q—u—e—s—t— —(—e—.—g—.—,— —"—G—e—t— —m—e— —t—h—e— —l—i—s—t— —o—f— —p—r—o—d—u—c—t—s—"—)—
-—-— —B—a—c—k—e—n—d— —p—r—o—c—e—s—s—e—s— —t—h—e— —r—e—q—u—e—s—t— —(—c—a—l—c—u—l—a—t—i—o—n—s—,— —b—u—s—i—n—e—s—s— —l—o—g—i—c—)—
-—-— —B—a—c—k—e—n—d— —t—a—l—k—s— —t—o— —t—h—e— —D—a—t—a—b—a—s—e— —t—o— —f—e—t—c—h—/—s—t—o—r—e— —d—a—t—a—
-—-— —B—a—c—k—e—n—d— —s—e—n—d—s— —a— —r—e—s—p—o—n—s—e— —b—a—c—k— —t—o— —t—h—e— —C—l—i—e—n—t—
-—
-—T—h—i—s— —i—s— —c—a—l—l—e—d— —a— —*—*—M—O—N—O—L—I—T—H—I—C—*—*— —o—r— —*—*—S—I—M—P—L—E— —3—-—T—I—E—R— —A—R—C—H—I—T—E—C—T—U—R—E—*—*—.—
-—
-—F—o—r— —a— —c—o—l—l—e—g—e— —p—r—o—j—e—c—t— —o—r— —p—r—o—t—o—t—y—p—e— —w—i—t—h— —1—0—–—1—0—0— —u—s—e—r—s— —→— —T—h—i—s— —w—o—r—k—s— —p—e—r—f—e—c—t—l—y— —f—i—n—e—.—
-—
-—#—#—#— —1—.—2— —W—h—y— —T—h—i—s— —B—r—e—a—k—s— —i—n— —t—h—e— —R—e—a—l— —W—o—r—l—d—
-—
-—I—m—a—g—i—n—e— —I—n—s—t—a—g—r—a—m— —u—s—i—n—g— —t—h—i—s— —a—r—c—h—i—t—e—c—t—u—r—e—.— —T—h—e—y— —h—a—v—e— —2—+— —*—*—B—I—L—L—I—O—N—*—*— —u—s—e—r—s—.— —O—n— —a— —M—o—n—d—a—y— —m—o—r—n—i—n—g—,— —m—i—l—l—i—o—n—s— —o—f— —p—e—o—p—l—e— —o—p—e—n— —t—h—e— —a—p—p— —s—i—m—u—l—t—a—n—e—o—u—s—l—y—.—
-—
-—W—h—a—t— —h—a—p—p—e—n—s— —t—o— —o—u—r— —s—i—m—p—l—e— —s—e—r—v—e—r—?—
-—
-—|— —P—r—o—b—l—e—m— —|— —D—e—s—c—r—i—p—t—i—o—n— —|—
-—|—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—1— ——— —S—e—r—v—e—r— —o—v—e—r—l—o—a—d—*—*— —|— —Y—o—u—r— —s—i—n—g—l—e— —s—e—r—v—e—r— —c—a—n— —o—n—l—y— —h—a—n—d—l—e—,— —s—a—y—,— —1—0—0—0— —r—e—q—u—e—s—t—s—/—s—e—c—o—n—d—.— —I—f— —1—,—0—0—0—,—0—0—0— —r—e—q—u—e—s—t—s— —a—r—r—i—v—e— —p—e—r— —s—e—c—o—n—d— —→— —S—e—r—v—e—r— —c—r—a—s—h—e—s—.— —A—l—l— —u—s—e—r—s— —s—e—e— —a—n— —e—r—r—o—r— —p—a—g—e—.— —B—u—s—i—n—e—s—s— —l—o—s—e—s— —m—o—n—e—y—.— —|—
-—|— —*—*—2— ——— —S—i—n—g—l—e— —p—o—i—n—t— —o—f— —f—a—i—l—u—r—e—*—*— —|— —I—f— —y—o—u—r— —O—N—E— —s—e—r—v—e—r— —g—o—e—s— —d—o—w—n— —(—h—a—r—d—w—a—r—e— —f—a—i—l—u—r—e—,— —p—o—w—e—r— —c—u—t—,— —s—o—f—t—w—a—r—e— —b—u—g—)—,— —y—o—u—r— —E—N—T—I—R—E— —a—p—p—l—i—c—a—t—i—o—n— —g—o—e—s— —d—o—w—n—.— —1—0—0—%— —d—o—w—n—t—i—m—e—.— —N—o— —r—e—d—u—n—d—a—n—c—y—,— —n—o— —b—a—c—k—u—p—.— —T—h—i—s— —i—s— —c—a—l—l—e—d— —a— —*—*—S—i—n—g—l—e— —P—o—i—n—t— —o—f— —F—a—i—l—u—r—e— —(—S—P—O—F—)—*—*—.— —|—
-—|— —*—*—3— ——— —N—o— —s—c—a—l—a—b—i—l—i—t—y—*—*— —|— —Y—o—u—r— —a—p—p— —b—e—c—o—m—e—s— —p—o—p—u—l—a—r— —o—v—e—r—n—i—g—h—t— —(—v—i—r—a—l— —m—o—m—e—n—t—)—.— —Y—o—u— —h—a—v—e— —n—o— —w—a—y— —t—o— —q—u—i—c—k—l—y— —a—d—d— —c—a—p—a—c—i—t—y—.— —U—s—e—r—s— —l—e—a—v—e— —b—e—c—a—u—s—e— —t—h—e— —s—i—t—e— —i—s— —s—l—o—w—/—d—o—w—n—.— —|—
-—|— —*—*—4— ——— —D—a—t—a— —b—o—t—t—l—e—n—e—c—k—*—*— —|— —O—n—e— —d—a—t—a—b—a—s—e— —s—e—r—v—e—r— —h—a—n—d—l—i—n—g— —m—i—l—l—i—o—n—s— —o—f— —r—e—a—d—s— —a—n—d— —w—r—i—t—e—s— —s—i—m—u—l—t—a—n—e—o—u—s—l—y— —b—e—c—o—m—e—s— —a— —b—o—t—t—l—e—n—e—c—k—.— —Q—u—e—r—i—e—s— —s—l—o—w— —d—o—w—n—,— —l—o—c—k—s— —h—a—p—p—e—n—,— —d—a—t—a— —g—e—t—s— —c—o—r—r—u—p—t—e—d—.— —|—
-—|— —*—*—5— ——— —G—e—o—g—r—a—p—h—i—c— —d—i—s—t—a—n—c—e—*—*— —|— —I—f— —y—o—u—r— —s—e—r—v—e—r— —i—s— —i—n— —M—u—m—b—a—i— —a—n—d— —a— —u—s—e—r— —i—s— —i—n— —N—e—w— —Y—o—r—k—,— —e—v—e—r—y— —r—e—q—u—e—s—t— —h—a—s— —t—o— —t—r—a—v—e—l— —h—a—l—f—w—a—y— —a—r—o—u—n—d— —t—h—e— —w—o—r—l—d—.— —T—h—i—s— —a—d—d—s— —s—i—g—n—i—f—i—c—a—n—t— —*—*—l—a—t—e—n—c—y—*—*— —(—d—e—l—a—y—)—.— —|—
-—|— —*—*—6— ——— —S—e—c—u—r—i—t—y—*—*— —|— —A— —s—i—n—g—l—e— —s—e—r—v—e—r— —w—i—t—h— —a—l—l— —y—o—u—r— —c—o—d—e— —a—n—d— —d—a—t—a— —e—x—p—o—s—e—d— —i—s— —e—a—s—y— —t—o— —a—t—t—a—c—k—.— —D—D—o—S— —a—t—t—a—c—k—s—,— —S—Q—L— —i—n—j—e—c—t—i—o—n—s—,— —d—a—t—a— —b—r—e—a—c—h—e—s— —b—e—c—o—m—e— —c—r—i—t—i—c—a—l— —c—o—n—c—e—r—n—s—.— —|—
-—
-—#—#—#— —1—.—3— —W—h—a—t— —S—y—s—t—e—m— —D—e—s—i—g—n— —T—e—a—c—h—e—s— —Y—o—u—
-—
-—S—y—s—t—e—m— —D—e—s—i—g—n— —i—s— —t—h—e— —d—i—s—c—i—p—l—i—n—e— —o—f— —a—r—c—h—i—t—e—c—t—i—n—g— —s—o—f—t—w—a—r—e— —s—y—s—t—e—m—s— —t—h—a—t— —c—a—n—:—
-—
-—|— —G—o—a—l— —|— —M—e—a—n—i—n—g— —|—
-—|—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—S—c—a—l—a—b—i—l—i—t—y—*—*— —|— —H—a—n—d—l—e— —g—r—o—w—t—h— —f—r—o—m— —1—0—0— —t—o— —1—0—0— —m—i—l—l—i—o—n— —u—s—e—r—s— —|—
-—|— —*—*—R—e—l—i—a—b—i—l—i—t—y—*—*— —|— —S—t—a—y— —o—p—e—r—a—t—i—o—n—a—l— —e—v—e—n— —w—h—e—n— —p—a—r—t—s— —f—a—i—l— —|—
-—|— —*—*—A—v—a—i—l—a—b—i—l—i—t—y—*—*— —|— —B—e— —a—c—c—e—s—s—i—b—l—e— —9—9—.—9—9—%— —o—f— —t—h—e— —t—i—m—e— —(—H—i—g—h— —A—v—a—i—l—a—b—i—l—i—t—y—)— —|—
-—|— —*—*—F—a—u—l—t— —t—o—l—e—r—a—n—c—e—*—*— —|— —D—e—t—e—c—t— —f—a—i—l—u—r—e—s— —a—n—d— —r—e—c—o—v—e—r— —a—u—t—o—m—a—t—i—c—a—l—l—y— —|—
-—|— —*—*—P—e—r—f—o—r—m—a—n—c—e—*—*— —|— —R—e—s—p—o—n—d— —q—u—i—c—k—l—y— —u—n—d—e—r— —h—i—g—h— —l—o—a—d— —|—
-—|— —*—*—S—e—c—u—r—i—t—y—*—*— —|— —P—r—o—t—e—c—t— —d—a—t—a— —a—n—d— —r—e—s—i—s—t— —a—t—t—a—c—k—s— —|—
-—|— —*—*—M—a—i—n—t—a—i—n—a—b—i—l—i—t—y—*—*— —|— —E—a—s—y— —t—o— —u—p—d—a—t—e— —a—n—d— —d—e—b—u—g— —|—
-—|— —*—*—C—o—s—t— —e—f—f—i—c—i—e—n—c—y—*—*— —|— —D—o—n—'—t— —o—v—e—r—-—e—n—g—i—n—e—e—r—;— —u—s—e— —r—e—s—o—u—r—c—e—s— —w—i—s—e—l—y— —|—
-—
-—R—e—a—l— —c—o—m—p—a—n—i—e—s— —l—i—k—e— —G—o—o—g—l—e—,— —A—m—a—z—o—n—,— —N—e—t—f—l—i—x—,— —a—n—d— —U—b—e—r— —h—a—v—e— —m—a—s—s—i—v—e— —e—n—g—i—n—e—e—r—i—n—g— —t—e—a—m—s— —w—h—o—s—e— —*—*—s—o—l—e— —j—o—b—*—*— —i—s— —d—e—s—i—g—n—i—n—g— —t—h—e—s—e— —s—y—s—t—e—m—s— —c—o—r—r—e—c—t—l—y—.—
-—
-—#—#—#— —1—.—4— —W—h—a—t— —I—s— —a— —"—C—l—i—e—n—t—"—?—
-—
-—I—n— —s—y—s—t—e—m— —d—e—s—i—g—n— —d—i—a—g—r—a—m—s—,— —*—*—"—C—l—i—e—n—t—"—*—*— —m—e—a—n—s— —*—*—A—N—Y—*—*— —d—e—v—i—c—e— —o—r— —a—p—p—l—i—c—a—t—i—o—n— —t—h—a—t— —i—s— —s—e—n—d—i—n—g— —r—e—q—u—e—s—t—s— —t—o— —y—o—u—r— —s—y—s—t—e—m—.— —I—t— —i—s— —*—*—N—O—T—*—*— —l—i—m—i—t—e—d— —t—o— —a— —w—e—b— —b—r—o—w—s—e—r—.—
-—
-—*—*—C—l—i—e—n—t— —c—a—n— —b—e—:—*—*—
-—
-—-— —A— —R—e—a—c—t—J—S— —/— —V—u—e— —/— —A—n—g—u—l—a—r— —w—e—b— —a—p—p—l—i—c—a—t—i—o—n— —r—u—n—n—i—n—g— —i—n— —C—h—r—o—m—e— —o—r— —F—i—r—e—f—o—x—
-—-— —A—n— —A—n—d—r—o—i—d— —m—o—b—i—l—e— —a—p—p— —(—w—r—i—t—t—e—n— —i—n— —K—o—t—l—i—n—/—J—a—v—a—)—
-—-— —A—n— —i—O—S— —m—o—b—i—l—e— —a—p—p— —(—w—r—i—t—t—e—n— —i—n— —S—w—i—f—t—/—O—b—j—e—c—t—i—v—e—-—C—)—
-—-— —A— —d—e—s—k—t—o—p— —a—p—p— —(—W—i—n—d—o—w—s—/—M—a—c—)—
-—-— —A—n—o—t—h—e—r— —b—a—c—k—e—n—d— —s—e—r—v—i—c—e— —(—M—i—c—r—o—s—e—r—v—i—c—e— —c—a—l—l—i—n—g— —a—n—o—t—h—e—r— —M—i—c—r—o—s—e—r—v—i—c—e—)—
-—-— —A— —C—L—I— —t—o—o—l— —(—c—o—m—m—a—n—d—-—l—i—n—e— —s—c—r—i—p—t— —h—i—t—t—i—n—g— —a—n— —A—P—I—)—
-—-— —A— —s—m—a—r—t—w—a—t—c—h—,— —I—o—T— —d—e—v—i—c—e—,— —s—m—a—r—t— —T—V—,— —e—t—c—.—
-—
-—*—*—I—m—p—o—r—t—a—n—t—:—*—*— —W—h—e—n— —w—e— —d—r—a—w— —a— —"—C—l—i—e—n—t—"— —b—o—x— —i—n— —s—y—s—t—e—m— —d—e—s—i—g—n—,— —w—e— —m—e—a—n—:— —*—"—W—h—a—t—e—v—e—r— —t—h—e— —e—n—d— —u—s—e—r— —i—s— —u—s—i—n—g— —t—o— —i—n—t—e—r—a—c—t— —w—i—t—h— —o—u—r— —s—y—s—t—e—m—.—"—*—
-—
-—T—h—e— —c—l—i—e—n—t— —d—o—e—s— —*—*—N—O—T—*—*— —c—o—n—t—a—i—n— —y—o—u—r— —b—u—s—i—n—e—s—s— —l—o—g—i—c—.— —I—t— —j—u—s—t— —s—e—n—d—s— —r—e—q—u—e—s—t—s— —a—n—d— —d—i—s—p—l—a—y—s— —r—e—s—p—o—n—s—e—s—.— —A—l—l— —t—h—e— —h—e—a—v—y— —l—i—f—t—i—n—g— —h—a—p—p—e—n—s— —o—n— —t—h—e— —s—e—r—v—e—r— —s—i—d—e—.—
-—
-—-—-—-—
-—
-—#—#— —S—e—c—t—i—o—n— —2— ——— —W—h—a—t— —I—s— —a— —S—e—r—v—e—r—?—
-—
-—#—#—#— —2—.—1— —D—e—f—i—n—i—t—i—o—n—
-—
-—A— —*—*—S—E—R—V—E—R—*—*— —i—s— —s—i—m—p—l—y— —a— —c—o—m—p—u—t—e—r— —(—m—a—c—h—i—n—e—)— —t—h—a—t—:—
-—
-—1—.— —H—a—s— —y—o—u—r— —a—p—p—l—i—c—a—t—i—o—n— —c—o—d—e— —r—u—n—n—i—n—g— —o—n— —i—t—
-—2—.— —I—s— —c—o—n—n—e—c—t—e—d— —t—o— —a— —n—e—t—w—o—r—k— —(—i—n—t—e—r—n—e—t— —o—r— —i—n—t—r—a—n—e—t—)—
-—3—.— —L—i—s—t—e—n—s— —f—o—r— —i—n—c—o—m—i—n—g— —r—e—q—u—e—s—t—s— —a—n—d— —r—e—s—p—o—n—d—s— —t—o— —t—h—e—m—
-—4—.— —R—u—n—s— —2—4— —h—o—u—r—s— —a— —d—a—y—,— —7— —d—a—y—s— —a— —w—e—e—k— —(—i—d—e—a—l—l—y—)—
-—
-—T—h—e—r—e— —i—s— —*—*—N—O—T—H—I—N—G— —m—a—g—i—c—a—l—*—*— —a—b—o—u—t— —a— —s—e—r—v—e—r—.— —I—t— —i—s— —p—h—y—s—i—c—a—l—l—y— —t—h—e— —s—a—m—e— —h—a—r—d—w—a—r—e— —a—s— —y—o—u—r— —l—a—p—t—o—p— ——— —i—t— —h—a—s— —a— —C—P—U—,— —R—A—M—,— —d—i—s—k— —s—t—o—r—a—g—e—,— —a—n—d— —a— —n—e—t—w—o—r—k— —c—a—r—d—.—
-—
-—|— —Y—o—u—r— —l—a—p—t—o—p— —|— —A— —s—e—r—v—e—r— —|—
-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—|—
-—|— —P—e—r—s—o—n—a—l— —u—s—e—,— —g—o—e—s— —t—o— —s—l—e—e—p—,— —n—o—t— —a—l—w—a—y—s— —o—n—l—i—n—e— —|— —A—l—w—a—y—s— —r—u—n—n—i—n—g—,— —o—p—t—i—m—i—z—e—d— —f—o—r— —h—a—n—d—l—i—n—g— —n—e—t—w—o—r—k— —t—r—a—f—f—i—c— —|—
-—|— —|— —H—a—s— —a— —p—u—b—l—i—c— —I—P—,— —o—f—t—e—n— —h—a—s— —n—o— —s—c—r—e—e—n— —a—t—t—a—c—h—e—d— —(—h—e—a—d—l—e—s—s—)— —|—
-—
-—#—#—#— —2—.—2— —L—o—c—a—l—h—o—s—t— —a—n—d— —I—P— —A—d—d—r—e—s—s—e—s—
-—
-—W—h—e—n— —y—o—u— —r—u—n— —y—o—u—r— —N—o—d—e—.—j—s— —a—p—p—:—
-—
-—`—`—`—b—a—s—h—
-—$— —n—o—d—e— —a—p—p—.—j—s—
-—S—e—r—v—e—r— —r—u—n—n—i—n—g— —o—n— —h—t—t—p—:—/—/—l—o—c—a—l—h—o—s—t—:—8—0—8—0—
-—`—`—`—
-—
-—#—#—#—#— —W—h—a—t— —i—s— —l—o—c—a—l—h—o—s—t—?—
-—
-—-— —*—*—"—l—o—c—a—l—h—o—s—t—"—*—*— —i—s— —a— —s—p—e—c—i—a—l— —h—o—s—t—n—a—m—e— —t—h—a—t— —*—*—A—L—W—A—Y—S—*—*— —r—e—f—e—r—s— —t—o— —*—*—Y—O—U—R— —O—W—N— —M—A—C—H—I—N—E—*—*—.—
-—-— —I—t— —i—s— —n—o—t— —a—n— —e—x—t—e—r—n—a—l— —a—d—d—r—e—s—s—.— —N—o—b—o—d—y— —e—l—s—e— —o—n— —t—h—e— —i—n—t—e—r—n—e—t— —c—a—n— —r—e—a—c—h— —i—t—.—
-—-— —`—l—o—c—a—l—h—o—s—t—`— —→— —r—e—s—o—l—v—e—s— —t—o— —I—P— —a—d—d—r—e—s—s— —→— —*—*—1—2—7—.—0—.—0—.—1—*—*—
-—-— —T—h—i—s— —I—P— —(—1—2—7—.—0—.—0—.—1—)— —i—s— —c—a—l—l—e—d— —t—h—e— —*—*—L—O—O—P—B—A—C—K— —A—D—D—R—E—S—S—*—*—.— —I—t— —a—l—w—a—y—s— —m—e—a—n—s— —"—t—h—i—s— —m—a—c—h—i—n—e— —i—t—s—e—l—f—.—"—
-—
-—#—#—#—#— —W—h—a—t— —i—s— —a—n— —I—P— —a—d—d—r—e—s—s—?—
-—
-—-— —*—*—I—P—*—*— —=— —I—n—t—e—r—n—e—t— —P—r—o—t—o—c—o—l—
-—-— —A—n— —I—P— —a—d—d—r—e—s—s— —i—s— —a— —u—n—i—q—u—e— —n—u—m—e—r—i—c—a—l— —l—a—b—e—l— —a—s—s—i—g—n—e—d— —t—o— —e—v—e—r—y— —d—e—v—i—c—e— —c—o—n—n—e—c—t—e—d— —t—o— —a— —n—e—t—w—o—r—k—.— —I—t—'—s— —l—i—k—e— —a— —h—o—m—e— —a—d—d—r—e—s—s— —f—o—r— —c—o—m—p—u—t—e—r—s—.—
-—
-—*—*—T—w—o— —v—e—r—s—i—o—n—s— —e—x—i—s—t—:—*—*—
-—
-—|— —V—e—r—s—i—o—n— —|— —F—o—r—m—a—t— —|— —N—o—t—e—s— —|—
-—|—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—|—
-—|— —*—*—I—P—v—4—*—*— —|— —`—x—x—x—.—x—x—x—.—x—x—x—.—x—x—x—`— —(—e—.—g—.—,— —1—9—2—.—1—6—8—.—1—.—1—)— —|— —4— —n—u—m—b—e—r—s—,— —e—a—c—h— —0—–—2—5—5—.— —~—4—.—3— —b—i—l—l—i—o—n— —a—d—d—r—e—s—s—e—s— —(—r—u—n—n—i—n—g— —o—u—t—!—)— —|—
-—|— —*—*—I—P—v—6—*—*— —|— —`—x—x—x—x—:—x—x—x—x—:—.—.—.—`— —(—l—o—n—g— —h—e—x— —g—r—o—u—p—s—)— —|— —E—x—a—m—p—l—e—:— —`—2—0—0—1—:—0—d—b—8—:—8—5—a—3—:—0—0—0—0—:—0—0—0—0—:—8—a—2—e—:—0—3—7—0—:—7—3—3—4—`—.— —V—i—r—t—u—a—l—l—y— —u—n—l—i—m—i—t—e—d— —|—
-—
-—*—*—P—r—i—v—a—t—e— —v—s— —p—u—b—l—i—c— —I—P— —a—d—d—r—e—s—s—e—s—:—*—*—
-—
-—|— —T—y—p—e— —|— —S—c—o—p—e— —|— —E—x—a—m—p—l—e—s— —|—
-—|—-—-—-—-—-—-—|—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—P—r—i—v—a—t—e— —I—P—*—*— —|— —O—n—l—y— —w—i—t—h—i—n— —y—o—u—r— —l—o—c—a—l— —n—e—t—w—o—r—k— —(—h—o—m—e—/—o—f—f—i—c—e— —W—i—F—i—)— —|— —1—9—2—.—1—6—8—.—x—.—x—,— —1—0—.—x—.—x—.—x—,— —1—7—2—.—1—6—.—x—.—x—–—1—7—2—.—3—1—.—x—.—x—.— —*—*—N—O—T—*—*— —r—e—a—c—h—a—b—l—e— —f—r—o—m— —t—h—e— —i—n—t—e—r—n—e—t—.— —|—
-—|— —*—*—P—u—b—l—i—c— —I—P—*—*— —|— —A—s—s—i—g—n—e—d— —b—y— —I—S—P—;— —r—e—a—c—h—a—b—l—e— —w—o—r—l—d—w—i—d—e— —|— —E—v—e—r—y— —w—e—b—s—i—t—e—/—s—e—r—v—e—r— —y—o—u— —v—i—s—i—t— —h—a—s— —a— —p—u—b—l—i—c— —I—P—.— —|—
-—
-—*—*—K—e—y— —i—n—s—i—g—h—t—:—*—*— —Y—o—u—r— —c—o—l—l—e—g—e— —p—r—o—j—e—c—t— —o—n— —`—l—o—c—a—l—h—o—s—t—:—8—0—8—0—`— —u—s—e—s— —y—o—u—r— —p—r—i—v—a—t—e—/—l—o—o—p—b—a—c—k— —I—P—.— —N—o— —o—n—e— —o—u—t—s—i—d—e— —y—o—u—r— —m—a—c—h—i—n—e— —c—a—n— —a—c—c—e—s—s— —i—t—.— —T—o— —m—a—k—e— —i—t— —a—c—c—e—s—s—i—b—l—e— —w—o—r—l—d—w—i—d—e—,— —y—o—u— —n—e—e—d— —a— —*—*—P—U—B—L—I—C— —I—P— —A—D—D—R—E—S—S—*—*— —a—t—t—a—c—h—e—d— —t—o— —y—o—u—r— —m—a—c—h—i—n—e—/—s—e—r—v—e—r—.—
-—
-—#—#—#— —2—.—3— —W—h—a—t— —I—s— —a— —P—o—r—t—?—
-—
-—A— —s—e—r—v—e—r— —m—a—c—h—i—n—e— —c—a—n— —r—u—n— —*—*—M—A—N—Y—*—*— —a—p—p—l—i—c—a—t—i—o—n—s— —s—i—m—u—l—t—a—n—e—o—u—s—l—y— ——— —j—u—s—t— —l—i—k—e— —y—o—u—r— —l—a—p—t—o—p— —c—a—n— —r—u—n— —C—h—r—o—m—e—,— —S—p—o—t—i—f—y—,— —a—n—d— —V—S— —C—o—d—e— —a—t— —t—h—e— —s—a—m—e— —t—i—m—e—.—
-—
-—S—o— —w—h—e—n— —a— —r—e—q—u—e—s—t— —a—r—r—i—v—e—s— —a—t— —I—P— —a—d—d—r—e—s—s— —`—3—5—.—1—5—4—.—3—3—.—6—4—`—,— —*—*—H—O—W—*—*— —d—o—e—s— —t—h—e— —s—e—r—v—e—r— —k—n—o—w— —*—*—W—H—I—C—H—*—*— —a—p—p—l—i—c—a—t—i—o—n— —s—h—o—u—l—d— —h—a—n—d—l—e— —i—t—?—
-—
-—*—*—A—n—s—w—e—r—:— —P—O—R—T—S—.—*—*—
-—
-—-— —A— —*—*—P—o—r—t—*—*— —i—s— —a— —n—u—m—b—e—r— —(—0—–—6—5—5—3—5—)— —t—h—a—t— —i—d—e—n—t—i—f—i—e—s— —a— —s—p—e—c—i—f—i—c— —a—p—p—l—i—c—a—t—i—o—n—/—s—e—r—v—i—c—e— —r—u—n—n—i—n—g— —o—n— —a— —m—a—c—h—i—n—e—.—
-—-— —T—h—i—n—k— —o—f— —i—t— —a—s— —a— —d—o—o—r— —n—u—m—b—e—r— —i—n—s—i—d—e— —a—n— —a—p—a—r—t—m—e—n—t— —b—u—i—l—d—i—n—g—.—
-— — —-— —*—*—I—P— —A—d—d—r—e—s—s—*—*— —=— —T—h—e— —a—p—a—r—t—m—e—n—t— —b—u—i—l—d—i—n—g— —a—d—d—r—e—s—s— —(—e—.—g—.—,— —3—5—.—1—5—4—.—3—3—.—6—4—)—
-— — —-— —*—*—P—o—r—t—*—*— —=— —T—h—e— —s—p—e—c—i—f—i—c— —f—l—a—t—/—a—p—a—r—t—m—e—n—t— —n—u—m—b—e—r— —(—e—.—g—.—,— —8—0—8—0—)—
-—
-—S—o— —`—3—5—.—1—5—4—.—3—3—.—6—4—:—8—0—8—0—`— —m—e—a—n—s—:— —*—"—G—o— —t—o— —t—h—e— —m—a—c—h—i—n—e— —a—t— —I—P— —3—5—.—1—5—4—.—3—3—.—6—4—,— —a—n—d— —t—a—l—k— —t—o— —t—h—e— —a—p—p— —o—n— —d—o—o—r— —8—0—8—0—"—*—
-—
-—#—#—#—#— —W—e—l—l—-—k—n—o—w—n— —/— —r—e—s—e—r—v—e—d— —p—o—r—t— —n—u—m—b—e—r—s—
-—
-—|— —P—o—r—t— —|— —S—e—r—v—i—c—e— —/— —P—r—o—t—o—c—o—l— —|—
-—|—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —8—0— —|— —H—T—T—P— —(—u—n—s—e—c—u—r—e—d— —w—e—b— —t—r—a—f—f—i—c—)— —|—
-—|— —4—4—3— —|— —H—T—T—P—S— —(—s—e—c—u—r—e—d— —w—e—b— —t—r—a—f—f—i—c— —w—i—t—h— —S—S—L—/—T—L—S—)— —|—
-—|— —2—2— —|— —S—S—H— —(—s—e—c—u—r—e— —s—h—e—l—l— —/— —r—e—m—o—t—e— —l—o—g—i—n—)— —|—
-—|— —2—1— —|— —F—T—P— —(—f—i—l—e— —t—r—a—n—s—f—e—r—)— —|—
-—|— —2—5— —|— —S—M—T—P— —(—s—e—n—d—i—n—g— —e—m—a—i—l—)— —|—
-—|— —3—3—0—6— —|— —M—y—S—Q—L— —d—a—t—a—b—a—s—e— —|—
-—|— —5—4—3—2— —|— —P—o—s—t—g—r—e—S—Q—L— —d—a—t—a—b—a—s—e— —|—
-—|— —2—7—0—1—7— —|— —M—o—n—g—o—D—B— —d—a—t—a—b—a—s—e— —|—
-—|— —6—3—7—9— —|— —R—e—d—i—s— —c—a—c—h—e— —|—
-—|— —8—0—8—0— —|— —C—o—m—m—o—n— —a—l—t—e—r—n—a—t—e— —H—T—T—P— —(—d—e—v— —s—e—r—v—e—r—s—)— —|—
-—
-—*—*—P—o—r—t— —r—a—n—g—e—s—:—*—*—
-—
-—-— —*—*—0—–—1—0—2—3—*—*— ——— —S—y—s—t—e—m—/—w—e—l—l—-—k—n—o—w—n— —p—o—r—t—s— —(—r—e—s—e—r—v—e—d—,— —n—e—e—d— —a—d—m—i—n— —a—c—c—e—s—s—)—
-—-— —*—*—1—0—2—4—–—4—9—1—5—1—*—*— ——— —R—e—g—i—s—t—e—r—e—d— —p—o—r—t—s— —(—c—o—m—m—o—n— —a—p—p—s—)—
-—-— —*—*—4—9—1—5—2—–—6—5—5—3—5—*—*— ——— —D—y—n—a—m—i—c—/—p—r—i—v—a—t—e— —p—o—r—t—s— —(—t—e—m—p—o—r—a—r—y—,— —e—p—h—e—m—e—r—a—l—)—
-—
-—W—h—e—n— —y—o—u— —t—y—p—e— —`—h—t—t—p—s—:—/—/—g—o—o—g—l—e—.—c—o—m—`—,— —y—o—u—r— —b—r—o—w—s—e—r— —a—u—t—o—m—a—t—i—c—a—l—l—y— —u—s—e—s— —p—o—r—t— —*—*—4—4—3—*—*—.— —Y—o—u— —d—o—n—'—t— —t—y—p—e— —i—t— —b—e—c—a—u—s—e— —b—r—o—w—s—e—r—s— —a—s—s—u—m—e— —4—4—3— —f—o—r— —H—T—T—P—S— —a—n—d— —8—0— —f—o—r— —H—T—T—P—.— —B—e—h—i—n—d— —t—h—e— —s—c—e—n—e—s—:— —`—h—t—t—p—s—:—/—/—g—o—o—g—l—e—.—c—o—m—`— —=— —`—1—4—2—.—2—5—0—.—7—7—.—4—6—:—4—4—3—`—
-—
-—#—#—#— —2—.—4— —W—h—a—t— —I—s— —D—N—S—?—
-—
-—*—*—D—N—S—*—*— —=— —D—o—m—a—i—n— —N—a—m—e— —S—y—s—t—e—m—
-—
-—-— —*—*—P—r—o—b—l—e—m—:—*—*— —I—P— —a—d—d—r—e—s—s—e—s— —l—i—k—e— —`—1—4—2—.—2—5—0—.—7—7—.—4—6—`— —a—r—e— —h—a—r—d— —t—o— —r—e—m—e—m—b—e—r—.—
-—-— —*—*—S—o—l—u—t—i—o—n—:—*—*— —D—N—S— —i—s— —l—i—k—e— —t—h—e— —*—*—P—H—O—N—E— —B—O—O—K—*—*— —o—f— —t—h—e— —i—n—t—e—r—n—e—t—.— —Y—o—u— —g—i—v—e— —D—N—S— —a— —d—o—m—a—i—n— —n—a—m—e— —→— —I—t— —g—i—v—e—s— —y—o—u— —b—a—c—k— —a—n— —I—P— —a—d—d—r—e—s—s—.—
-—
-—#—#—#—#— —H—o—w— —D—N—S— —r—e—s—o—l—u—t—i—o—n— —w—o—r—k—s— —(—s—t—e—p—-—b—y—-—s—t—e—p—)—
-—
-—1—.— —Y—o—u— —t—y—p—e— —`—h—t—t—p—s—:—/—/—a—b—c—.—c—o—m—`— —i—n— —y—o—u—r— —b—r—o—w—s—e—r— —a—n—d— —h—i—t— —E—n—t—e—r—.—
-—2—.— —Y—o—u—r— —b—r—o—w—s—e—r— —c—h—e—c—k—s— —i—t—s— —o—w—n— —*—*—D—N—S— —C—A—C—H—E—*—*—.— —(—I—t— —m—a—y— —a—l—r—e—a—d—y— —k—n—o—w— —t—h—e— —I—P— —f—r—o—m— —a— —p—r—e—v—i—o—u—s— —v—i—s—i—t—.—)— —I—f— —f—o—u—n—d— —→— —s—k—i—p— —t—o— —s—t—e—p— —6—.—
-—3—.— —I—f— —n—o—t— —c—a—c—h—e—d—,— —y—o—u—r— —O—S— —c—h—e—c—k—s— —i—t—s— —l—o—c—a—l— —D—N—S— —c—a—c—h—e— —a—n—d— —t—h—e— —*—*—h—o—s—t—s— —f—i—l—e—*—*— —(—`—/—e—t—c—/—h—o—s—t—s—`— —o—n— —L—i—n—u—x—/—M—a—c—,— —`—C—:—\—W—i—n—d—o—w—s—\—S—y—s—t—e—m—3—2—\—d—r—i—v—e—r—s—\—e—t—c—\—h—o—s—t—s—`— —o—n— —W—i—n—d—o—w—s—)—.— —I—f— —f—o—u—n—d— —→— —s—k—i—p— —t—o— —s—t—e—p— —6—.—
-—4—.— —I—f— —s—t—i—l—l— —n—o—t— —f—o—u—n—d—,— —y—o—u—r— —O—S— —s—e—n—d—s— —t—h—e— —q—u—e—r—y— —t—o— —a— —*—*—D—N—S— —R—E—S—O—L—V—E—R—*—*— —(—u—s—u—a—l—l—y— —I—S—P— —o—r— —p—u—b—l—i—c—:— —G—o—o—g—l—e— —`—8—.—8—.—8—.—8—`—,— —C—l—o—u—d—f—l—a—r—e— —`—1—.—1—.—1—.—1—`—)—.—
-—5—.— —T—h—e— —D—N—S— —R—e—s—o—l—v—e—r— —g—o—e—s— —t—h—r—o—u—g—h— —a— —h—i—e—r—a—r—c—h—y—:—
-— — — —-— —*—*—R—O—O—T— —N—A—M—E— —S—E—R—V—E—R—S—*—*— —→— —K—n—o—w— —w—h—e—r—e— —`—.—c—o—m—`—,— —`—.—i—n—`—,— —`—.—o—r—g—`— —e—t—c—.— —s—e—r—v—e—r—s— —a—r—e—
-— — — —-— —*—*—T—L—D— —N—A—M—E— —S—E—R—V—E—R—S—*—*— —→— —`—.—c—o—m—`— —s—e—r—v—e—r—s— —k—n—o—w— —w—h—e—r—e— —`—a—b—c—.—c—o—m—`—'—s— —n—a—m—e—s—e—r—v—e—r— —i—s—
-— — — —-— —*—*—A—U—T—H—O—R—I—T—A—T—I—V—E— —N—A—M—E— —S—E—R—V—E—R—*—*— —→— —H—a—s— —t—h—e— —a—c—t—u—a—l— —I—P— —a—d—d—r—e—s—s— —f—o—r— —`—a—b—c—.—c—o—m—`—
-—6—.— —T—h—e— —I—P— —a—d—d—r—e—s—s— —(—e—.—g—.—,— —`—3—5—.—1—5—4—.—3—3—.—6—4—`—)— —i—s— —r—e—t—u—r—n—e—d— —t—o— —y—o—u—r— —b—r—o—w—s—e—r—.—
-—7—.— —B—r—o—w—s—e—r— —c—o—n—n—e—c—t—s— —t—o— —`—3—5—.—1—5—4—.—3—3—.—6—4—:—4—4—3—`— —a—n—d— —r—e—q—u—e—s—t—s— —t—h—e— —p—a—g—e—.—
-—
-—*—*—V—i—s—u—a—l— —f—l—o—w—:—*—*—
-—
-—`—`—`—m—e—r—m—a—i—d—
-—f—l—o—w—c—h—a—r—t— —T—D—
-— — — — —S—t—a—r—t—(—[—"—U—s—e—r— —e—n—t—e—r—s— —a—b—c—.—c—o—m—"—]—)— —-—-—>— —B—C—{—"—B—r—o—w—s—e—r— —D—N—S—\—n—c—a—c—h—e— —h—i—t—?—"—}—
-— — — — —B—C— —-—-—>—|—Y—e—s—|— —I—P—[—"—R—e—t—u—r—n— —I—P— —a—d—d—r—e—s—s—"—]—
-— — — — —B—C— —-—-—>—|—N—o—|— —O—S—{—"—O—S— —c—a—c—h—e— —o—r—\—n—h—o—s—t—s— —f—i—l—e—?—"—}—
-— — — — —O—S— —-—-—>—|—Y—e—s—|— —I—P—
-— — — — —O—S— —-—-—>—|—N—o—|— —D—R—[—"—D—N—S— —R—e—s—o—l—v—e—r—\—n—(—8—.—8—.—8—.—8— —/— —1—.—1—.—1—.—1—)—"—]—
-— — — — —D—R— —-—-—>— —R—o—o—t—[—"—R—o—o—t— —N—a—m—e— —S—e—r—v—e—r—"—]—
-— — — — —R—o—o—t— —-—-—>— —T—L—D—[—"—T—L—D— —S—e—r—v—e—r— —(—.—c—o—m—)—"—]—
-— — — — —T—L—D— —-—-—>— —A—u—t—h—[—"—A—u—t—h—o—r—i—t—a—t—i—v—e— —N—S—\—n—f—o—r— —a—b—c—.—c—o—m—"—]—
-— — — — —A—u—t—h— —-—-—>— —I—P—
-— — — — —I—P— —-—-—>— —C—o—n—n—[—"—B—r—o—w—s—e—r— —c—o—n—n—e—c—t—s—\—n—3—5—.—1—5—4—.—3—3—.—6—4—:—4—4—3—"—]—
-—`—`—`—
-—
-—#—#—#—#— —D—N—S— —r—e—c—o—r—d— —t—y—p—e—s— —(—c—o—m—m—o—n— —o—n—e—s—)—
-—
-—|— —T—y—p—e— —|— —P—u—r—p—o—s—e— —|—
-—|—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—A—*—*— —|— —M—a—p—s— —d—o—m—a—i—n— —t—o— —I—P—v—4— —a—d—d—r—e—s—s— —(—`—a—b—c—.—c—o—m—`— —→— —`—3—5—.—1—5—4—.—3—3—.—6—4—`—)— —|—
-—|— —*—*—A—A—A—A—*—*— —|— —M—a—p—s— —d—o—m—a—i—n— —t—o— —I—P—v—6— —a—d—d—r—e—s—s— —|—
-—|— —*—*—C—N—A—M—E—*—*— —|— —A—l—i—a—s— ——— —p—o—i—n—t—s— —o—n—e— —d—o—m—a—i—n— —t—o— —a—n—o—t—h—e—r— —d—o—m—a—i—n— —|—
-—|— —*—*—M—X—*—*— —|— —M—a—i—l— —s—e—r—v—e—r—s— —f—o—r— —t—h—e— —d—o—m—a—i—n— —(—e—m—a—i—l— —r—o—u—t—i—n—g—)— —|—
-—|— —*—*—T—X—T—*—*— —|— —T—e—x—t— —r—e—c—o—r—d—s— —(—v—e—r—i—f—i—c—a—t—i—o—n—,— —S—P—F—,— —D—K—I—M—)— —|—
-—|— —*—*—N—S—*—*— —|— —N—a—m—e—s—e—r—v—e—r— —r—e—c—o—r—d—s— ——— —w—h—o— —m—a—n—a—g—e—s— —D—N—S— —f—o—r— —t—h—i—s— —d—o—m—a—i—n— —|—
-—
-—*—*—T—T—L— —(—T—i—m—e— —T—o— —L—i—v—e—)—:—*—*—
-—
-—-— —E—v—e—r—y— —D—N—S— —r—e—c—o—r—d— —h—a—s— —a— —T—T—L— ——— —h—o—w— —m—a—n—y— —s—e—c—o—n—d—s— —i—t— —s—h—o—u—l—d— —b—e— —c—a—c—h—e—d—.—
-—-— —A—f—t—e—r— —T—T—L— —e—x—p—i—r—e—s—,— —t—h—e— —r—e—s—o—l—v—e—r— —f—e—t—c—h—e—s— —f—r—e—s—h— —d—a—t—a—.—
-—-— —*—*—L—o—w— —T—T—L—*—*— —=— —c—h—a—n—g—e—s— —p—r—o—p—a—g—a—t—e— —q—u—i—c—k—l—y— —b—u—t— —m—o—r—e— —D—N—S— —q—u—e—r—i—e—s—.—
-—-— —*—*—H—i—g—h— —T—T—L—*—*— —=— —f—e—w—e—r— —q—u—e—r—i—e—s— —b—u—t— —c—h—a—n—g—e—s— —t—a—k—e— —l—o—n—g—e—r— —t—o— —p—r—o—p—a—g—a—t—e—.—
-—
-—#—#—#— —2—.—5— —F—u—l—l— —R—e—q—u—e—s—t— —L—i—f—e—c—y—c—l—e— —(—P—u—t—t—i—n—g— —I—t— —A—l—l— —T—o—g—e—t—h—e—r—)—
-—
-—L—e—t—'—s— —t—r—a—c—e— —*—*—e—x—a—c—t—l—y—*—*— —w—h—a—t— —h—a—p—p—e—n—s— —w—h—e—n— —y—o—u— —v—i—s—i—t— —`—h—t—t—p—s—:—/—/—a—b—c—.—c—o—m—`—:—
-—
-—`—`—`—
-—[—Y—O—U—R— —B—R—O—W—S—E—R—]—
-— — — — — —|—
-— — — — — —|— — —1—.— —U—s—e—r— —t—y—p—e—s— —h—t—t—p—s—:—/—/—a—b—c—.—c—o—m— —a—n—d— —p—r—e—s—s—e—s— —E—n—t—e—r—
-— — — — — —↓—
-—[—D—N—S— —R—E—S—O—L—V—E—R—]—
-— — — — — —|—
-— — — — — —|— — —2—.— —R—e—s—o—l—v—e—s— —a—b—c—.—c—o—m— —→— —3—5—.—1—5—4—.—3—3—.—6—4—
-— — — — — —↓—
-—[—Y—O—U—R— —B—R—O—W—S—E—R— —a—g—a—i—n—]—
-— — — — — —|—
-— — — — — —|— — —3—.— —I—n—i—t—i—a—t—e—s— —T—C—P— —C—o—n—n—e—c—t—i—o—n— —t—o— —3—5—.—1—5—4—.—3—3—.—6—4—:—4—4—3—
-— — — — — —|— — — — — —(—3—-—w—a—y— —h—a—n—d—s—h—a—k—e—:— —S—Y—N— —→— —S—Y—N—-—A—C—K— —→— —A—C—K—)—
-— — — — — —|—
-— — — — — —|— — —4—.— —T—L—S— —H—a—n—d—s—h—a—k—e— —(—f—o—r— —H—T—T—P—S— —s—e—c—u—r—i—t—y—)—
-— — — — — —|— — — — — —(—C—e—r—t—i—f—i—c—a—t—e—s— —e—x—c—h—a—n—g—e—d—,— —e—n—c—r—y—p—t—i—o—n— —k—e—y—s— —s—e—t— —u—p—)—
-— — — — — —↓—
-—[—S—E—R—V—E—R— —a—t— —3—5—.—1—5—4—.—3—3—.—6—4—]—
-— — — — — —|—
-— — — — — —|— — —5—.— —S—e—r—v—e—r— —r—e—c—e—i—v—e—s— —r—e—q—u—e—s—t— —o—n— —p—o—r—t— —4—4—3—
-— — — — — —|— — — — — —I—d—e—n—t—i—f—i—e—s— —t—h—e— —c—o—r—r—e—c—t— —a—p—p—l—i—c—a—t—i—o—n— —(—w—e—b— —s—e—r—v—e—r— —/— —r—e—v—e—r—s—e— —p—r—o—x—y—)—
-— — — — — —|—
-— — — — — —|— — —6—.— —A—p—p—l—i—c—a—t—i—o—n— —p—r—o—c—e—s—s—e—s— —t—h—e— —r—e—q—u—e—s—t—
-— — — — — —|— — — — — —(—f—e—t—c—h— —d—a—t—a— —f—r—o—m— —D—B—,— —r—u—n— —b—u—s—i—n—e—s—s— —l—o—g—i—c—,— —e—t—c—.—)—
-— — — — — —↓—
-—[—Y—O—U—R— —B—R—O—W—S—E—R— —a—g—a—i—n—]—
-— — — — — —|—
-— — — — — —|— — —7—.— —S—e—r—v—e—r— —s—e—n—d—s— —b—a—c—k— —H—T—T—P— —R—e—s—p—o—n—s—e— —(—H—T—M—L—/—J—S—O—N—/—e—t—c—.—)—
-— — — — — —|—
-— — — — — —|— — —8—.— —B—r—o—w—s—e—r— —r—e—n—d—e—r—s— —t—h—e— —p—a—g—e— —/— —p—r—o—c—e—s—s—e—s— —t—h—e— —d—a—t—a—
-— — — — — —↓—
-—[—Y—O—U— —S—E—E— —T—H—E— —W—E—B—P—A—G—E—]—
-—`—`—`—
-—
-—>— —[—!—N—O—T—E—]—
-—>— —S—t—e—p—s— —3—–—8— —h—a—p—p—e—n— —i—n— —m—i—l—l—i—s—e—c—o—n—d—s— —f—o—r— —a— —f—a—s—t—,— —w—e—l—l—-—d—e—s—i—g—n—e—d— —s—y—s—t—e—m—.—
-—
-—-—-—-—
-—
-—#—#— —S—e—c—t—i—o—n— —3— ——— —H—o—w— —t—o— —D—e—p—l—o—y— —a—n— —A—p—p—l—i—c—a—t—i—o—n—?—
-—
-—#—#—#— —3—.—1— —T—h—e— —P—r—o—b—l—e—m— —w—i—t—h— —H—o—s—t—i—n—g— —Y—o—u—r—s—e—l—f—
-—
-—T—h—e—o—r—e—t—i—c—a—l—l—y—,— —y—o—u— —*—*—C—O—U—L—D—*—*— —h—o—s—t— —y—o—u—r— —a—p—p— —o—n— —y—o—u—r— —o—w—n— —l—a—p—t—o—p— —a—n—d— —e—x—p—o—s—e— —i—t— —t—o— —t—h—e— —i—n—t—e—r—n—e—t—.— —B—u—t— —h—e—r—e—'—s— —w—h—y— —n—o—b—o—d—y— —d—o—e—s— —t—h—i—s— —f—o—r— —p—r—o—d—u—c—t—i—o—n—:—
-—
-—|— —C—h—a—l—l—e—n—g—e— —|— —I—s—s—u—e— —|—
-—|—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—|—
-—|— —*—*—S—t—a—t—i—c— —p—u—b—l—i—c— —I—P—*—*— —|— —M—o—s—t— —h—o—m—e—/—c—o—l—l—e—g—e— —c—o—n—n—e—c—t—i—o—n—s— —h—a—v—e— —a— —*—*—d—y—n—a—m—i—c—*—*— —I—P—.— —I—t— —c—h—a—n—g—e—s— —w—h—e—n— —y—o—u— —r—e—c—o—n—n—e—c—t—.— —D—o—m—a—i—n— —b—r—e—a—k—s— —c—o—n—s—t—a—n—t—l—y—.— —S—t—a—t—i—c— —I—P— —c—o—s—t—s— —e—x—t—r—a—.— —|—
-—|— —*—*—A—l—w—a—y—s— —o—n—*—*— —|— —L—a—p—t—o—p— —s—l—e—e—p—s—,— —s—h—u—t—s— —d—o—w—n—,— —m—o—v—e—s— —→— —a—p—p— —g—o—e—s— —o—f—f—l—i—n—e—.— —S—e—r—v—e—r—s— —n—e—e—d— —2—4—/—7—/—3—6—5—.— —|—
-—|— —*—*—H—a—r—d—w—a—r—e— —m—a—i—n—t—e—n—a—n—c—e—*—*— —|— —D—i—s—k— —d—i—e—s—,— —R—A—M— —f—a—i—l—s—,— —p—o—w—e—r— —c—u—t— —→— —a—p—p— —g—o—n—e—.— —N—e—e—d— —b—a—c—k—u—p—s—,— —U—P—S—,— —r—e—d—u—n—d—a—n—t— —h—a—r—d—w—a—r—e—.— —E—x—p—e—n—s—i—v—e— —a—n—d— —c—o—m—p—l—e—x—.— —|—
-—|— —*—*—B—a—n—d—w—i—d—t—h—*—*— —|— —M—i—l—l—i—o—n—s— —o—f— —u—s—e—r—s— —n—e—e—d— —e—n—o—r—m—o—u—s— —b—a—n—d—w—i—d—t—h—.— —H—o—m—e— —i—n—t—e—r—n—e—t— —i—s—n—'—t— —d—e—s—i—g—n—e—d— —f—o—r— —t—h—i—s—.— —|—
-—|— —*—*—S—e—c—u—r—i—t—y—*—*— —|— —E—x—p—o—s—i—n—g— —l—a—p—t—o—p— —t—o— —i—n—t—e—r—n—e—t— —i—s— —d—a—n—g—e—r—o—u—s—.— —N—e—e—d— —f—i—r—e—w—a—l—l—s—,— —D—D—o—S— —p—r—o—t—e—c—t—i—o—n—,— —i—n—t—r—u—s—i—o—n— —d—e—t—e—c—t—i—o—n—.— —|—
-—|— —*—*—S—c—a—l—a—b—i—l—i—t—y—*—*— —|— —T—r—a—f—f—i—c— —s—p—i—k—e—s— ——— —y—o—u— —c—a—n—'—t— —i—n—s—t—a—n—t—l—y— —a—d—d— —m—o—r—e— —C—P—U—/—R—A—M— —t—o— —y—o—u—r— —l—a—p—t—o—p—.— —|—
-—
-—#—#—#— —3—.—2— —C—l—o—u—d— —P—r—o—v—i—d—e—r—s— ——— —T—h—e— —S—o—l—u—t—i—o—n—
-—
-—C—l—o—u—d— —p—r—o—v—i—d—e—r—s— —o—w—n— —*—*—M—A—S—S—I—V—E—*—*— —d—a—t—a— —c—e—n—t—e—r—s— —w—i—t—h— —t—h—o—u—s—a—n—d—s— —o—f— —p—h—y—s—i—c—a—l— —s—e—r—v—e—r—s—.— —T—h—e—y— —r—e—n—t— —y—o—u— —a— —s—l—i—c—e— —o—f— —t—h—a—t— —i—n—f—r—a—s—t—r—u—c—t—u—r—e— —(—c—a—l—l—e—d— —a— —*—*—V—I—R—T—U—A—L— —M—A—C—H—I—N—E—*—*—)—.—
-—
-—#—#—#—#— —M—a—j—o—r— —c—l—o—u—d— —p—r—o—v—i—d—e—r—s—
-—
-—|— —P—r—o—v—i—d—e—r— —|— —V—i—r—t—u—a—l— —M—a—c—h—i—n—e— —P—r—o—d—u—c—t— —N—a—m—e— —|—
-—|—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —A—W—S— —(—A—m—a—z—o—n—)— —|— —E—C—2— ——— —E—l—a—s—t—i—c— —C—o—m—p—u—t—e— —C—l—o—u—d— —|—
-—|— —A—z—u—r—e— —(—M—i—c—r—o—s—o—f—t—)— —|— —A—z—u—r—e— —V—i—r—t—u—a—l— —M—a—c—h—i—n—e—s— —|—
-—|— —G—C—P— —(—G—o—o—g—l—e—)— —|— —C—o—m—p—u—t—e— —E—n—g—i—n—e— —|—
-—|— —D—i—g—i—t—a—l—O—c—e—a—n— —|— —D—r—o—p—l—e—t—s— —|—
-—|— —L—i—n—o—d—e— —/— —A—k—a—m—a—i— —|— —L—i—n—o—d—e— —I—n—s—t—a—n—c—e—s— —|—
-—|— —V—u—l—t—r— —|— —C—l—o—u—d— —C—o—m—p—u—t—e— —I—n—s—t—a—n—c—e—s— —|—
-—
-—*—*—W—h—a—t— —y—o—u— —g—e—t— —f—r—o—m— —a— —c—l—o—u—d— —p—r—o—v—i—d—e—r—:—*—*—
-—
-—-— —A— —V—i—r—t—u—a—l— —M—a—c—h—i—n—e— —(—V—M—)— —w—i—t—h— —d—e—d—i—c—a—t—e—d— —C—P—U—,— —R—A—M—,— —D—i—s—k—
-—-— —A— —p—u—b—l—i—c— —s—t—a—t—i—c— —I—P— —a—d—d—r—e—s—s— —(—o—r— —e—l—a—s—t—i—c— —I—P—)—
-—-— —N—e—t—w—o—r—k— —c—o—n—n—e—c—t—i—v—i—t—y— —w—i—t—h— —h—i—g—h— —b—a—n—d—w—i—d—t—h—
-—-— —C—h—o—i—c—e— —o—f— —O—S— —(—U—b—u—n—t—u—,— —A—m—a—z—o—n— —L—i—n—u—x—,— —W—i—n—d—o—w—s—,— —e—t—c—.—)—
-—-— —P—a—y— —o—n—l—y— —f—o—r— —w—h—a—t— —y—o—u— —u—s—e— —(—p—a—y—-—p—e—r—-—h—o—u—r— —o—r— —p—a—y—-—p—e—r—-—s—e—c—o—n—d—)—
-—-— —O—p—t—i—o—n—s— —t—o— —s—c—a—l—e— —u—p— —(—b—i—g—g—e—r— —m—a—c—h—i—n—e—)— —o—r— —s—c—a—l—e— —o—u—t— —(—m—o—r—e— —m—a—c—h—i—n—e—s—)—
-—-— —M—a—n—a—g—e—d— —s—e—r—v—i—c—e—s— —f—o—r— —d—a—t—a—b—a—s—e—s—,— —s—t—o—r—a—g—e—,— —n—e—t—w—o—r—k—i—n—g—,— —e—t—c—.—
-—
-—#—#—#— —3—.—3— —W—h—a—t— —I—s— —a— —V—i—r—t—u—a—l— —M—a—c—h—i—n—e— —(—V—M—)—?—
-—
-—A— —*—*—V—i—r—t—u—a—l— —M—a—c—h—i—n—e—*—*— —i—s— —s—o—f—t—w—a—r—e— —t—h—a—t— —s—i—m—u—l—a—t—e—s— —a— —p—h—y—s—i—c—a—l— —c—o—m—p—u—t—e—r—.— —T—h—e— —c—l—o—u—d— —p—r—o—v—i—d—e—r— —r—u—n—s— —a— —*—*—H—Y—P—E—R—V—I—S—O—R—*—*— —o—n— —t—h—e—i—r— —p—h—y—s—i—c—a—l— —s—e—r—v—e—r—s—.— —T—h—e— —h—y—p—e—r—v—i—s—o—r— —d—i—v—i—d—e—s— —o—n—e— —p—h—y—s—i—c—a—l— —m—a—c—h—i—n—e— —i—n—t—o— —m—a—n—y— —v—i—r—t—u—a—l— —m—a—c—h—i—n—e—s—.—
-—
-—`—`—`—
-—P—h—y—s—i—c—a—l— —S—e—r—v—e—r— —(—e—.—g—.—,— —1—2—8— —C—P—U— —c—o—r—e—s—,— —5—1—2—G—B— —R—A—M—)—
-—┌—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—┐—
-—│— — — — — — — — — — — — — — —H—Y—P—E—R—V—I—S—O—R— — — — — — — — — — — — — — — — — — —│—
-—├—─—─—─—─—─—─—─—─—─—─—┬—─—─—─—─—─—─—─—─—─—─—┬—─—─—─—─—─—─—─—─—─—─—┬—─—─—─—─—─—─—─—─—─—┤—
-—│— —V—M— —#—1— — — — —│— —V—M— —#—2— — — — —│— —V—M— —#—3— — — — —│— —V—M— —#—4— — — —│—
-—│— —2— —C—P—U—s— — — —│— —4— —C—P—U—s— — — —│— —8— —C—P—U—s— — — —│— —2— —C—P—U—s— — —│—
-—│— —4—G—B— —R—A—M— — —│— —1—6—G—B— —R—A—M— —│— —3—2—G—B— —R—A—M— —│— —8—G—B— —R—A—M— —│—
-—│— —U—b—u—n—t—u— — — —│— —W—i—n—d—o—w—s— — —│— —A—m—a—z—o—n— — — —│— —D—e—b—i—a—n— — —│—
-—│— — — — — — — — — — —│— — — — — — — — — — —│— —L—i—n—u—x— — — — —│— — — — — — — — — —│—
-—└—─—─—─—─—─—─—─—─—─—─—┴—─—─—─—─—─—─—─—─—─—─—┴—─—─—─—─—─—─—─—─—─—─—┴—─—─—─—─—─—─—─—─—─—┘—
-—`—`—`—
-—
-—-— —E—a—c—h— —V—M— —i—s— —*—*—i—s—o—l—a—t—e—d—*—*— —f—r—o—m— —o—t—h—e—r—s—.— —Y—o—u— —g—e—t— —f—u—l—l— —O—S— —a—c—c—e—s—s— —a—n—d— —r—o—o—t— —c—o—n—t—r—o—l—.—
-—-— —Y—o—u— —c—a—n— —i—n—s—t—a—l—l— —a—n—y—t—h—i—n—g— ——— —N—o—d—e—.—j—s—,— —P—y—t—h—o—n—,— —J—a—v—a—,— —d—a—t—a—b—a—s—e—s—,— —e—t—c—.—
-—-— —A—W—S— —c—a—l—l—s— —t—h—e—i—r— —V—M—s—:— —*—*—E—C—2— —I—N—S—T—A—N—C—E—S—*—*—.— —E—C—2— —=— —E—l—a—s—t—i—c— —C—o—m—p—u—t—e— —C—l—o—u—d— —(—"—E—l—a—s—t—i—c—"— —=— —c—a—n— —s—c—a—l—e— —d—y—n—a—m—i—c—a—l—l—y—)—
-—
-—#—#—#— —3—.—4— —W—h—a—t— —I—s— —D—e—p—l—o—y—m—e—n—t—?—
-—
-—*—*—D—E—P—L—O—Y—M—E—N—T—*—*— —=— —T—h—e— —p—r—o—c—e—s—s— —o—f— —m—a—k—i—n—g— —y—o—u—r— —a—p—p—l—i—c—a—t—i—o—n— —a—c—c—e—s—s—i—b—l—e— —t—o— —u—s—e—r—s— —b—y— —r—u—n—n—i—n—g— —i—t— —o—n— —a— —s—e—r—v—e—r— —(—u—s—u—a—l—l—y— —i—n— —t—h—e— —c—l—o—u—d—)—.—
-—
-—*—*—S—i—m—p—l—i—f—i—e—d— —d—e—p—l—o—y—m—e—n—t— —s—t—e—p—s—:—*—*—
-—
-—1—.— —W—r—i—t—e— —c—o—d—e— —o—n— —y—o—u—r— —*—*—L—O—C—A—L—*—*— —m—a—c—h—i—n—e— —(—l—a—p—t—o—p—)—
-—2—.— —T—e—s—t— —i—t— —l—o—c—a—l—l—y— —(—`—l—o—c—a—l—h—o—s—t—:—8—0—8—0—`—)—
-—3—.— —P—u—s—h— —c—o—d—e— —t—o— —v—e—r—s—i—o—n— —c—o—n—t—r—o—l— —(—G—i—t—H—u—b—/—G—i—t—L—a—b—)—
-—4—.— —C—o—n—n—e—c—t— —t—o— —y—o—u—r— —c—l—o—u—d— —V—M— —(—v—i—a— —S—S—H—)—
-—5—.— —P—u—l—l— —t—h—e— —c—o—d—e— —o—n—t—o— —t—h—e— —V—M—
-—6—.— —I—n—s—t—a—l—l— —d—e—p—e—n—d—e—n—c—i—e—s— —(—`—n—p—m— —i—n—s—t—a—l—l—`— —/— —`—p—i—p— —i—n—s—t—a—l—l—`—)—
-—7—.— —S—t—a—r—t— —t—h—e— —a—p—p—l—i—c—a—t—i—o—n— —o—n— —t—h—e— —V—M— —(—`—n—o—d—e— —a—p—p—.—j—s—`— —/— —`—p—y—t—h—o—n— —a—p—p—.—p—y—`—)—
-—8—.— —C—o—n—f—i—g—u—r—e— —a— —d—o—m—a—i—n— —n—a—m—e— —t—o— —p—o—i—n—t— —t—o— —t—h—e— —V—M—'—s— —p—u—b—l—i—c— —I—P— —(—D—N—S— —A— —r—e—c—o—r—d—)—
-—9—.— —(—O—p—t—i—o—n—a—l—)— —S—e—t— —u—p— —H—T—T—P—S— —w—i—t—h— —S—S—L— —c—e—r—t—i—f—i—c—a—t—e— —(—L—e—t—'—s— —E—n—c—r—y—p—t—)—
-—1—0—.— —A—p—p— —i—s— —n—o—w— —*—*—L—I—V—E—*—*— —a—n—d— —a—c—c—e—s—s—i—b—l—e— —w—o—r—l—d—w—i—d—e—!—
-—
-—*—*—M—o—d—e—r—n— —d—e—p—l—o—y—m—e—n—t— —a—p—p—r—o—a—c—h—e—s—:—*—*—
-—
-—-— —*—*—C—I—/—C—D— —P—i—p—e—l—i—n—e—s—*—*— —(—G—i—t—H—u—b— —A—c—t—i—o—n—s—,— —J—e—n—k—i—n—s—,— —G—i—t—L—a—b— —C—I—)— ——— —A—u—t—o—m—a—t—i—c—a—l—l—y— —t—e—s—t— —a—n—d— —d—e—p—l—o—y— —o—n— —p—u—s—h— —t—o— —m—a—i—n—
-—-— —*—*—D—o—c—k—e—r— —C—o—n—t—a—i—n—e—r—s—*—*— ——— —P—a—c—k—a—g—e— —a—p—p— —+— —d—e—p—e—n—d—e—n—c—i—e—s— —f—o—r— —c—o—n—s—i—s—t—e—n—t— —e—n—v—i—r—o—n—m—e—n—t—s—
-—-— —*—*—K—u—b—e—r—n—e—t—e—s— —(—K—8—s—)—*—*— ——— —O—r—c—h—e—s—t—r—a—t—e— —m—a—n—y— —c—o—n—t—a—i—n—e—r—s— —a—c—r—o—s—s— —m—a—n—y— —s—e—r—v—e—r—s—
-—-— —*—*—S—e—r—v—e—r—l—e—s—s—*—*— —(—A—W—S— —L—a—m—b—d—a—,— —G—o—o—g—l—e— —C—l—o—u—d— —F—u—n—c—t—i—o—n—s—)— ——— —R—u—n— —c—o—d—e— —w—i—t—h—o—u—t— —m—a—n—a—g—i—n—g— —s—e—r—v—e—r—s—;— —p—a—y— —p—e—r— —e—x—e—c—u—t—i—o—n—
-—-— —*—*—P—l—a—t—f—o—r—m—-—a—s—-—a—-—S—e—r—v—i—c—e— —(—P—a—a—S—)—*—*— ——— —H—e—r—o—k—u—,— —R—a—i—l—w—a—y—,— —R—e—n—d—e—r— —h—a—n—d—l—e— —d—e—p—l—o—y—m—e—n—t—;— —y—o—u— —j—u—s—t— —p—u—s—h— —c—o—d—e—
-—
-—#—#—#— —3—.—5— —L—o—c—a—l— —v—s— —P—r—o—d—u—c—t—i—o—n— —E—n—v—i—r—o—n—m—e—n—t—
-—
-—|— —E—n—v—i—r—o—n—m—e—n—t— —|— —C—h—a—r—a—c—t—e—r—i—s—t—i—c—s— —|—
-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—L—O—C—A—L— —(—D—e—v—e—l—o—p—m—e—n—t—)—*—*— —|— —R—u—n—s— —o—n— —l—a—p—t—o—p—;— —o—n—l—y— —y—o—u— —c—a—n— —a—c—c—e—s—s— —(—`—l—o—c—a—l—h—o—s—t—`—)—;— —e—a—s—y— —t—o— —t—e—s—t—/—d—e—b—u—g—;— —n—o—t— —o—p—t—i—m—i—z—e—d— —f—o—r— —p—e—r—f—o—r—m—a—n—c—e— —|—
-—|— —*—*—S—T—A—G—I—N—G—*—*— —|— —C—o—p—y— —o—f— —p—r—o—d—u—c—t—i—o—n— —f—o—r— —t—e—s—t—i—n—g— —b—e—f—o—r—e— —g—o—i—n—g— —l—i—v—e—;— —s—a—m—e— —s—e—t—u—p— —a—s— —p—r—o—d—u—c—t—i—o—n— —b—u—t— —t—e—s—t— —d—a—t—a—;— —Q—A— —f—i—n—d—s— —b—u—g—s— —b—e—f—o—r—e— —r—e—l—e—a—s—e— —|—
-—|— —*—*—P—R—O—D—U—C—T—I—O—N—*—*— —|— —L—i—v—e— —e—n—v—i—r—o—n—m—e—n—t— —r—e—a—l— —u—s—e—r—s— —u—s—e—;— —m—u—s—t— —b—e— —h—i—g—h—l—y— —a—v—a—i—l—a—b—l—e—,— —f—a—s—t—,— —s—e—c—u—r—e—;— —m—i—s—t—a—k—e—s— —i—m—p—a—c—t— —u—s—e—r—s—;— —c—h—a—n—g—e—s— —d—e—p—l—o—y—e—d— —c—a—r—e—f—u—l—l—y— —(—o—f—t—e—n— —w—i—t—h— —r—o—l—l—b—a—c—k— —p—l—a—n—s—)— —|—
-—
-—-—-—-—
-—
-—#—#— —S—e—c—t—i—o—n— —4— ——— —L—a—t—e—n—c—y— —a—n—d— —T—h—r—o—u—g—h—p—u—t—
-—
-—T—h—e—s—e— —a—r—e— —t—h—e— —t—w—o— —m—o—s—t— —f—u—n—d—a—m—e—n—t—a—l— —p—e—r—f—o—r—m—a—n—c—e— —m—e—t—r—i—c—s— —i—n— —e—v—e—r—y— —s—y—s—t—e—m— —d—e—s—i—g—n— —d—i—s—c—u—s—s—i—o—n—.— —U—n—d—e—r—s—t—a—n—d—i—n—g— —t—h—e—m— —d—e—e—p—l—y— —i—s— —e—s—s—e—n—t—i—a—l—.—
-—
-—#—#—#— —4—.—1— —L—a—t—e—n—c—y— ——— —D—e—e—p— —D—i—v—e—
-—
-—#—#—#—#— —D—e—f—i—n—i—t—i—o—n—
-—
-—*—*—L—a—t—e—n—c—y—*—*— —i—s— —t—h—e— —*—*—T—I—M—E—*—*— —i—t— —t—a—k—e—s— —f—o—r— —a— —*—*—S—I—N—G—L—E—*—*— —r—e—q—u—e—s—t— —t—o— —t—r—a—v—e—l— —f—r—o—m— —t—h—e— —c—l—i—e—n—t— —t—o— —t—h—e— —s—e—r—v—e—r—,— —g—e—t— —p—r—o—c—e—s—s—e—d—,— —a—n—d— —r—e—t—u—r—n— —a— —r—e—s—p—o—n—s—e— —b—a—c—k— —t—o— —t—h—e— —c—l—i—e—n—t—.—
-—
-—T—h—i—n—k— —o—f— —i—t— —a—s—:— —*—"—H—o—w— —f—a—s—t— —d—o—e—s— —O—N—E— —t—h—i—n—g— —g—e—t— —d—o—n—e—?—"—*—
-—
-—-— —*—*—P—r—i—m—a—r—y— —u—n—i—t—:—*—*— —M—i—l—l—i—s—e—c—o—n—d—s— —(—m—s—)—
-—-— —A—l—s—o—:— —m—i—c—r—o—s—e—c—o—n—d—s— —(—μ—s—)— —f—o—r— —v—e—r—y— —f—a—s—t— —o—p—s—,— —o—r— —s—e—c—o—n—d—s— —(—s—)— —f—o—r— —v—e—r—y— —s—l—o—w— —o—p—s—
-—
-—#—#—#—#— —W—h—a—t— —c—o—n—t—r—i—b—u—t—e—s— —t—o— —l—a—t—e—n—c—y—?—
-—
-—L—a—t—e—n—c—y— —i—s— —m—a—d—e— —u—p— —o—f— —m—u—l—t—i—p—l—e— —p—a—r—t—s—:—
-—
-—1—.— —*—*—N—e—t—w—o—r—k— —t—r—a—n—s—m—i—s—s—i—o—n— —l—a—t—e—n—c—y—*—*— ——— —P—h—y—s—i—c—a—l— —t—i—m—e— —f—o—r— —p—a—c—k—e—t—s— —t—o— —t—r—a—v—e—l—.— —L—i—m—i—t—e—d— —b—y— —s—p—e—e—d— —o—f— —l—i—g—h—t—.—
-— — — —-— —S—a—m—e— —c—i—t—y—:— —~—1—–—5—m—s—
-— — — —-— —C—r—o—s—s—-—c—o—u—n—t—r—y— —(—M—u—m—b—a—i— —t—o— —D—e—l—h—i—)—:— —~—2—0—–—4—0—m—s—
-— — — —-— —I—n—t—e—r—c—o—n—t—i—n—e—n—t—a—l— —(—M—u—m—b—a—i— —t—o— —N—e—w— —Y—o—r—k—)—:— —~—1—0—0—–—2—0—0—m—s—
-—2—.— —*—*—P—r—o—p—a—g—a—t—i—o—n— —d—e—l—a—y—*—*— ——— —H—o—w— —f—a—r— —t—h—e— —s—i—g—n—a—l— —t—r—a—v—e—l—s—.— —C—a—n—n—o—t— —b—e—a—t— —s—p—e—e—d—-—o—f—-—l—i—g—h—t— —l—i—m—i—t—.— —G—e—o—g—r—a—p—h—i—c— —p—r—o—x—i—m—i—t—y— —m—a—t—t—e—r—s—.—
-—3—.— —*—*—Q—u—e—u—i—n—g— —d—e—l—a—y—*—*— ——— —I—f— —s—e—r—v—e—r— —i—s— —b—u—s—y—,— —r—e—q—u—e—s—t— —w—a—i—t—s— —i—n— —q—u—e—u—e—.— —U—n—d—e—r— —h—e—a—v—y— —l—o—a—d—,— —a—d—d—s— —s—i—g—n—i—f—i—c—a—n—t— —l—a—t—e—n—c—y—.—
-—4—.— —*—*—P—r—o—c—e—s—s—i—n—g—/—c—o—m—p—u—t—a—t—i—o—n— —t—i—m—e—*—*— ——— —S—e—r—v—e—r— —r—u—n—s— —c—o—d—e—,— —e—x—e—c—u—t—e—s— —q—u—e—r—i—e—s—.— —D—e—p—e—n—d—s— —o—n— —C—P—U— —a—n—d— —a—l—g—o—r—i—t—h—m— —e—f—f—i—c—i—e—n—c—y—.—
-—5—.— —*—*—D—a—t—a—b—a—s—e— —q—u—e—r—y— —t—i—m—e—*—*— ——— —O—f—t—e—n— —t—h—e— —b—i—g—g—e—s—t— —c—o—n—t—r—i—b—u—t—o—r—.— —P—o—o—r— —S—Q—L— —o—r— —m—i—s—s—i—n—g— —i—n—d—e—x— —→— —s—e—c—o—n—d—s— —i—n—s—t—e—a—d— —o—f— —m—s—.—
-—6—.— —*—*—S—e—r—i—a—l—i—z—a—t—i—o—n— —/— —d—e—s—e—r—i—a—l—i—z—a—t—i—o—n—*—*— ——— —C—o—n—v—e—r—t—i—n—g— —t—o—/—f—r—o—m— —J—S—O—N—,— —X—M—L—,— —P—r—o—t—o—b—u—f—,— —e—t—c—.—
-—7—.— —*—*—T—L—S— —h—a—n—d—s—h—a—k—e—*—*— ——— —H—T—T—P—S— —a—d—d—s— —1—–—2— —r—o—u—n—d— —t—r—i—p—s— —b—e—f—o—r—e— —d—a—t—a— —i—s— —s—e—n—t—.—
-—
-—*—*—T—o—t—a—l— —l—a—t—e—n—c—y—*—*— —=— —S—u—m— —o—f— —a—l—l— —t—h—e— —a—b—o—v—e— —c—o—m—p—o—n—e—n—t—s—.—
-—
-—#—#—#—#— —R—T—T— ——— —R—o—u—n—d— —T—r—i—p— —T—i—m—e—
-—
-—*—*—R—T—T—*—*— —i—s— —t—h—e— —t—i—m—e— —f—o—r— —a— —r—e—q—u—e—s—t— —t—o— —g—o— —*—*—F—R—O—M—*—*— —t—h—e— —c—l—i—e—n—t— —*—*—T—O—*—*— —t—h—e— —s—e—r—v—e—r—,— —*—*—A—N—D—*—*— —f—o—r— —t—h—e— —r—e—s—p—o—n—s—e— —t—o— —t—r—a—v—e—l— —*—*—B—A—C—K—*—*— —t—o— —t—h—e— —c—l—i—e—n—t—.—
-—
-—`—`—`—
-—R—T—T— —=— —T—i—m—e— —t—o— —s—e—n—d— —r—e—q—u—e—s—t— —+— —S—e—r—v—e—r— —p—r—o—c—e—s—s—i—n—g— —t—i—m—e— —+— —T—i—m—e— —t—o— —r—e—c—e—i—v—e— —r—e—s—p—o—n—s—e—
-—`—`—`—
-—
-—R—T—T— —i—s— —e—s—s—e—n—t—i—a—l—l—y— —t—h—e— —f—u—l—l— —l—a—t—e—n—c—y— —y—o—u— —e—x—p—e—r—i—e—n—c—e— —a—s— —a— —u—s—e—r—.— —*—*—"—P—i—n—g—"—*—*— —i—n— —n—e—t—w—o—r—k—i—n—g— —t—o—o—l—s— —m—e—a—s—u—r—e—s— —R—T—T—.—
-—
-—`—`—`—b—a—s—h—
-—$— —p—i—n—g— —g—o—o—g—l—e—.—c—o—m—
-—6—4— —b—y—t—e—s— —f—r—o—m— —1—4—2—.—2—5—0—.—7—7—.—4—6—:— —i—c—m—p—_—s—e—q—=—1— —t—t—l—=—1—1—7— —t—i—m—e—=—2—8—.—4— —m—s—
-—#— —←— —T—h—i—s— —"—2—8—.—4— —m—s—"— —i—s— —t—h—e— —R—T—T—
-—`—`—`—
-—
-—#—#—#—#— —L—a—t—e—n—c—y— —t—a—r—g—e—t—s— —(—i—n—d—u—s—t—r—y— —s—t—a—n—d—a—r—d—s—)—
-—
-—|— —T—y—p—e— —o—f— —a—p—p—l—i—c—a—t—i—o—n— —|— —G—o—o—d— —l—a—t—e—n—c—y— —|— —B—a—d— —l—a—t—e—n—c—y— —|—
-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —R—e—a—l—-—t—i—m—e— —g—a—m—i—n—g— —/— —t—r—a—d—i—n—g— —|— —<— —1—0—m—s— —|— —>— —5—0—m—s— —|—
-—|— —I—n—t—e—r—a—c—t—i—v—e— —w—e—b— —a—p—p— —|— —<— —1—0—0—m—s— —|— —>— —3—0—0—m—s— —|—
-—|— —A—P—I— —r—e—s—p—o—n—s—e— —(—t—y—p—i—c—a—l—)— —|— —<— —2—0—0—m—s— —|— —>— —1—0—0—0—m—s— —|—
-—|— —P—a—g—e— —l—o—a—d— —(—f—u—l—l— —w—e—b— —p—a—g—e—)— —|— —<— —2— —s—e—c—o—n—d—s— —|— —>— —5— —s—e—c—o—n—d—s— —|—
-—|— —V—i—d—e—o— —s—t—r—e—a—m—i—n—g— —(—b—u—f—f—e—r—i—n—g—)— —|— —<— —5—0—0—m—s— —|— —>— —3— —s—e—c—o—n—d—s— —|—
-—|— —D—a—t—a—b—a—s—e— —q—u—e—r—y— —|— —<— —1—0—m—s— —|— —>— —1—0—0—m—s— —|—
-—
-—*—*—H—u—m—a—n— —p—e—r—c—e—p—t—i—o—n—:—*—*—
-—
-—|— —L—a—t—e—n—c—y— —|— —U—s—e—r— —e—x—p—e—r—i—e—n—c—e— —|—
-—|—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —<— —1—0—0—m—s— —|— —F—e—e—l—s— —i—n—s—t—a—n—t—a—n—e—o—u—s— —|—
-—|— —1—0—0—–—3—0—0—m—s— —|— —N—o—t—i—c—e—a—b—l—e— —b—u—t— —a—c—c—e—p—t—a—b—l—e— —|—
-—|— —3—0—0—m—s—–—1—s— —|— —N—o—t—i—c—e—a—b—l—y— —s—l—o—w—,— —u—s—e—r—s— —g—e—t— —a—n—n—o—y—e—d— —|—
-—|— —>— —1—s— —|— —U—s—e—r—s— —s—t—a—r—t— —a—b—a—n—d—o—n—i—n—g— —t—h—e— —p—a—g—e— —|—
-—|— —>— —3—s— —|— —5—0—%—+— —o—f— —m—o—b—i—l—e— —u—s—e—r—s— —l—e—a—v—e— —(—G—o—o—g—l—e— —s—t—u—d—y—)— —|—
-—
-—#—#—#—#— —H—o—w— —t—o— —r—e—d—u—c—e— —l—a—t—e—n—c—y—
-—
-—1—.— —*—*—C—D—N—*—*— ——— —C—a—c—h—e— —s—t—a—t—i—c— —a—s—s—e—t—s— —n—e—a—r— —u—s—e—r—s— —(—C—l—o—u—d—f—l—a—r—e—,— —A—k—a—m—a—i—,— —A—W—S— —C—l—o—u—d—F—r—o—n—t—)—.— —M—u—m—b—a—i— —s—e—r—v—e—r— —→— —N—Y— —u—s—e—r— —(—2—0—0—m—s—)— —v—s— —N—Y— —C—D—N— —e—d—g—e— —→— —N—Y— —u—s—e—r— —(—5—m—s—)—.—
-—2—.— —*—*—C—a—c—h—i—n—g—*—*— ——— —R—e—d—i—s—,— —M—e—m—c—a—c—h—e—d—.— —D—B— —q—u—e—r—y—:— —5—0—m—s— —→— —C—a—c—h—e— —h—i—t—:— —0—.—5—m—s— —(—~—1—0—0—x— —f—a—s—t—e—r—)—.—
-—3—.— —*—*—D—a—t—a—b—a—s—e— —i—n—d—e—x—i—n—g—*—*— ——— —I—n—d—e—x— —f—r—e—q—u—e—n—t—l—y— —q—u—e—r—i—e—d— —c—o—l—u—m—n—s—.— —S—e—c—o—n—d—s— —→— —m—i—l—l—i—s—e—c—o—n—d—s—.—
-—4—.— —*—*—E—f—f—i—c—i—e—n—t— —a—l—g—o—r—i—t—h—m—s—*—*— ——— —O—(—n—²—)— —→— —O—(—n— —l—o—g— —n—)— —o—r— —O—(—n—)—.—
-—5—.— —*—*—C—o—n—n—e—c—t—i—o—n— —p—o—o—l—i—n—g—*—*— ——— —R—e—u—s—e— —D—B— —c—o—n—n—e—c—t—i—o—n—s—.— —N—e—w— —c—o—n—n—e—c—t—i—o—n— —a—d—d—s— —1—0—–—5—0—m—s— —e—a—c—h— —t—i—m—e—.—
-—6—.— —*—*—H—T—T—P—/—2— —a—n—d— —H—T—T—P—/—3—*—*— ——— —M—u—l—t—i—p—l—e—x—i—n—g—,— —h—e—a—d—e—r— —c—o—m—p—r—e—s—s—i—o—n—,— —f—a—s—t—e—r— —c—o—n—n—e—c—t—i—o—n— —s—e—t—u—p—.—
-—7—.— —*—*—G—e—o—g—r—a—p—h—i—c— —d—i—s—t—r—i—b—u—t—i—o—n—*—*— ——— —D—e—p—l—o—y— —i—n— —m—u—l—t—i—p—l—e— —r—e—g—i—o—n—s—;— —r—o—u—t—e— —u—s—e—r—s— —t—o— —n—e—a—r—e—s—t— —s—e—r—v—e—r—.—
-—
-—#—#—#— —4—.—2— —T—h—r—o—u—g—h—p—u—t— ——— —D—e—e—p— —D—i—v—e—
-—
-—#—#—#—#— —D—e—f—i—n—i—t—i—o—n—
-—
-—*—*—T—h—r—o—u—g—h—p—u—t—*—*— —i—s— —t—h—e— —*—*—N—U—M—B—E—R—*—*— —o—f— —r—e—q—u—e—s—t—s— —(—o—r— —o—p—e—r—a—t—i—o—n—s—)— —a— —s—y—s—t—e—m— —c—a—n— —s—u—c—c—e—s—s—f—u—l—l—y— —h—a—n—d—l—e— —*—*—P—E—R— —S—E—C—O—N—D—*—*— —(—o—r— —p—e—r— —u—n—i—t— —o—f— —t—i—m—e—)—.—
-—
-—T—h—i—n—k— —o—f— —i—t— —a—s—:— —*—"—H—o—w— —M—A—N—Y— —t—h—i—n—g—s— —c—a—n— —g—e—t— —d—o—n—e— —p—e—r— —s—e—c—o—n—d—?—"—*—
-—
-—*—*—P—r—i—m—a—r—y— —u—n—i—t—s—:—*—*—
-—
-—|— —A—b—b—r—e—v—i—a—t—i—o—n— —|— —M—e—a—n—i—n—g— —|—
-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—R—P—S—*—*— —|— —R—e—q—u—e—s—t—s— —P—e—r— —S—e—c—o—n—d— —(—w—e—b— —s—e—r—v—e—r—s—,— —A—P—I—s—)— —|—
-—|— —*—*—T—P—S—*—*— —|— —T—r—a—n—s—a—c—t—i—o—n—s— —P—e—r— —S—e—c—o—n—d— —(—d—a—t—a—b—a—s—e—s—,— —p—a—y—m—e—n—t—s—)— —|—
-—|— —*—*—Q—P—S—*—*— —|— —Q—u—e—r—i—e—s— —P—e—r— —S—e—c—o—n—d— —(—d—a—t—a—b—a—s—e—s—)— —|—
-—|— —*—*—b—p—s— —/— —M—b—p—s— —/— —G—b—p—s—*—*— —|— —b—i—t—s— —p—e—r— —s—e—c—o—n—d— —(—n—e—t—w—o—r—k— —b—a—n—d—w—i—d—t—h—)— —|—
-—
-—#—#—#—#— —W—h—a—t— —l—i—m—i—t—s— —t—h—r—o—u—g—h—p—u—t—?—
-—
-—E—v—e—r—y— —s—y—s—t—e—m— —h—a—s— —a— —*—*—B—O—T—T—L—E—N—E—C—K—*—*— ——— —t—h—e— —s—l—o—w—e—s—t— —c—o—m—p—o—n—e—n—t— —t—h—a—t— —c—a—p—s— —t—h—r—o—u—g—h—p—u—t—.—
-—
-—1—.— —*—*—C—P—U— —s—p—e—e—d— —&— —c—o—r—e—s—*—*— ——— —M—o—r—e— —c—o—r—e—s— —→— —m—o—r—e— —p—a—r—a—l—l—e—l— —p—r—o—c—e—s—s—i—n—g—.—
-—2—.— —*—*—M—e—m—o—r—y— —(—R—A—M—)—*—*— ——— —O—u—t— —o—f— —R—A—M— —→— —s—w—a—p— —t—o— —d—i—s—k— —(—1—0—0—x— —s—l—o—w—e—r— —t—h—a—n— —R—A—M—)— —→— —t—h—r—o—u—g—h—p—u—t— —d—r—o—p—s—.—
-—3—.— —*—*—N—e—t—w—o—r—k— —b—a—n—d—w—i—d—t—h—*—*— ——— —C—o—n—n—e—c—t—i—o—n— —m—a—x—e—s— —o—u—t— —→— —r—e—q—u—e—s—t—s— —d—r—o—p—p—e—d— —o—r— —q—u—e—u—e—d—.— —1— —G—b—p—s— —≈— —~—1—2—5— —M—B—/—s—.—
-—4—.— —*—*—D—i—s—k— —I—/—O—*—*— ——— —S—l—o—w— —r—e—a—d—s—/—w—r—i—t—e—s—;— —D—B—-—h—e—a—v—y— —a—p—p—s— —o—f—t—e—n— —d—i—s—k—-—l—i—m—i—t—e—d—.—
-—5—.— —*—*—D—a—t—a—b—a—s—e— —c—o—n—n—e—c—t—i—o—n— —l—i—m—i—t—s—*—*— ——— —A—l—l— —c—o—n—n—e—c—t—i—o—n—s— —i—n— —u—s—e— —→— —n—e—w— —q—u—e—r—i—e—s— —w—a—i—t—.—
-—6—.— —*—*—A—p—p—l—i—c—a—t—i—o—n— —c—o—d—e— —e—f—f—i—c—i—e—n—c—y—*—*— ——— —B—l—o—c—k—i—n—g—/—s—y—n—c— —c—o—d—e— —r—e—d—u—c—e—s— —c—o—n—c—u—r—r—e—n—t— —h—a—n—d—l—i—n—g—.—
-—7—.— —*—*—T—h—r—e—a—d— —/— —p—r—o—c—e—s—s— —l—i—m—i—t—s—*—*— ——— —O—n—e— —r—e—q—u—e—s—t— —p—e—r— —t—h—r—e—a—d— —i—n— —t—r—a—d—i—t—i—o—n—a—l— —s—e—r—v—e—r—s—.— —N—o—d—e—.—j—s— —u—s—e—s— —n—o—n—-—b—l—o—c—k—i—n—g— —a—s—y—n—c— —I—/—O—.—
-—
-—#—#—#—#— —T—h—r—o—u—g—h—p—u—t— —i—n— —p—r—a—c—t—i—c—e—
-—
-—|— —E—x—a—m—p—l—e— —|— —N—u—m—b—e—r—s— —|—
-—|—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—S—i—m—p—l—e— —A—P—I— —s—e—r—v—e—r—*—*— —|— —E—x—p—r—e—s—s— —o—n— —2—-—c—o—r—e—:— —1—,—0—0—0—–—5—,—0—0—0— —R—P—S— —(—n—o— —D—B—)—;— —1—0—0—–—5—0—0— —R—P—S— —w—i—t—h— —D—B— —|—
-—|— —*—*—N—e—t—f—l—i—x— —a—t— —p—e—a—k—*—*— —|— —2—0—0—+— —m—i—l—l—i—o—n— —c—o—n—c—u—r—r—e—n—t— —u—s—e—r—s—;— —m—i—l—l—i—o—n—s— —o—f— —R—P—S— —g—l—o—b—a—l—l—y— —|—
-—|— —*—*—P—a—y—m—e—n—t— —s—y—s—t—e—m—s—*—*— —|— —V—i—s—a— —~—2—4—,—0—0—0— —T—P—S— —a—v—e—r—a—g—e—;— —~—6—5—,—0—0—0— —T—P—S— —p—e—a—k— —|—
-—
-—#—#—#—#— —H—o—w— —t—o— —i—n—c—r—e—a—s—e— —t—h—r—o—u—g—h—p—u—t—
-—
-—1—.— —*—*—H—o—r—i—z—o—n—t—a—l— —s—c—a—l—i—n—g— —(—s—c—a—l—e— —o—u—t—)—*—*— ——— —M—o—r—e— —s—e—r—v—e—r—s— —+— —l—o—a—d— —b—a—l—a—n—c—e—r—.— —1— —s—e—r—v—e—r— —@— —1—,—0—0—0— —R—P—S— —→— —1—0— —s—e—r—v—e—r—s— —@— —1—0—,—0—0—0— —R—P—S—.—
-—2—.— —*—*—V—e—r—t—i—c—a—l— —s—c—a—l—i—n—g— —(—s—c—a—l—e— —u—p—)—*—*— ——— —B—i—g—g—e—r— —m—a—c—h—i—n—e— —(—m—o—r—e— —C—P—U—/—R—A—M—)—.— —H—a—r—d—w—a—r—e— —c—e—i—l—i—n—g— —e—x—i—s—t—s—.—
-—3—.— —*—*—A—s—y—n—c—h—r—o—n—o—u—s— —p—r—o—c—e—s—s—i—n—g—*—*— ——— —Q—u—e—u—e— —s—l—o—w— —t—a—s—k—s— —(—e—m—a—i—l—,— —i—m—a—g—e—s—)—.— —R—e—s—p—o—n—d— —i—n—s—t—a—n—t—l—y—;— —p—r—o—c—e—s—s— —i—n— —b—a—c—k—g—r—o—u—n—d—.—
-—4—.— —*—*—C—a—c—h—i—n—g—*—*— ——— —C—a—c—h—e—d— —r—e—s—p—o—n—s—e—s— —=— —n—o— —D—B—,— —n—o— —c—o—m—p—u—t—e—.— —M—o—r—e— —c—a—c—h—e— —h—i—t—s— —=— —m—o—r—e— —R—P—S—.—
-—5—.— —*—*—D—a—t—a—b—a—s—e— —r—e—a—d— —r—e—p—l—i—c—a—s—*—*— ——— —P—r—i—m—a—r—y— —f—o—r— —w—r—i—t—e—s—;— —r—e—p—l—i—c—a—s— —f—o—r— —r—e—a—d—s—.—
-—6—.— —*—*—C—o—n—n—e—c—t—i—o—n— —p—o—o—l—i—n—g—*—*— ——— —P—o—o—l— —o—f— —p—e—r—s—i—s—t—e—n—t— —c—o—n—n—e—c—t—i—o—n—s— —s—e—r—v—e—s— —t—h—o—u—s—a—n—d—s— —o—f— —r—e—q—u—e—s—t—s—.—
-—7—.— —*—*—E—f—f—i—c—i—e—n—t— —d—a—t—a— —f—o—r—m—a—t—s—*—*— ——— —P—r—o—t—o—b—u—f—,— —M—e—s—s—a—g—e—P—a—c—k— —v—s— —J—S—O—N—/—X—M—L— ——— —l—e—s—s— —b—a—n—d—w—i—d—t—h— —p—e—r— —m—e—s—s—a—g—e—.—
-—8—.— —*—*—N—o—n—-—b—l—o—c—k—i—n—g— —I—/—O—*—*— ——— —N—o—d—e—.—j—s— —h—a—n—d—l—e—s— —o—t—h—e—r— —r—e—q—u—e—s—t—s— —w—h—i—l—e— —w—a—i—t—i—n—g— —o—n— —D—B—.—
-—
-—#—#—#— —4—.—3— —T—h—e— —R—e—l—a—t—i—o—n—s—h—i—p— —B—e—t—w—e—e—n— —L—a—t—e—n—c—y— —a—n—d— —T—h—r—o—u—g—h—p—u—t—
-—
-—T—h—e—s—e— —t—w—o— —a—r—e— —*—*—R—E—L—A—T—E—D—*—*— —b—u—t— —*—*—D—I—F—F—E—R—E—N—T—*—*—,— —a—n—d— —c—a—n— —s—o—m—e—t—i—m—e—s— —*—*—c—o—n—f—l—i—c—t—*—*—.—
-—
-—#—#—#—#— —L—i—t—t—l—e—'—s— —L—a—w— —(—f—u—n—d—a—m—e—n—t—a—l— —t—h—e—o—r—e—m— —o—f— —q—u—e—u—i—n—g— —s—y—s—t—e—m—s—)—
-—
-—T—h—r—o—u—g—h—p—u—t— —(—λ—)— —=— —C—o—n—c—u—r—r—e—n—t— —U—s—e—r—s— —(—L—)— —/— —L—a—t—e—n—c—y— —(—W—)—
-—→— —O—r—:— —L— —=— —λ— —×— —W—
-—
-—I—f— —y—o—u— —h—a—v—e— —m—o—r—e— —c—o—n—c—u—r—r—e—n—t— —u—s—e—r—s— —a—n—d— —t—h—e— —s—a—m—e— —t—h—r—o—u—g—h—p—u—t—,— —*—*—l—a—t—e—n—c—y— —i—n—c—r—e—a—s—e—s—*—*—.— —T—o— —s—e—r—v—e— —m—o—r—e— —u—s—e—r—s— —a—t— —t—h—e— —s—a—m—e— —l—a—t—e—n—c—y—,— —y—o—u— —m—u—s—t— —*—*—i—n—c—r—e—a—s—e— —t—h—r—o—u—g—h—p—u—t—*—*—.—
-—
-—#—#—#—#— —T—h—e— —t—r—a—d—e—o—f—f—
-—
-—-— —S—o—m—e—t—i—m—e—s— —i—m—p—r—o—v—i—n—g— —t—h—r—o—u—g—h—p—u—t— —*—*—i—n—c—r—e—a—s—e—s—*—*— —l—a—t—e—n—c—y—.—
-— — —-— —*—*—E—x—a—m—p—l—e—:—*—*— —B—a—t—c—h—i—n—g— —D—B— —w—r—i—t—e—s— —(—1—0—0— —a—t— —o—n—c—e—)— —→— —h—i—g—h—e—r— —t—h—r—o—u—g—h—p—u—t—,— —b—u—t— —e—a—c—h— —w—r—i—t—e— —w—a—i—t—s— —f—o—r— —b—a—t—c—h— —→— —h—i—g—h—e—r— —l—a—t—e—n—c—y—.—
-—-— —*—*—E—x—a—m—p—l—e—:—*—*— —C—a—c—h—i—n—g— —i—m—p—r—o—v—e—s— —*—*—b—o—t—h—*—*— —(—r—a—r—e— —w—i—n—!—)— —→— —l—o—w—e—r— —l—a—t—e—n—c—y— —*—*—a—n—d—*—*— —h—i—g—h—e—r— —t—h—r—o—u—g—h—p—u—t—.—
-—
-—#—#—#—#— —S—a—t—u—r—a—t—i—o—n— —p—o—i—n—t—
-—
-—A—s— —l—o—a—d— —i—n—c—r—e—a—s—e—s—,— —l—a—t—e—n—c—y— —s—t—a—y—s— —l—o—w— —u—n—t—i—l— —t—h—e— —s—y—s—t—e—m— —a—p—p—r—o—a—c—h—e—s— —i—t—s— —t—h—r—o—u—g—h—p—u—t— —l—i—m—i—t—.— —T—h—e—n— —l—a—t—e—n—c—y— —i—n—c—r—e—a—s—e—s— —r—a—p—i—d—l—y—.—
-—
-—`—`—`—m—e—r—m—a—i—d—
-—f—l—o—w—c—h—a—r—t— —T—D—
-— — — — —L—o—a—d—[—"—R—e—q—u—e—s—t—s— —p—e—r— —s—e—c—o—n—d— —i—n—c—r—e—a—s—e—"—]— —-—-—>— —C—a—p—{—"—B—e—l—o—w— —s—y—s—t—e—m—\—n—c—a—p—a—c—i—t—y—?—"—}—
-— — — — —C—a—p— —-—-—>—|—Y—e—s—|— —S—t—a—b—l—e—[—"—L—a—t—e—n—c—y— —s—t—a—y—s— —l—o—w—"—]—
-— — — — —C—a—p— —-—-—>—|—N—o—|— —S—a—t—[—"—S—a—t—u—r—a—t—i—o—n— —p—o—i—n—t—"—]—
-— — — — —S—a—t— —-—-—>— —S—p—i—k—e—[—"—L—a—t—e—n—c—y— —r—i—s—e—s— —s—h—a—r—p—l—y—"—]—
-— — — — —S—t—a—b—l—e— —-—-—>— —G—o—a—l—[—"—G—o—a—l—:— —s—c—a—l—e— —t—h—r—o—u—g—h—p—u—t—\—n—b—e—f—o—r—e— —s—a—t—u—r—a—t—i—o—n—"—]—
-—`—`—`—
-—
-—`—`—`—
-—L—a—t—e—n—c—y—
-—│— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —*—
-—│— — — — — — — — — — — — — — — — — — — — — — — — — — — —*— —*—
-—│— — — — — — — — — — — — — — — — — — — — — — — — —*— —*—
-—│— — — — — — — — — — — — — — —*— —*— —*— —*— —*—
-—│—*— —*— —*— —*— —*— —*— —*—
-—└—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─— —R—e—q—u—e—s—t—s—/—s—e—c—
-— — — — — —↑— — — — — — — — — — — — — — — — — — — — —↑—
-—L—o—w— —l—o—a—d— —z—o—n—e— — — — — — — — —S—a—t—u—r—a—t—i—o—n— —p—o—i—n—t—
-—(—l—a—t—e—n—c—y— —s—t—a—b—l—e—)— — — — — —(—l—a—t—e—n—c—y— —e—x—p—l—o—d—e—s—)—
-—`—`—`—
-—
-—*—*—I—d—e—a—l— —g—o—a—l—:—*—*— —O—p—t—i—m—i—z—e— —*—*—b—o—t—h—*—*—:—
-—
-—-— —L—o—w— —l—a—t—e—n—c—y— —→— —E—a—c—h— —u—s—e—r— —g—e—t—s— —a— —f—a—s—t— —r—e—s—p—o—n—s—e—
-—-— —H—i—g—h— —t—h—r—o—u—g—h—p—u—t— —→— —M—a—n—y— —u—s—e—r—s— —s—e—r—v—e—d— —s—i—m—u—l—t—a—n—e—o—u—s—l—y—
-—
-—#—#—#— —4—.—4— —A—n—a—l—o—g—i—e—s— —(—M—u—l—t—i—p—l—e— —f—o—r— —E—a—s—y— —M—e—m—o—r—y—)—
-—
-—|— —A—n—a—l—o—g—y— —|— —L—a—t—e—n—c—y— —|— —T—h—r—o—u—g—h—p—u—t— —|—
-—|—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—H—i—g—h—w—a—y—*—*— —|— —T—i—m—e— —f—o—r— —O—N—E— —c—a—r— —f—r—o—m— —C—i—t—y— —A— —t—o— —C—i—t—y— —B— —|— —C—a—r—s— —p—a—s—s—i—n—g— —t—h—r—o—u—g—h— —p—e—r— —h—o—u—r— —|—
-—|— —*—*—R—e—s—t—a—u—r—a—n—t—*—*— —|— —O—r—d—e—r— —t—o— —p—l—a—t—e— —(—3—0— —m—i—n—)— —|— —C—u—s—t—o—m—e—r—s— —s—e—r—v—e—d— —p—e—r— —h—o—u—r— —(—5—0—/—h—o—u—r—)— —|—
-—|— —*—*—W—a—t—e—r— —p—i—p—e—*—*— —|— —T—i—m—e— —f—o—r— —f—i—r—s—t— —d—r—o—p— —f—r—o—m— —t—a—n—k— —t—o— —t—a—p— —|— —L—i—t—e—r—s— —p—e—r— —s—e—c—o—n—d— —|—
-—|— —*—*—A—s—s—e—m—b—l—y— —l—i—n—e—*—*— —|— —T—i—m—e— —t—o— —b—u—i—l—d— —O—N—E— —c—a—r— —(—8— —h—o—u—r—s—)— —|— —C—a—r—s— —p—r—o—d—u—c—e—d— —p—e—r— —d—a—y— —(—5—0—0—/—d—a—y—)— —|—
-—
-—-— —W—i—d—e—r— —h—i—g—h—w—a—y— —=— —h—i—g—h—e—r— —t—h—r—o—u—g—h—p—u—t—;— —f—a—s—t—e—r— —s—p—e—e—d— —l—i—m—i—t— —=— —l—o—w—e—r— —l—a—t—e—n—c—y—.—
-—-— —A— —f—a—c—t—o—r—y— —c—a—n— —p—r—o—d—u—c—e— —5—0—0— —c—a—r—s—/—d—a—y— —(—h—i—g—h— —t—h—r—o—u—g—h—p—u—t—)— —e—v—e—n— —i—f— —e—a—c—h— —c—a—r— —t—a—k—e—s— —8— —h—o—u—r—s— —(—h—i—g—h— —l—a—t—e—n—c—y—)— ——— —m—a—n—y— —c—a—r—s— —a—t— —d—i—f—f—e—r—e—n—t— —s—t—a—g—e—s— —(—*—*—p—a—r—a—l—l—e—l—i—s—m—/—c—o—n—c—u—r—r—e—n—c—y—*—*—)—.—
-—
-—#—#—#— —4—.—5— —P—e—r—c—e—n—t—i—l—e— —L—a—t—e—n—c—y— —(—p—5—0—,— —p—9—5—,— —p—9—9—)—
-—
-—I—n— —p—r—o—d—u—c—t—i—o—n—,— —y—o—u— —*—*—N—E—V—E—R—*—*— —j—u—s—t— —l—o—o—k— —a—t— —*—*—a—v—e—r—a—g—e—*—*— —l—a—t—e—n—c—y—.— —A—v—e—r—a—g—e—s— —h—i—d—e— —t—e—r—r—i—b—l—e— —e—x—p—e—r—i—e—n—c—e—s— —f—o—r— —s—o—m—e— —u—s—e—r—s—.—
-—
-—|— —P—e—r—c—e—n—t—i—l—e— —|— —M—e—a—n—i—n—g— —|—
-—|—-—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—p—5—0— —(—m—e—d—i—a—n—)—*—*— —|— —5—0—%— —o—f— —r—e—q—u—e—s—t—s— —f—a—s—t—e—r— —t—h—a—n— —t—h—i—s— —|—
-—|— —*—*—p—7—5—*—*— —|— —7—5—%— —f—a—s—t—e—r— —|—
-—|— —*—*—p—9—5—*—*— —|— —9—5—%— —f—a—s—t—e—r— —|—
-—|— —*—*—p—9—9—*—*— —|— —9—9—%— —f—a—s—t—e—r— —|—
-—|— —*—*—p—9—9—.—9—*—*— —|— —9—9—.—9—%— —f—a—s—t—e—r— —(—"—t—h—r—e—e— —n—i—n—e—s—"—)— —|—
-—
-—*—*—E—x—a—m—p—l—e— —A—P—I— —m—e—a—s—u—r—e—m—e—n—t—s—:—*—*—
-—
-—|— —P—e—r—c—e—n—t—i—l—e— —|— —V—a—l—u—e— —|—
-—|—-—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—|—
-—|— —p—5—0— —|— —5—0—m—s— ——— —h—a—l—f— —o—f— —u—s—e—r—s— —u—n—d—e—r— —5—0—m—s— —|—
-—|— —p—9—5— —|— —2—0—0—m—s— —|—
-—|— —p—9—9— —|— —8—0—0—m—s— —|—
-—|— —p—9—9—.—9— —|— —3—0—0—0—m—s— ——— —s—l—o—w—e—s—t— —0—.—1—%— —w—a—i—t— —u—p— —t—o— —3—s— —|—
-—
-—*—*—p—9—9— —a—n—d— —p—9—9—.—9—*—*— —=— —*—*—T—A—I—L— —L—A—T—E—N—C—I—E—S—*—*—.— —A—t— —s—c—a—l—e—:—
-—
-—-— —1—0— —m—i—l—l—i—o—n— —r—e—q—u—e—s—t—s—/—d—a—y— —→— —1—%— —=— —1—0—0—,—0—0—0— —r—e—q—u—e—s—t—s— —@— —8—0—0—m—s—
-—-— —0—.—1—%— —=— —1—0—,—0—0—0— —r—e—q—u—e—s—t—s— —@— —3— —s—e—c—o—n—d— —l—a—t—e—n—c—y—
-—
-—A—m—a—z—o—n— —f—o—u—n—d— —t—h—a—t— —e—v—e—r—y— —*—*—1—0—0—m—s—*—*— —o—f— —l—a—t—e—n—c—y— —c—o—s—t—s— —t—h—e—m— —*—*—1—%—*—*— —i—n— —s—a—l—e—s—.—
-—
-—*—*—W—h—y— —t—a—i—l— —l—a—t—e—n—c—y— —e—x—i—s—t—s—:—*—*—
-—
-—-— —G—a—r—b—a—g—e— —c—o—l—l—e—c—t—i—o—n— —p—a—u—s—e—s— —(—J—V—M—)—
-—-— —D—i—s—k— —I—/—O— —o—r— —s—w—a—p—
-—-— —N—e—t—w—o—r—k— —c—o—n—g—e—s—t—i—o—n—
-—-— —D—a—t—a—b—a—s—e— —l—o—c—k— —c—o—n—t—e—n—t—i—o—n—
-—-— —C—o—l—d— —s—t—a—r—t—s— —(—s—e—r—v—e—r—l—e—s—s—)—
-—-— —C—P—U— —s—c—h—e—d—u—l—i—n—g— —d—e—l—a—y—s—
-—
-—-—-—-—
-—
-—#—#— —S—e—c—t—i—o—n— —5— ——— —P—u—t—t—i—n—g— —I—t— —A—l—l— —T—o—g—e—t—h—e—r—
-—
-—#—#—#— —5—.—1— —H—o—w— —T—h—e—s—e— —C—o—n—c—e—p—t—s— —C—o—n—n—e—c—t—
-—
-—`—`—`—m—e—r—m—a—i—d—
-—f—l—o—w—c—h—a—r—t— —T—D—
-— — — — —A—[—"—B—u—i—l—d— —a—p—p— —o—n— —l—a—p—t—o—p—"—]— —-—-—>— —B—[—"—D—e—p—l—o—y— —t—o— —c—l—o—u—d— —V—M—\—n—(—E—C—2—,— —D—r—o—p—l—e—t—,— —e—t—c—.—)—"—]—
-— — — — —B— —-—-—>— —C—[—"—D—o—m—a—i—n— —n—a—m—e— —→— —D—N—S— —→— —P—u—b—l—i—c— —I—P—"—]—
-— — — — —C— —-—-—>— —D—[—"—P—o—r—t— —r—o—u—t—e—s— —t—o— —c—o—r—r—e—c—t— —a—p—p—"—]—
-— — — — —D— —-—-—>— —E—[—"—R—e—q—u—e—s—t— —p—r—o—c—e—s—s—i—n—g— —=— —L—a—t—e—n—c—y—"—]—
-— — — — —E— —-—-—>— —F—[—"—M—a—n—y— —c—o—n—c—u—r—r—e—n—t— —u—s—e—r—s— —=— —T—h—r—o—u—g—h—p—u—t—"—]—
-— — — — —F— —-—-—>— —G—{—"—T—r—a—f—f—i—c— —g—r—o—w—s—?—"—}—
-— — — — —G— —-—-—>—|—Y—e—s—|— —H—[—"—A—p—p—l—y— —s—y—s—t—e—m— —d—e—s—i—g—n—:—\—n—s—c—a—l—e—,— —c—a—c—h—e—,— —C—D—N—,— —r—e—p—l—i—c—a—s—"—]—
-— — — — —G— —-—-—>—|—N—o—|— —O—K—[—"—S—i—m—p—l—e— —3—-—t—i—e—r— —m—a—y— —s—u—f—f—i—c—e—"—]—
-—`—`—`—
-—
-—`—`—`—
-—Y—o—u— —b—u—i—l—d— —a—n— —a—p—p— —(—c—o—d—e— —o—n— —l—a—p—t—o—p—)—
-— — — — — — —↓—
-—Y—o—u— —D—E—P—L—O—Y— —i—t— —t—o— —a— —C—L—O—U—D— —S—E—R—V—E—R— —(—A—W—S— —E—C—2—,— —e—t—c—.—)—
-— — — — — — —↓—
-—U—s—e—r—s— —a—c—c—e—s—s— —i—t— —v—i—a— —D—O—M—A—I—N— —N—A—M—E— —→— —D—N—S— —r—e—s—o—l—v—e—s— —t—o— —S—E—R—V—E—R— —I—P—
-— — — — — — —↓—
-—R—e—q—u—e—s—t— —g—o—e—s— —t—o— —c—o—r—r—e—c—t— —a—p—p— —v—i—a— —P—O—R—T— —N—U—M—B—E—R—
-— — — — — — —↓—
-—S—e—r—v—e—r— —p—r—o—c—e—s—s—e—s— —r—e—q—u—e—s—t— ——— —t—h—i—s— —t—a—k—e—s— —L—A—T—E—N—C—Y— —t—i—m—e—
-— — — — — — —↓—
-—S—y—s—t—e—m— —m—u—s—t— —h—a—n—d—l—e— —m—a—n—y— —u—s—e—r—s— —s—i—m—u—l—t—a—n—e—o—u—s—l—y— ——— —t—h—i—s— —i—s— —T—H—R—O—U—G—H—P—U—T—
-— — — — — — —↓—
-—A—s— —u—s—e—r—s— —g—r—o—w—,— —s—i—m—p—l—e— —a—r—c—h—i—t—e—c—t—u—r—e— —b—r—e—a—k—s— —→— —N—e—e—d— —S—Y—S—T—E—M— —D—E—S—I—G—N— —p—r—i—n—c—i—p—l—e—s—
-—`—`—`—
-—
-—#—#—#— —5—.—2— —C—o—m—m—o—n— —I—n—t—e—r—v—i—e—w— —Q—u—e—s—t—i—o—n—s— —o—n— —T—h—e—s—e— —T—o—p—i—c—s—
-—
-—*—*—Q—:— —W—h—a—t— —i—s— —t—h—e— —d—i—f—f—e—r—e—n—c—e— —b—e—t—w—e—e—n— —l—a—t—e—n—c—y— —a—n—d— —t—h—r—o—u—g—h—p—u—t—?—*—*—
-—
-—*—*—A—:—*—*— —L—a—t—e—n—c—y— —m—e—a—s—u—r—e—s— —h—o—w— —l—o—n—g— —*—*—O—N—E—*—*— —r—e—q—u—e—s—t— —t—a—k—e—s— —(—s—p—e—e—d—)—.— —T—h—r—o—u—g—h—p—u—t— —m—e—a—s—u—r—e—s— —h—o—w— —*—*—M—A—N—Y—*—*— —r—e—q—u—e—s—t—s— —c—a—n— —b—e— —h—a—n—d—l—e—d— —p—e—r— —s—e—c—o—n—d— —(—c—a—p—a—c—i—t—y—)—.—
-—
-—*—*—Q—:— —I—f— —I— —a—d—d— —m—o—r—e— —s—e—r—v—e—r—s—,— —d—o—e—s— —l—a—t—e—n—c—y— —d—e—c—r—e—a—s—e—?—*—*—
-—
-—*—*—A—:—*—*— —N—o—t— —n—e—c—e—s—s—a—r—i—l—y—.— —L—a—t—e—n—c—y— —p—e—r— —r—e—q—u—e—s—t— —s—t—a—y—s— —t—h—e— —s—a—m—e—.— —B—u—t— —*—*—t—h—r—o—u—g—h—p—u—t—*—*— —i—n—c—r—e—a—s—e—s—.— —U—n—d—e—r— —h—e—a—v—y— —l—o—a—d—,— —m—o—r—e— —s—e—r—v—e—r—s— —p—r—e—v—e—n—t— —q—u—e—u—e— —b—u—i—l—d—u—p—,— —w—h—i—c—h— —*—*—i—n—d—i—r—e—c—t—l—y—*—*— —k—e—e—p—s— —l—a—t—e—n—c—y— —f—r—o—m— —s—p—i—k—i—n—g— —(—l—e—s—s— —q—u—e—u—i—n—g— —d—e—l—a—y—)—.—
-—
-—*—*—Q—:— —W—h—a—t— —i—s— —a— —s—i—n—g—l—e— —p—o—i—n—t— —o—f— —f—a—i—l—u—r—e—?—*—*—
-—
-—*—*—A—:—*—*— —A— —c—o—m—p—o—n—e—n—t— —t—h—a—t—,— —i—f— —i—t— —f—a—i—l—s—,— —b—r—i—n—g—s— —t—h—e— —e—n—t—i—r—e— —s—y—s—t—e—m— —d—o—w—n—.— —E—x—a—m—p—l—e—:— —O—n—e— —s—e—r—v—e—r— —w—i—t—h— —n—o— —b—a—c—k—u—p— —=— —S—P—O—F—.— —S—o—l—u—t—i—o—n—:— —R—e—d—u—n—d—a—n—c—y— ——— —m—u—l—t—i—p—l—e— —s—e—r—v—e—r—s—,— —l—o—a—d— —b—a—l—a—n—c—e—r—s—,— —D—B— —r—e—p—l—i—c—a—s—.—
-—
-—*—*—Q—:— —W—h—a—t— —i—s— —t—h—e— —d—i—f—f—e—r—e—n—c—e— —b—e—t—w—e—e—n— —s—c—a—l—i—n—g— —u—p— —a—n—d— —s—c—a—l—i—n—g— —o—u—t—?—*—*—
-—
-—*—*—A—:—*—*— —*—*—S—c—a—l—e— —u—p— —(—v—e—r—t—i—c—a—l—)—:—*—*— —M—a—k—e— —o—n—e— —s—e—r—v—e—r— —b—i—g—g—e—r— —(—m—o—r—e— —C—P—U—/—R—A—M—)—.— —*—*—S—c—a—l—e— —o—u—t— —(—h—o—r—i—z—o—n—t—a—l—)—:—*—*— —A—d—d— —m—o—r—e— —s—e—r—v—e—r—s— —a—n—d— —d—i—s—t—r—i—b—u—t—e— —l—o—a—d—.— —S—c—a—l—e— —o—u—t— —i—s— —g—e—n—e—r—a—l—l—y— —p—r—e—f—e—r—r—e—d— —f—o—r— —l—a—r—g—e— —s—y—s—t—e—m—s—.—
-—
-—*—*—Q—:— —W—h—y— —d—o— —w—e— —u—s—e— —p—o—r—t—s—?—*—*—
-—
-—*—*—A—:—*—*— —O—n—e— —s—e—r—v—e—r— —r—u—n—s— —m—a—n—y— —a—p—p—l—i—c—a—t—i—o—n—s—.— —P—o—r—t—s— —l—e—t— —t—h—e— —O—S— —r—o—u—t—e— —t—r—a—f—f—i—c— —t—o— —t—h—e— —c—o—r—r—e—c—t— —a—p—p—.—
-—
-—*—*—Q—:— —W—h—a—t— —i—s— —R—T—T—?—*—*—
-—
-—*—*—A—:—*—*— —R—o—u—n—d— —T—r—i—p— —T—i—m—e— ——— —t—o—t—a—l— —t—i—m—e— —f—o—r— —r—e—q—u—e—s—t— —t—o— —s—e—r—v—e—r— —*—*—a—n—d—*—*— —r—e—s—p—o—n—s—e— —b—a—c—k—.— —E—s—s—e—n—t—i—a—l—l—y— —e—q—u—a—l—s— —l—a—t—e—n—c—y— —f—r—o—m— —t—h—e— —u—s—e—r—'—s— —v—i—e—w—.—
-—
-—-—-—-—
-—
-—#—#— —S—e—c—t—i—o—n— —6— ——— —M—a—s—t—e—r— —R—e—f—e—r—e—n—c—e— —T—a—b—l—e—s—
-—
-—#—#—#— —6—.—1— —K—e—y— —C—o—n—c—e—p—t—s— —S—u—m—m—a—r—y—
-—
-—|— —C—o—n—c—e—p—t— —|— —E—x—p—l—a—n—a—t—i—o—n— —|—
-—|—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —S—e—r—v—e—r— —|— —M—a—c—h—i—n—e— —(—p—h—y—s—i—c—a—l— —o—r— —v—i—r—t—u—a—l—)— —t—h—a—t— —r—u—n—s— —y—o—u—r— —a—p—p— —|—
-—|— —C—l—i—e—n—t— —|— —A—p—p—/—d—e—v—i—c—e— —u—s—e—r—s— —u—s—e— —t—o— —i—n—t—e—r—a—c—t— —w—i—t—h— —y—o—u—r— —s—y—s—t—e—m— —|—
-—|— —I—P— —A—d—d—r—e—s—s— —|— —U—n—i—q—u—e— —a—d—d—r—e—s—s— —f—o—r— —e—v—e—r—y— —m—a—c—h—i—n—e— —o—n— —a— —n—e—t—w—o—r—k— —|—
-—|— —l—o—c—a—l—h—o—s—t— —/— —1—2—7—.—0—.—0—.—1— —|— —R—e—f—e—r—s— —t—o— —t—h—e— —c—u—r—r—e—n—t— —m—a—c—h—i—n—e— —i—t—s—e—l—f— —|—
-—|— —P—u—b—l—i—c— —I—P— —|— —I—P— —r—e—a—c—h—a—b—l—e— —f—r—o—m— —t—h—e— —i—n—t—e—r—n—e—t— —|—
-—|— —P—r—i—v—a—t—e— —I—P— —|— —I—P— —o—n—l—y— —r—e—a—c—h—a—b—l—e— —w—i—t—h—i—n— —a— —l—o—c—a—l— —n—e—t—w—o—r—k— —|—
-—|— —P—o—r—t— —|— —N—u—m—b—e—r— —r—o—u—t—i—n—g— —t—r—a—f—f—i—c— —t—o— —t—h—e— —c—o—r—r—e—c—t— —a—p—p— —(—0—–—6—5—5—3—5—)— —|—
-—|— —D—N—S— —|— —T—r—a—n—s—l—a—t—e—s— —d—o—m—a—i—n— —→— —I—P— —a—d—d—r—e—s—s— —|—
-—|— —R—T—T— —|— —R—o—u—n—d— —T—r—i—p— —T—i—m—e— —=— —r—e—q—u—e—s—t— —+— —r—e—s—p—o—n—s—e— —t—i—m—e— —|—
-—|— —L—a—t—e—n—c—y— —|— —T—i—m—e— —f—o—r— —a— —s—i—n—g—l—e— —r—e—q—u—e—s—t— —t—o— —c—o—m—p—l—e—t—e— —|—
-—|— —T—h—r—o—u—g—h—p—u—t— —|— —R—e—q—u—e—s—t—s— —h—a—n—d—l—e—d— —p—e—r— —s—e—c—o—n—d— —|—
-—|— —R—P—S— —|— —R—e—q—u—e—s—t—s— —P—e—r— —S—e—c—o—n—d— —|—
-—|— —T—P—S— —|— —T—r—a—n—s—a—c—t—i—o—n—s— —P—e—r— —S—e—c—o—n—d— —|—
-—|— —D—e—p—l—o—y—m—e—n—t— —|— —P—u—t—t—i—n—g— —y—o—u—r— —a—p—p— —o—n— —a— —p—u—b—l—i—c— —s—e—r—v—e—r— —|—
-—|— —E—C—2— —|— —A—W—S— —v—i—r—t—u—a—l— —m—a—c—h—i—n—e— —p—r—o—d—u—c—t— —|—
-—|— —V—M— —|— —V—i—r—t—u—a—l— —M—a—c—h—i—n—e— ——— —s—i—m—u—l—a—t—e—d— —c—o—m—p—u—t—e—r— —o—n— —r—e—a—l— —h—a—r—d—w—a—r—e— —|—
-—|— —H—y—p—e—r—v—i—s—o—r— —|— —S—o—f—t—w—a—r—e— —t—h—a—t— —c—r—e—a—t—e—s— —a—n—d— —m—a—n—a—g—e—s— —V—M—s— —|—
-—|— —S—P—O—F— —|— —S—i—n—g—l—e— —P—o—i—n—t— —o—f— —F—a—i—l—u—r—e— —|—
-—|— —H—o—r—i—z—o—n—t—a—l— —S—c—a—l—i—n—g— —|— —A—d—d—i—n—g— —m—o—r—e— —s—e—r—v—e—r—s— —|—
-—|— —V—e—r—t—i—c—a—l— —S—c—a—l—i—n—g— —|— —U—p—g—r—a—d—i—n—g— —e—x—i—s—t—i—n—g— —s—e—r—v—e—r— —h—a—r—d—w—a—r—e— —|—
-—|— —T—a—i—l— —L—a—t—e—n—c—y— —|— —S—l—o—w—e—s—t— —r—e—q—u—e—s—t—s— —(—p—9—9—,— —p—9—9—.—9—)— —|—
-—|— —C—D—N— —|— —G—e—o—g—r—a—p—h—i—c—a—l—l—y— —d—i—s—t—r—i—b—u—t—e—d— —c—o—n—t—e—n—t— —s—e—r—v—e—r—s— —|—
-—|— —C—a—c—h—e— —|— —F—a—s—t— —t—e—m—p—o—r—a—r—y— —s—t—o—r—a—g—e— —t—o— —a—v—o—i—d— —r—e—p—e—a—t—e—d— —w—o—r—k— —|—
-—|— —L—o—a—d— —B—a—l—a—n—c—e—r— —|— —D—i—s—t—r—i—b—u—t—e—s— —r—e—q—u—e—s—t—s— —a—c—r—o—s—s— —m—u—l—t—i—p—l—e— —s—e—r—v—e—r—s— —|—
-—
-—#—#—#— —6—.—2— —L—a—t—e—n—c—y— —v—s— —T—h—r—o—u—g—h—p—u—t— —C—o—m—p—a—r—i—s—o—n—
-—
-—|— —D—i—m—e—n—s—i—o—n— —|— —L—a—t—e—n—c—y— —|— —T—h—r—o—u—g—h—p—u—t— —|—
-—|—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —D—e—f—i—n—i—t—i—o—n— —|— —T—i—m—e— —f—o—r— —O—N—E— —r—e—q—u—e—s—t— —|— —R—e—q—u—e—s—t—s— —h—a—n—d—l—e—d—/—s—e—c—o—n—d— —|—
-—|— —M—e—a—s—u—r—e—s— —|— —S—p—e—e—d— —/— —r—e—s—p—o—n—s—i—v—e—n—e—s—s— —|— —C—a—p—a—c—i—t—y— —/— —v—o—l—u—m—e— —|—
-—|— —U—n—i—t— —|— —m—s— —|— —R—P—S— —/— —T—P—S— —/— —Q—P—S— —|—
-—|— —I—d—e—a—l— —g—o—a—l— —|— —L—O—W— —|— —H—I—G—H— —|—
-—|— —I—m—p—r—o—v—e—s— —w—i—t—h— —|— —C—a—c—h—i—n—g—,— —C—D—N—,— —b—e—t—t—e—r— —c—o—d—e— —|— —M—o—r—e— —s—e—r—v—e—r—s—,— —a—s—y—n—c—,— —c—a—c—h—e— —|—
-—|— —A—n—a—l—o—g—y— —|— —S—p—e—e—d— —o—f— —O—N—E— —c—a—r— —|— —C—a—r—s—/—h—o—u—r— —o—n— —h—i—g—h—w—a—y— —|—
-—|— —U—s—e—r— —i—m—p—a—c—t— —|— —H—o—w— —f—a—s—t— —p—a—g—e— —l—o—a—d—s— —|— —H—o—w— —m—a—n—y— —u—s—e—r—s— —s—e—r—v—e—d— —|—
-—|— —B—o—t—t—l—e—n—e—c—k— —c—a—u—s—e— —|— —N—e—t—w—o—r—k— —d—i—s—t—a—n—c—e—,— —s—l—o—w— —D—B— —|— —C—P—U—,— —R—A—M—,— —b—a—n—d—w—i—d—t—h—,— —I—/—O— —|—
-—
-—#—#—#— —6—.—3— —W—e—l—l—-—K—n—o—w—n— —P—o—r—t— —N—u—m—b—e—r—s— —(—Q—u—i—c—k— —R—e—f—e—r—e—n—c—e—)—
-—
-—|— —P—o—r—t— —|— —P—r—o—t—o—c—o—l— —/— —S—e—r—v—i—c—e— —|—
-—|—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —2—0— —|— —F—T—P— —(—d—a—t—a— —t—r—a—n—s—f—e—r—)— —|—
-—|— —2—1— —|— —F—T—P— —(—c—o—n—t—r—o—l—)— —|—
-—|— —2—2— —|— —S—S—H— —|—
-—|— —2—5— —|— —S—M—T—P— —|—
-—|— —5—3— —|— —D—N—S— —|—
-—|— —8—0— —|— —H—T—T—P— —|—
-—|— —1—1—0— —|— —P—O—P—3— —|—
-—|— —1—4—3— —|— —I—M—A—P— —|—
-—|— —4—4—3— —|— —H—T—T—P—S— —|—
-—|— —3—0—0—0— —|— —C—o—m—m—o—n— —N—o—d—e—.—j—s— —/— —R—e—a—c—t— —d—e—v— —s—e—r—v—e—r— —|—
-—|— —3—3—0—6— —|— —M—y—S—Q—L— —|—
-—|— —5—4—3—2— —|— —P—o—s—t—g—r—e—S—Q—L— —|—
-—|— —6—3—7—9— —|— —R—e—d—i—s— —|—
-—|— —8—0—8—0— —|— —A—l—t—e—r—n—a—t—e— —H—T—T—P— —/— —d—e—v— —s—e—r—v—e—r— —|—
-—|— —8—4—4—3— —|— —A—l—t—e—r—n—a—t—e— —H—T—T—P—S— —|—
-—|— —2—7—0—1—7— —|— —M—o—n—g—o—D—B— —|—
-—
-—#—#—#— —6—.—4— —C—l—o—u—d— —P—r—o—v—i—d—e—r— —C—o—m—p—a—r—i—s—o—n— —(—B—e—g—i—n—n—e—r— —L—e—v—e—l—)—
-—
-—|— —P—r—o—v—i—d—e—r— —|— —V—M— —P—r—o—d—u—c—t— —|— —M—a—r—k—e—t— —|— —K—n—o—w—n— —f—o—r— —|—
-—|—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —A—W—S— —(—A—m—a—z—o—n—)— —|— —E—C—2— —|— —L—a—r—g—e—s—t— —|— —W—i—d—e—s—t— —r—a—n—g—e— —o—f— —s—e—r—v—i—c—e—s— —|—
-—|— —A—z—u—r—e— —(—M—i—c—r—o—s—o—f—t—)— —|— —V—i—r—t—u—a—l— —M—a—c—h—i—n—e—s— —|— —2—n—d— —|— —E—n—t—e—r—p—r—i—s—e— —/— —W—i—n—d—o—w—s— —w—o—r—k—l—o—a—d—s— —|—
-—|— —G—C—P— —(—G—o—o—g—l—e—)— —|— —C—o—m—p—u—t—e— —E—n—g—i—n—e— —|— —3—r—d— —|— —M—L—,— —b—i—g— —d—a—t—a— —|—
-—|— —D—i—g—i—t—a—l—O—c—e—a—n— —|— —D—r—o—p—l—e—t—s— —|— —S—m—a—l—l—e—r— —|— —D—e—v—e—l—o—p—e—r—-—f—r—i—e—n—d—l—y—,— —s—i—m—p—l—e— —|—
-—|— —L—i—n—o—d—e—/—A—k—a—m—a—i— —|— —L—i—n—o—d—e—s— —|— —S—m—a—l—l—e—r— —|— —S—i—m—p—l—e—,— —a—f—f—o—r—d—a—b—l—e— —|—
-—
-—#—#—#— —6—.—5— —L—a—t—e—n—c—y— —B—e—n—c—h—m—a—r—k—s— —(—O—r—d—e—r— —o—f— —M—a—g—n—i—t—u—d—e— ——— —m—e—m—o—r—i—z—e— —t—h—e—s—e—!—)—
-—
-—R—o—u—g—h— —n—u—m—b—e—r—s— —f—o—r— —s—y—s—t—e—m— —d—e—s—i—g—n— —i—n—t—e—r—v—i—e—w—s—:—
-—
-—|— —O—p—e—r—a—t—i—o—n— —|— —A—p—p—r—o—x— —l—a—t—e—n—c—y— —|—
-—|—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —L—1— —c—a—c—h—e— —r—e—f—e—r—e—n—c—e— —(—C—P—U—)— —|— —0—.—5— —n—s— —|—
-—|— —L—2— —c—a—c—h—e— —r—e—f—e—r—e—n—c—e— —(—C—P—U—)— —|— —7— —n—s— —|—
-—|— —R—A—M— —m—e—m—o—r—y— —r—e—a—d— —|— —1—0—0— —n—s— —|—
-—|— —S—S—D— —r—a—n—d—o—m— —r—e—a—d— —|— —1—0—0— —μ—s— —(—0—.—1— —m—s—)— —|—
-—|— —H—D—D— —r—e—a—d— —|— —1—0— —m—s— —|—
-—|— —R—e—d—i—s— —/— —i—n—-—m—e—m—o—r—y— —c—a—c—h—e— —r—e—a—d— —|— —0—.—1—–—1— —m—s— —|—
-—|— —D—B— —q—u—e—r—y— —(—i—n—d—e—x—e—d—,— —s—i—m—p—l—e—)— —|— —1—–—1—0— —m—s— —|—
-—|— —D—B— —q—u—e—r—y— —(—c—o—m—p—l—e—x— —/— —n—o— —i—n—d—e—x—)— —|— —1—0—0— —m—s— —–— —s—e—c—o—n—d—s— —|—
-—|— —N—e—t—w—o—r—k— —w—i—t—h—i—n— —s—a—m—e— —d—a—t—a— —c—e—n—t—e—r— —|— —0—.—5—–—1— —m—s— —|—
-—|— —N—e—t—w—o—r—k— —c—r—o—s—s—-—r—e—g—i—o—n— —(—M—u—m—b—a—i— —→— —S—i—n—g—a—p—o—r—e—)— —|— —2—0—–—4—0— —m—s— —|—
-—|— —N—e—t—w—o—r—k— —c—r—o—s—s—-—c—o—n—t—i—n—e—n—t— —(—I—n—d—i—a— —→— —U—S—A—)— —|— —1—5—0—–—2—0—0— —m—s— —|—
-—|— —D—N—S— —l—o—o—k—u—p— —|— —1—0—–—1—0—0— —m—s— —|—
-—|— —T—L—S— —h—a—n—d—s—h—a—k—e— —(—H—T—T—P—S— —s—e—t—u—p—)— —|— —5—0—–—2—0—0— —m—s— —|—
-—
-—*—*—K—e—y— —i—n—s—i—g—h—t—:—*—*— —R—A—M— —i—s— —~—1—0—0—,—0—0—0—×— —f—a—s—t—e—r— —t—h—a—n— —d—i—s—k—.— —T—h—i—s— —i—s— —w—h—y— —*—*—c—a—c—h—i—n—g—*—*— —(—s—t—o—r—i—n—g— —i—n— —R—A—M—)— —d—r—a—m—a—t—i—c—a—l—l—y— —r—e—d—u—c—e—s— —l—a—t—e—n—c—y—.—
-—
-—-—-—-—
-—
-—#—#— —S—e—c—t—i—o—n— —7— ——— —T—h—i—n—g—s— —t—o— —R—e—m—e—m—b—e—r— —/— —C—o—m—m—o—n— —M—i—s—t—a—k—e—s—
-—
-—|— —M—i—s—t—a—k—e— —|— —T—r—u—t—h— —|—
-—|—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—|—
-—|— —"—H—i—g—h— —t—h—r—o—u—g—h—p—u—t— —m—e—a—n—s— —l—o—w— —l—a—t—e—n—c—y— —t—o—o—.—"— —|— —T—h—e—y— —a—r—e— —*—*—i—n—d—e—p—e—n—d—e—n—t—*—*—.— —H—i—g—h— —t—h—r—o—u—g—h—p—u—t— —+— —h—i—g—h— —l—a—t—e—n—c—y— —i—s— —p—o—s—s—i—b—l—e— —(—e—.—g—.—,— —b—a—t—c—h— —s—y—s—t—e—m—s—)—.— —|—
-—|— —"—A—d—d—i—n—g— —m—o—r—e— —s—e—r—v—e—r—s— —a—l—w—a—y—s— —r—e—d—u—c—e—s— —l—a—t—e—n—c—y—.—"— —|— —M—o—r—e— —s—e—r—v—e—r—s— —i—n—c—r—e—a—s—e— —*—*—t—h—r—o—u—g—h—p—u—t—*—*—.— —L—a—t—e—n—c—y— —d—e—p—e—n—d—s— —o—n— —n—e—t—w—o—r—k—,— —D—B—,— —a—l—g—o—r—i—t—h—m—s—.— —M—o—r—e— —s—e—r—v—e—r—s— —o—n—l—y— —r—e—d—u—c—e— —l—a—t—e—n—c—y— —*—*—i—n—d—i—r—e—c—t—l—y—*—*— —(—l—e—s—s— —q—u—e—u—i—n—g— —u—n—d—e—r— —l—o—a—d—)—.— —|—
-—|— —"—A—v—e—r—a—g—e— —l—a—t—e—n—c—y— —i—s— —a— —g—o—o—d— —m—e—t—r—i—c—.—"— —|— —A—v—e—r—a—g—e—s— —h—i—d—e— —o—u—t—l—i—e—r—s—.— —U—s—e— —*—*—p—e—r—c—e—n—t—i—l—e—s—*—*— —(—p—9—5—,— —p—9—9—)—.— —5—0—m—s— —a—v—e—r—a—g—e— —w—i—t—h— —5—0—0—0—m—s— —p—9—9— —=— —a—w—f—u—l— —e—x—p—e—r—i—e—n—c—e— —f—o—r— —1—%— —o—f— —u—s—e—r—s—.— —|—
-—|— —"—l—o—c—a—l—h—o—s—t— —a—n—d— —1—2—7—.—0—.—0—.—1— —a—r—e— —d—i—f—f—e—r—e—n—t—.—"— —|— —T—h—e—y—'—r—e— —t—h—e— —*—*—s—a—m—e—*—*—.— —l—o—c—a—l—h—o—s—t— —r—e—s—o—l—v—e—s— —t—o— —1—2—7—.—0—.—0—.—1—.— —|—
-—|— —"—P—o—r—t— —8—0— —a—n—d— —4—4—3— —a—r—e— —o—p—t—i—o—n—a—l—.—"— —|— —T—h—e—y—'—r—e— —*—*—d—e—f—a—u—l—t—*—*— —p—o—r—t—s— ——— —b—r—o—w—s—e—r—s— —a—s—s—u—m—e— —t—h—e—m—.— —S—t—i—l—l— —u—s—e—d— —b—e—h—i—n—d— —t—h—e— —s—c—e—n—e—s—.— —|—
-—|— —"—V—e—r—t—i—c—a—l— —s—c—a—l—i—n—g— —i—s— —a—l—w—a—y—s— —b—e—t—t—e—r—.—"— —|— —V—e—r—t—i—c—a—l— —s—c—a—l—i—n—g— —h—a—s— —l—i—m—i—t—s—.— —H—o—r—i—z—o—n—t—a—l— —s—c—a—l—i—n—g— —i—s— —m—o—r—e— —s—c—a—l—a—b—l—e— —a—n—d— —f—a—u—l—t—-—t—o—l—e—r—a—n—t—.— —O—n—e— —b—i—g— —s—e—r—v—e—r— —=— —S—P—O—F—.— —|—
-—|— —"—M—y— —a—p—p— —w—o—r—k—s— —l—o—c—a—l—l—y—,— —s—o— —d—e—p—l—o—y—m—e—n—t— —i—s— —e—a—s—y—.—"— —|— —L—o—c—a—l— —≠— —p—r—o—d—u—c—t—i—o—n—.— —D—i—f—f—e—r—e—n—t— —O—S—,— —d—e—p—s—,— —s—e—c—u—r—i—t—y— —g—r—o—u—p—s—,— —f—i—r—e—w—a—l—l—s—,— —e—n—v— —v—a—r—s—,— —S—S—L—,— —e—t—c—.— —|—
-—
-—-—-—-—
-—
-—#—#— —G—l—o—s—s—a—r—y— ——— —A—l—p—h—a—b—e—t—i—c—a—l—
-—
-—|— —T—e—r—m— —|— —D—e—f—i—n—i—t—i—o—n— —|—
-—|—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—B—a—n—d—w—i—d—t—h—*—*— —|— —M—a—x—i—m—u—m— —r—a—t—e— —o—f— —d—a—t—a— —t—r—a—n—s—f—e—r— —a—c—r—o—s—s— —a— —n—e—t—w—o—r—k— —(—M—b—p—s—/—G—b—p—s—)— —|—
-—|— —*—*—C—a—c—h—e—*—*— —|— —F—a—s—t— —t—e—m—p—o—r—a—r—y— —s—t—o—r—a—g—e— —t—o— —s—e—r—v—e— —r—e—p—e—a—t—e—d— —d—a—t—a— —w—i—t—h—o—u—t— —r—e—c—o—m—p—u—t—i—n—g— —|—
-—|— —*—*—C—D—N—*—*— —|— —C—o—n—t—e—n—t— —D—e—l—i—v—e—r—y— —N—e—t—w—o—r—k— ——— —s—e—r—v—e—r—s— —d—i—s—t—r—i—b—u—t—e—d— —g—l—o—b—a—l—l—y— —n—e—a—r— —u—s—e—r—s— —|—
-—|— —*—*—C—l—i—e—n—t—*—*— —|— —A—n—y— —d—e—v—i—c—e—/—a—p—p— —t—h—a—t— —s—e—n—d—s— —r—e—q—u—e—s—t—s— —t—o— —y—o—u—r— —s—y—s—t—e—m— —|—
-—|— —*—*—D—e—p—l—o—y—m—e—n—t—*—*— —|— —M—o—v—i—n—g— —y—o—u—r— —a—p—p—l—i—c—a—t—i—o—n— —t—o— —a— —l—i—v—e— —s—e—r—v—e—r— —f—o—r— —p—u—b—l—i—c— —a—c—c—e—s—s— —|—
-—|— —*—*—D—N—S—*—*— —|— —D—o—m—a—i—n— —N—a—m—e— —S—y—s—t—e—m— ——— —t—r—a—n—s—l—a—t—e—s— —d—o—m—a—i—n— —n—a—m—e—s— —t—o— —I—P— —a—d—d—r—e—s—s—e—s— —|—
-—|— —*—*—E—C—2—*—*— —|— —A—m—a—z—o—n— —W—e—b— —S—e—r—v—i—c—e—s—'— —v—i—r—t—u—a—l— —m—a—c—h—i—n—e— —p—r—o—d—u—c—t— —|—
-—|— —*—*—F—a—u—l—t— —T—o—l—e—r—a—n—c—e—*—*— —|— —S—y—s—t—e—m—'—s— —a—b—i—l—i—t—y— —t—o— —c—o—n—t—i—n—u—e— —o—p—e—r—a—t—i—n—g— —d—e—s—p—i—t—e— —p—a—r—t—i—a—l— —f—a—i—l—u—r—e—s— —|—
-—|— —*—*—H—o—r—i—z—o—n—t—a—l— —S—c—a—l—i—n—g—*—*— —|— —A—d—d—i—n—g— —m—o—r—e— —m—a—c—h—i—n—e—s— —t—o— —h—a—n—d—l—e— —m—o—r—e— —l—o—a—d— —|—
-—|— —*—*—H—T—T—P—*—*— —|— —H—y—p—e—r—T—e—x—t— —T—r—a—n—s—f—e—r— —P—r—o—t—o—c—o—l— ——— —p—o—r—t— —8—0— —|—
-—|— —*—*—H—T—T—P—S—*—*— —|— —H—T—T—P— —s—e—c—u—r—e—d— —w—i—t—h— —S—S—L—/—T—L—S— ——— —p—o—r—t— —4—4—3— —|—
-—|— —*—*—H—y—p—e—r—v—i—s—o—r—*—*— —|— —S—o—f—t—w—a—r—e— —t—h—a—t— —c—r—e—a—t—e—s— —a—n—d— —m—a—n—a—g—e—s— —V—M—s— —o—n— —h—a—r—d—w—a—r—e— —|—
-—|— —*—*—I—P— —A—d—d—r—e—s—s—*—*— —|— —N—u—m—e—r—i—c—a—l— —l—a—b—e—l— —i—d—e—n—t—i—f—y—i—n—g— —a— —d—e—v—i—c—e— —o—n— —a— —n—e—t—w—o—r—k— —|—
-—|— —*—*—I—P—v—4—*—*— —|— —3—2—-—b—i—t— —I—P— —f—o—r—m—a—t— ——— —~—4—.—3—B— —a—d—d—r—e—s—s—e—s— —|—
-—|— —*—*—I—P—v—6—*—*— —|— —1—2—8—-—b—i—t— —I—P— —f—o—r—m—a—t— ——— —v—i—r—t—u—a—l—l—y— —u—n—l—i—m—i—t—e—d— —a—d—d—r—e—s—s—e—s— —|—
-—|— —*—*—L—a—t—e—n—c—y—*—*— —|— —T—i—m—e— —t—o— —c—o—m—p—l—e—t—e— —a— —s—i—n—g—l—e— —r—e—q—u—e—s—t— —(—m—s—)— —|—
-—|— —*—*—L—o—a—d— —B—a—l—a—n—c—e—r—*—*— —|— —D—i—s—t—r—i—b—u—t—e—s— —i—n—c—o—m—i—n—g— —r—e—q—u—e—s—t—s— —a—c—r—o—s—s— —m—u—l—t—i—p—l—e— —s—e—r—v—e—r—s— —|—
-—|— —*—*—l—o—c—a—l—h—o—s—t—*—*— —|— —H—o—s—t—n—a—m—e— —m—e—a—n—i—n—g— —"—t—h—i—s— —m—a—c—h—i—n—e—"— ——— —r—e—s—o—l—v—e—s— —t—o— —1—2—7—.—0—.—0—.—1— —|—
-—|— —*—*—M—o—n—o—l—i—t—h—*—*— —|— —S—i—n—g—l—e— —a—p—p—l—i—c—a—t—i—o—n— —c—o—n—t—a—i—n—i—n—g— —a—l—l— —c—o—d—e— —a—n—d— —f—u—n—c—t—i—o—n—a—l—i—t—y— —|—
-—|— —*—*—p—9—5—/—p—9—9—*—*— —|— —L—a—t—e—n—c—y— —p—e—r—c—e—n—t—i—l—e—s— ——— —9—5—%—/—9—9—%— —o—f— —r—e—q—u—e—s—t—s— —f—a—s—t—e—r— —t—h—a—n— —t—h—i—s— —|—
-—|— —*—*—P—o—r—t—*—*— —|— —N—u—m—b—e—r— —(—0—–—6—5—5—3—5—)— —i—d—e—n—t—i—f—y—i—n—g— —a— —s—p—e—c—i—f—i—c— —a—p—p— —o—n— —a— —s—e—r—v—e—r— —|—
-—|— —*—*—P—u—b—l—i—c— —I—P—*—*— —|— —I—P— —r—e—a—c—h—a—b—l—e— —f—r—o—m— —t—h—e— —i—n—t—e—r—n—e—t— —|—
-—|— —*—*—P—r—i—v—a—t—e— —I—P—*—*— —|— —I—P— —o—n—l—y— —r—e—a—c—h—a—b—l—e— —w—i—t—h—i—n— —a— —l—o—c—a—l— —n—e—t—w—o—r—k— —|—
-—|— —*—*—R—P—S—*—*— —|— —R—e—q—u—e—s—t—s— —P—e—r— —S—e—c—o—n—d— —|—
-—|— —*—*—R—T—T—*—*— —|— —R—o—u—n—d— —T—r—i—p— —T—i—m—e— ——— —r—e—q—u—e—s—t— —+— —r—e—s—p—o—n—s—e— —(—=— —l—a—t—e—n—c—y— —f—r—o—m— —u—s—e—r— —v—i—e—w—)— —|—
-—|— —*—*—S—c—a—l—a—b—i—l—i—t—y—*—*— —|— —S—y—s—t—e—m—'—s— —a—b—i—l—i—t—y— —t—o— —h—a—n—d—l—e— —i—n—c—r—e—a—s—i—n—g— —l—o—a—d— —|—
-—|— —*—*—S—e—r—v—e—r—*—*— —|— —M—a—c—h—i—n—e— —t—h—a—t— —r—u—n—s— —y—o—u—r— —a—p—p—l—i—c—a—t—i—o—n— —a—n—d— —s—e—r—v—e—s— —r—e—q—u—e—s—t—s— —|—
-—|— —*—*—S—P—O—F—*—*— —|— —S—i—n—g—l—e— —P—o—i—n—t— —o—f— —F—a—i—l—u—r—e— —|—
-—|— —*—*—T—a—i—l— —L—a—t—e—n—c—y—*—*— —|— —L—a—t—e—n—c—y— —o—f— —s—l—o—w—e—s—t— —r—e—q—u—e—s—t—s— —(—p—9—9—,— —p—9—9—.—9—)— —|—
-—|— —*—*—T—h—r—o—u—g—h—p—u—t—*—*— —|— —N—u—m—b—e—r— —o—f— —r—e—q—u—e—s—t—s— —h—a—n—d—l—e—d— —p—e—r— —u—n—i—t— —t—i—m—e— —|—
-—|— —*—*—T—L—S—/—S—S—L—*—*— —|— —E—n—c—r—y—p—t—i—o—n— —f—o—r— —H—T—T—P—S— —|—
-—|— —*—*—T—P—S—*—*— —|— —T—r—a—n—s—a—c—t—i—o—n—s— —P—e—r— —S—e—c—o—n—d— —|—
-—|— —*—*—T—T—L—*—*— —|— —T—i—m—e— —T—o— —L—i—v—e— ——— —h—o—w— —l—o—n—g— —D—N—S—/—c—a—c—h—e— —e—n—t—r—y— —s—t—a—y—s— —v—a—l—i—d— —|—
-—|— —*—*—V—e—r—t—i—c—a—l— —S—c—a—l—i—n—g—*—*— —|— —U—p—g—r—a—d—i—n—g— —a— —m—a—c—h—i—n—e— —(—m—o—r—e— —C—P—U—/—R—A—M—)— —|—
-—|— —*—*—V—i—r—t—u—a—l— —M—a—c—h—i—n—e—*—*— —|— —S—o—f—t—w—a—r—e—-—s—i—m—u—l—a—t—e—d— —c—o—m—p—u—t—e—r— —o—n— —r—e—a—l— —h—a—r—d—w—a—r—e— —|—
-—
-—-—-—-—
-—
-—#—#— —E—n—d— —o—f— —C—h—a—p—t—e—r— —1—
-—
-—*—*—N—e—x—t— —→—*—*— —[—C—h—a—p—t—e—r— —2—:— —S—c—a—l—i—n—g— —&— —E—s—t—i—m—a—t—i—o—n—]—(—<—0—2— —-— —S—c—a—l—i—n—g— —&— —B—a—c—k—-—o—f—-—t—h—e—-—E—n—v—e—l—o—p—e— —E—s—t—i—m—a—t—i—o—n—.—m—d—>—)—
+# System Design — Detailed Personal Notes (Chapter 1)
+
+**Topics:** Intro, Servers, Deployment, Latency & Throughput
+
+These notes are written for self-study and revision. Every concept is explained from scratch with real-world analogies, examples, diagrams, and edge cases so you never have to Google the basics again.
+
+**Next →** [Chapter 2: Scaling & Estimation](<02 - Scaling & Back-of-the-Envelope Estimation.md>)
+
+---
+
+## Section 1 — Why Study System Design?
+
+### 1.1 The Simple Architecture (College Level)
+
+When you build a project in college, your setup typically looks like this:
+
+```
+[ Client (Browser / App) ]
+ —  —  —  —  — |
+ —  —  —  —  — | — HTTP Request
+ —  —  —  —  — ↓
+[ Backend Server (Node.js / Django / Spring) ]
+ —  —  —  —  — |
+ —  —  —  —  — | — CRUD Operations (Create, Read, Update, Delete)
+ —  —  —  —  — ↓
+[ Database (MySQL / MongoDB / PostgreSQL) ]
+```
+
+```mermaid
+flowchart TD
+ —  — C["Client (Browser / App)"]
+ —  — S["Backend Server"]
+ —  — D[("Database")]
+ —  — C -->|"HTTP Request"| S
+ —  — S -->|"CRUD"| D
+ —  — D -->|"Data"| S
+ —  — S -->|"HTTP Response"| C
+```
+
+- Client sends a request (e.g., "Get me the list of products")
+- Backend processes the request (calculations, business logic)
+- Backend talks to the Database to fetch/store data
+- Backend sends a response back to the Client
+
+This is called a **MONOLITHIC** or **SIMPLE 3-TIER ARCHITECTURE**.
+
+For a college project or prototype with 10–100 users → This works perfectly fine.
+
+### 1.2 Why This Breaks in the Real World
+
+Imagine Instagram using this architecture. They have 2+ **BILLION** users. On a Monday morning, millions of people open the app simultaneously.
+
+What happens to our simple server?
+
+| Problem | Description |
+|--------|-------------|
+| **1 — Server overload** | Your single server can only handle, say, 1000 requests/second. If 1,000,000 requests arrive per second → Server crashes. All users see an error page. Business loses money. |
+| **2 — Single point of failure** | If your ONE server goes down (hardware failure, power cut, software bug), your ENTIRE application goes down. 100% downtime. No redundancy, no backup. This is called a **Single Point of Failure (SPOF)**. |
+| **3 — No scalability** | Your app becomes popular overnight (viral moment). You have no way to quickly add capacity. Users leave because the site is slow/down. |
+| **4 — Data bottleneck** | One database server handling millions of reads and writes simultaneously becomes a bottleneck. Queries slow down, locks happen, data gets corrupted. |
+| **5 — Geographic distance** | If your server is in Mumbai and a user is in New York, every request has to travel halfway around the world. This adds significant **latency** (delay). |
+| **6 — Security** | A single server with all your code and data exposed is easy to attack. DDoS attacks, SQL injections, data breaches become critical concerns. |
+
+### 1.3 What System Design Teaches You
+
+System Design is the discipline of architecting software systems that can:
+
+| Goal | Meaning |
+|------|---------|
+| **Scalability** | Handle growth from 100 to 100 million users |
+| **Reliability** | Stay operational even when parts fail |
+| **Availability** | Be accessible 99.99% of the time (High Availability) |
+| **Fault tolerance** | Detect failures and recover automatically |
+| **Performance** | Respond quickly under high load |
+| **Security** | Protect data and resist attacks |
+| **Maintainability** | Easy to update and debug |
+| **Cost efficiency** | Don't over-engineer; use resources wisely |
+
+Real companies like Google, Amazon, Netflix, and Uber have massive engineering teams whose **sole job** is designing these systems correctly.
+
+### 1.4 What Is a "Client"?
+
+In system design diagrams, **"Client"** means **ANY** device or application that is sending requests to your system. It is **NOT** limited to a web browser.
+
+**Client can be:**
+
+- A ReactJS / Vue / Angular web application running in Chrome or Firefox
+- An Android mobile app (written in Kotlin/Java)
+- An iOS mobile app (written in Swift/Objective-C)
+- A desktop app (Windows/Mac)
+- Another backend service (Microservice calling another Microservice)
+- A CLI tool (command-line script hitting an API)
+- A smartwatch, IoT device, smart TV, etc.
+
+**Important:** When we draw a "Client" box in system design, we mean: *"Whatever the end user is using to interact with our system."*
+
+The client does **NOT** contain your business logic. It just sends requests and displays responses. All the heavy lifting happens on the server side.
+
+---
+
+## Section 2 — What Is a Server?
+
+### 2.1 Definition
+
+A **SERVER** is simply a computer (machine) that:
+
+1. Has your application code running on it
+2. Is connected to a network (internet or intranet)
+3. Listens for incoming requests and responds to them
+4. Runs 24 hours a day, 7 days a week (ideally)
+
+There is **NOTHING magical** about a server. It is physically the same hardware as your laptop — it has a CPU, RAM, disk storage, and a network card.
+
+| Your laptop | A server |
+|-------------|----------|
+| Personal use, goes to sleep, not always online | Always running, optimized for handling network traffic |
+| | Has a public IP, often has no screen attached (headless) |
+
+### 2.2 Localhost and IP Addresses
+
+When you run your Node.js app:
+
+```bash
+$ node app.js
+Server running on http://localhost:8080
+```
+
+#### What is localhost?
+
+- **"localhost"** is a special hostname that **ALWAYS** refers to **YOUR OWN MACHINE**.
+- It is not an external address. Nobody else on the internet can reach it.
+- `localhost` → resolves to IP address → **127.0.0.1**
+- This IP (127.0.0.1) is called the **LOOPBACK ADDRESS**. It always means "this machine itself."
+
+#### What is an IP address?
+
+- **IP** = Internet Protocol
+- An IP address is a unique numerical label assigned to every device connected to a network. It's like a home address for computers.
+
+**Two versions exist:**
+
+| Version | Format | Notes |
+|---------|--------|-------|
+| **IPv4** | `xxx.xxx.xxx.xxx` (e.g., 192.168.1.1) | 4 numbers, each 0–255. ~4.3 billion addresses (running out!) |
+| **IPv6** | `xxxx:xxxx:...` (long hex groups) | Example: `2001:0db8:85a3:0000:0000:8a2e:0370:7334`. Virtually unlimited |
+
+**Private vs public IP addresses:**
+
+| Type | Scope | Examples |
+|------|-------|----------|
+| **Private IP** | Only within your local network (home/office WiFi) | 192.168.x.x, 10.x.x.x, 172.16.x.x–172.31.x.x. **NOT** reachable from the internet. |
+| **Public IP** | Assigned by ISP; reachable worldwide | Every website/server you visit has a public IP. |
+
+**Key insight:** Your college project on `localhost:8080` uses your private/loopback IP. No one outside your machine can access it. To make it accessible worldwide, you need a **PUBLIC IP ADDRESS** attached to your machine/server.
+
+### 2.3 What Is a Port?
+
+A server machine can run **MANY** applications simultaneously — just like your laptop can run Chrome, Spotify, and VS Code at the same time.
+
+So when a request arrives at IP address `35.154.33.64`, **HOW** does the server know **WHICH** application should handle it?
+
+**Answer: PORTS.**
+
+- A **Port** is a number (0–65535) that identifies a specific application/service running on a machine.
+- Think of it as a door number inside an apartment building.
+ — - **IP Address** = The apartment building address (e.g., 35.154.33.64)
+ — - **Port** = The specific flat/apartment number (e.g., 8080)
+
+So `35.154.33.64:8080` means: *"Go to the machine at IP 35.154.33.64, and talk to the app on door 8080"*
+
+#### Well-known / reserved port numbers
+
+| Port | Service / Protocol |
+|------|-------------------|
+| 80 | HTTP (unsecured web traffic) |
+| 443 | HTTPS (secured web traffic with SSL/TLS) |
+| 22 | SSH (secure shell / remote login) |
+| 21 | FTP (file transfer) |
+| 25 | SMTP (sending email) |
+| 3306 | MySQL database |
+| 5432 | PostgreSQL database |
+| 27017 | MongoDB database |
+| 6379 | Redis cache |
+| 8080 | Common alternate HTTP (dev servers) |
+
+**Port ranges:**
+
+- **0–1023** — System/well-known ports (reserved, need admin access)
+- **1024–49151** — Registered ports (common apps)
+- **49152–65535** — Dynamic/private ports (temporary, ephemeral)
+
+When you type `https://google.com`, your browser automatically uses port **443**. You don't type it because browsers assume 443 for HTTPS and 80 for HTTP. Behind the scenes: `https://google.com` = `142.250.77.46:443`
+
+### 2.4 What Is DNS?
+
+**DNS** = Domain Name System
+
+- **Problem:** IP addresses like `142.250.77.46` are hard to remember.
+- **Solution:** DNS is like the **PHONE BOOK** of the internet. You give DNS a domain name → It gives you back an IP address.
+
+#### How DNS resolution works (step-by-step)
+
+1. You type `https://abc.com` in your browser and hit Enter.
+2. Your browser checks its own **DNS CACHE**. (It may already know the IP from a previous visit.) If found → skip to step 6.
+3. If not cached, your OS checks its local DNS cache and the **hosts file** (`/etc/hosts` on Linux/Mac, `C:\Windows\System32\drivers\etc\hosts` on Windows). If found → skip to step 6.
+4. If still not found, your OS sends the query to a **DNS RESOLVER** (usually ISP or public: Google `8.8.8.8`, Cloudflare `1.1.1.1`).
+5. The DNS Resolver goes through a hierarchy:
+ —  - **ROOT NAME SERVERS** → Know where `.com`, `.in`, `.org` etc. servers are
+ —  - **TLD NAME SERVERS** → `.com` servers know where `abc.com`'s nameserver is
+ —  - **AUTHORITATIVE NAME SERVER** → Has the actual IP address for `abc.com`
+6. The IP address (e.g., `35.154.33.64`) is returned to your browser.
+7. Browser connects to `35.154.33.64:443` and requests the page.
+
+**Visual flow:**
+
+```mermaid
+flowchart TD
+ —  — Start(["User enters abc.com"]) --> BC{"Browser DNS\ncache hit?"}
+ —  — BC -->|Yes| IP["Return IP address"]
+ —  — BC -->|No| OS{"OS cache or\nhosts file?"}
+ —  — OS -->|Yes| IP
+ —  — OS -->|No| DR["DNS Resolver\n(8.8.8.8 / 1.1.1.1)"]
+ —  — DR --> Root["Root Name Server"]
+ —  — Root --> TLD["TLD Server (.com)"]
+ —  — TLD --> Auth["Authoritative NS\nfor abc.com"]
+ —  — Auth --> IP
+ —  — IP --> Conn["Browser connects\n35.154.33.64:443"]
+```
+
+#### DNS record types (common ones)
+
+| Type | Purpose |
+|------|---------|
+| **A** | Maps domain to IPv4 address (`abc.com` → `35.154.33.64`) |
+| **AAAA** | Maps domain to IPv6 address |
+| **CNAME** | Alias — points one domain to another domain |
+| **MX** | Mail servers for the domain (email routing) |
+| **TXT** | Text records (verification, SPF, DKIM) |
+| **NS** | Nameserver records — who manages DNS for this domain |
+
+**TTL (Time To Live):**
+
+- Every DNS record has a TTL — how many seconds it should be cached.
+- After TTL expires, the resolver fetches fresh data.
+- **Low TTL** = changes propagate quickly but more DNS queries.
+- **High TTL** = fewer queries but changes take longer to propagate.
+
+### 2.5 Full Request Lifecycle (Putting It All Together)
+
+Let's trace **exactly** what happens when you visit `https://abc.com`:
+
+```
+[YOUR BROWSER]
+ —  —  |
+ —  —  | — 1. User types https://abc.com and presses Enter
+ —  —  ↓
+[DNS RESOLVER]
+ —  —  |
+ —  —  | — 2. Resolves abc.com → 35.154.33.64
+ —  —  ↓
+[YOUR BROWSER again]
+ —  —  |
+ —  —  | — 3. Initiates TCP Connection to 35.154.33.64:443
+ —  —  | —  —  (3-way handshake: SYN → SYN-ACK → ACK)
+ —  —  |
+ —  —  | — 4. TLS Handshake (for HTTPS security)
+ —  —  | —  —  (Certificates exchanged, encryption keys set up)
+ —  —  ↓
+[SERVER at 35.154.33.64]
+ —  —  |
+ —  —  | — 5. Server receives request on port 443
+ —  —  | —  —  Identifies the correct application (web server / reverse proxy)
+ —  —  |
+ —  —  | — 6. Application processes the request
+ —  —  | —  —  (fetch data from DB, run business logic, etc.)
+ —  —  ↓
+[YOUR BROWSER again]
+ —  —  |
+ —  —  | — 7. Server sends back HTTP Response (HTML/JSON/etc.)
+ —  —  |
+ —  —  | — 8. Browser renders the page / processes the data
+ —  —  ↓
+[YOU SEE THE WEBPAGE]
+```
+
+> **Note:** Steps 3–8 happen in milliseconds for a fast, well-designed system.
+
+---
+
+## Section 3 — How to Deploy an Application?
+
+### 3.1 The Problem with Hosting Yourself
+
+Theoretically, you **COULD** host your app on your own laptop and expose it to the internet. But here's why nobody does this for production:
+
+| Challenge | Issue |
+|-----------|-------|
+| **Static public IP** | Most home/college connections have a **dynamic** IP. It changes when you reconnect. Domain breaks constantly. Static IP costs extra. |
+| **Always on** | Laptop sleeps, shuts down, moves → app goes offline. Servers need 24/7/365. |
+| **Hardware maintenance** | Disk dies, RAM fails, power cut → app gone. Need backups, UPS, redundant hardware. Expensive and complex. |
+| **Bandwidth** | Millions of users need enormous bandwidth. Home internet isn't designed for this. |
+| **Security** | Exposing laptop to internet is dangerous. Need firewalls, DDoS protection, intrusion detection. |
+| **Scalability** | Traffic spikes — you can't instantly add more CPU/RAM to your laptop. |
+
+### 3.2 Cloud Providers — The Solution
+
+Cloud providers own **MASSIVE** data centers with thousands of physical servers. They rent you a slice of that infrastructure (called a **VIRTUAL MACHINE**).
+
+#### Major cloud providers
+
+| Provider | Virtual Machine Product Name |
+|----------|------------------------------|
+| AWS (Amazon) | EC2 — Elastic Compute Cloud |
+| Azure (Microsoft) | Azure Virtual Machines |
+| GCP (Google) | Compute Engine |
+| DigitalOcean | Droplets |
+| Linode / Akamai | Linode Instances |
+| Vultr | Cloud Compute Instances |
+
+**What you get from a cloud provider:**
+
+- A Virtual Machine (VM) with dedicated CPU, RAM, Disk
+- A public static IP address (or elastic IP)
+- Network connectivity with high bandwidth
+- Choice of OS (Ubuntu, Amazon Linux, Windows, etc.)
+- Pay only for what you use (pay-per-hour or pay-per-second)
+- Options to scale up (bigger machine) or scale out (more machines)
+- Managed services for databases, storage, networking, etc.
+
+### 3.3 What Is a Virtual Machine (VM)?
+
+A **Virtual Machine** is software that simulates a physical computer. The cloud provider runs a **HYPERVISOR** on their physical servers. The hypervisor divides one physical machine into many virtual machines.
+
+```
+Physical Server (e.g., 128 CPU cores, 512GB RAM)
+┌──────────────────────────────────────────┐
+│ —  —  —  —  —  —  — HYPERVISOR —  —  —  —  —  —  —  —  — │
+├──────────┬──────────┬──────────┬─────────┤
+│ VM #1 —  — │ VM #2 —  — │ VM #3 —  — │ VM #4 —  │
+│ 2 CPUs —  │ 4 CPUs —  │ 8 CPUs —  │ 2 CPUs — │
+│ 4GB RAM — │ 16GB RAM │ 32GB RAM │ 8GB RAM │
+│ Ubuntu —  │ Windows — │ Amazon —  │ Debian — │
+│ —  —  —  —  — │ —  —  —  —  — │ Linux —  — │ —  —  —  —  │
+└──────────┴──────────┴──────────┴─────────┘
+```
+
+- Each VM is **isolated** from others. You get full OS access and root control.
+- You can install anything — Node.js, Python, Java, databases, etc.
+- AWS calls their VMs: **EC2 INSTANCES**. EC2 = Elastic Compute Cloud ("Elastic" = can scale dynamically)
+
+### 3.4 What Is Deployment?
+
+**DEPLOYMENT** = The process of making your application accessible to users by running it on a server (usually in the cloud).
+
+**Simplified deployment steps:**
+
+1. Write code on your **LOCAL** machine (laptop)
+2. Test it locally (`localhost:8080`)
+3. Push code to version control (GitHub/GitLab)
+4. Connect to your cloud VM (via SSH)
+5. Pull the code onto the VM
+6. Install dependencies (`npm install` / `pip install`)
+7. Start the application on the VM (`node app.js` / `python app.py`)
+8. Configure a domain name to point to the VM's public IP (DNS A record)
+9. (Optional) Set up HTTPS with SSL certificate (Let's Encrypt)
+10. App is now **LIVE** and accessible worldwide!
+
+**Modern deployment approaches:**
+
+- **CI/CD Pipelines** (GitHub Actions, Jenkins, GitLab CI) — Automatically test and deploy on push to main
+- **Docker Containers** — Package app + dependencies for consistent environments
+- **Kubernetes (K8s)** — Orchestrate many containers across many servers
+- **Serverless** (AWS Lambda, Google Cloud Functions) — Run code without managing servers; pay per execution
+- **Platform-as-a-Service (PaaS)** — Heroku, Railway, Render handle deployment; you just push code
+
+### 3.5 Local vs Production Environment
+
+| Environment | Characteristics |
+|-------------|-----------------|
+| **LOCAL (Development)** | Runs on laptop; only you can access (`localhost`); easy to test/debug; not optimized for performance |
+| **STAGING** | Copy of production for testing before going live; same setup as production but test data; QA finds bugs before release |
+| **PRODUCTION** | Live environment real users use; must be highly available, fast, secure; mistakes impact users; changes deployed carefully (often with rollback plans) |
+
+---
+
+## Section 4 — Latency and Throughput
+
+These are the two most fundamental performance metrics in every system design discussion. Understanding them deeply is essential.
+
+### 4.1 Latency — Deep Dive
+
+#### Definition
+
+**Latency** is the **TIME** it takes for a **SINGLE** request to travel from the client to the server, get processed, and return a response back to the client.
+
+Think of it as: *"How fast does ONE thing get done?"*
+
+- **Primary unit:** Milliseconds (ms)
+- Also: microseconds (μs) for very fast ops, or seconds (s) for very slow ops
+
+#### What contributes to latency?
+
+Latency is made up of multiple parts:
+
+1. **Network transmission latency** — Physical time for packets to travel. Limited by speed of light.
+ —  - Same city: ~1–5ms
+ —  - Cross-country (Mumbai to Delhi): ~20–40ms
+ —  - Intercontinental (Mumbai to New York): ~100–200ms
+2. **Propagation delay** — How far the signal travels. Cannot beat speed-of-light limit. Geographic proximity matters.
+3. **Queuing delay** — If server is busy, request waits in queue. Under heavy load, adds significant latency.
+4. **Processing/computation time** — Server runs code, executes queries. Depends on CPU and algorithm efficiency.
+5. **Database query time** — Often the biggest contributor. Poor SQL or missing index → seconds instead of ms.
+6. **Serialization / deserialization** — Converting to/from JSON, XML, Protobuf, etc.
+7. **TLS handshake** — HTTPS adds 1–2 round trips before data is sent.
+
+**Total latency** = Sum of all the above components.
+
+#### RTT — Round Trip Time
+
+**RTT** is the time for a request to go **FROM** the client **TO** the server, **AND** for the response to travel **BACK** to the client.
+
+```
+RTT = Time to send request + Server processing time + Time to receive response
+```
+
+RTT is essentially the full latency you experience as a user. **"Ping"** in networking tools measures RTT.
+
+```bash
+$ ping google.com
+64 bytes from 142.250.77.46: icmp_seq=1 ttl=117 time=28.4 ms
+# ← This "28.4 ms" is the RTT
+```
+
+#### Latency targets (industry standards)
+
+| Type of application | Good latency | Bad latency |
+|---------------------|--------------|-------------|
+| Real-time gaming / trading | < 10ms | > 50ms |
+| Interactive web app | < 100ms | > 300ms |
+| API response (typical) | < 200ms | > 1000ms |
+| Page load (full web page) | < 2 seconds | > 5 seconds |
+| Video streaming (buffering) | < 500ms | > 3 seconds |
+| Database query | < 10ms | > 100ms |
+
+**Human perception:**
+
+| Latency | User experience |
+|---------|-----------------|
+| < 100ms | Feels instantaneous |
+| 100–300ms | Noticeable but acceptable |
+| 300ms–1s | Noticeably slow, users get annoyed |
+| > 1s | Users start abandoning the page |
+| > 3s | 50%+ of mobile users leave (Google study) |
+
+#### How to reduce latency
+
+1. **CDN** — Cache static assets near users (Cloudflare, Akamai, AWS CloudFront). Mumbai server → NY user (200ms) vs NY CDN edge → NY user (5ms).
+2. **Caching** — Redis, Memcached. DB query: 50ms → Cache hit: 0.5ms (~100x faster).
+3. **Database indexing** — Index frequently queried columns. Seconds → milliseconds.
+4. **Efficient algorithms** — O(n²) → O(n log n) or O(n).
+5. **Connection pooling** — Reuse DB connections. New connection adds 10–50ms each time.
+6. **HTTP/2 and HTTP/3** — Multiplexing, header compression, faster connection setup.
+7. **Geographic distribution** — Deploy in multiple regions; route users to nearest server.
+
+### 4.2 Throughput — Deep Dive
+
+#### Definition
+
+**Throughput** is the **NUMBER** of requests (or operations) a system can successfully handle **PER SECOND** (or per unit of time).
+
+Think of it as: *"How MANY things can get done per second?"*
+
+**Primary units:**
+
+| Abbreviation | Meaning |
+|--------------|---------|
+| **RPS** | Requests Per Second (web servers, APIs) |
+| **TPS** | Transactions Per Second (databases, payments) |
+| **QPS** | Queries Per Second (databases) |
+| **bps / Mbps / Gbps** | bits per second (network bandwidth) |
+
+#### What limits throughput?
+
+Every system has a **BOTTLENECK** — the slowest component that caps throughput.
+
+1. **CPU speed & cores** — More cores → more parallel processing.
+2. **Memory (RAM)** — Out of RAM → swap to disk (100x slower than RAM) → throughput drops.
+3. **Network bandwidth** — Connection maxes out → requests dropped or queued. 1 Gbps ≈ ~125 MB/s.
+4. **Disk I/O** — Slow reads/writes; DB-heavy apps often disk-limited.
+5. **Database connection limits** — All connections in use → new queries wait.
+6. **Application code efficiency** — Blocking/sync code reduces concurrent handling.
+7. **Thread / process limits** — One request per thread in traditional servers. Node.js uses non-blocking async I/O.
+
+#### Throughput in practice
+
+| Example | Numbers |
+|---------|---------|
+| **Simple API server** | Express on 2-core: 1,000–5,000 RPS (no DB); 100–500 RPS with DB |
+| **Netflix at peak** | 200+ million concurrent users; millions of RPS globally |
+| **Payment systems** | Visa ~24,000 TPS average; ~65,000 TPS peak |
+
+#### How to increase throughput
+
+1. **Horizontal scaling (scale out)** — More servers + load balancer. 1 server @ 1,000 RPS → 10 servers @ 10,000 RPS.
+2. **Vertical scaling (scale up)** — Bigger machine (more CPU/RAM). Hardware ceiling exists.
+3. **Asynchronous processing** — Queue slow tasks (email, images). Respond instantly; process in background.
+4. **Caching** — Cached responses = no DB, no compute. More cache hits = more RPS.
+5. **Database read replicas** — Primary for writes; replicas for reads.
+6. **Connection pooling** — Pool of persistent connections serves thousands of requests.
+7. **Efficient data formats** — Protobuf, MessagePack vs JSON/XML — less bandwidth per message.
+8. **Non-blocking I/O** — Node.js handles other requests while waiting on DB.
+
+### 4.3 The Relationship Between Latency and Throughput
+
+These two are **RELATED** but **DIFFERENT**, and can sometimes **conflict**.
+
+#### Little's Law (fundamental theorem of queuing systems)
+
+Throughput (λ) = Concurrent Users (L) / Latency (W)
+→ Or: L = λ × W
+
+If you have more concurrent users and the same throughput, **latency increases**. To serve more users at the same latency, you must **increase throughput**.
+
+#### The tradeoff
+
+- Sometimes improving throughput **increases** latency.
+ — - **Example:** Batching DB writes (100 at once) → higher throughput, but each write waits for batch → higher latency.
+- **Example:** Caching improves **both** (rare win!) → lower latency **and** higher throughput.
+
+#### Saturation point
+
+As load increases, latency stays low until the system approaches its throughput limit. Then latency increases rapidly.
+
+```mermaid
+flowchart TD
+ —  — Load["Requests per second increase"] --> Cap{"Below system\ncapacity?"}
+ —  — Cap -->|Yes| Stable["Latency stays low"]
+ —  — Cap -->|No| Sat["Saturation point"]
+ —  — Sat --> Spike["Latency rises sharply"]
+ —  — Stable --> Goal["Goal: scale throughput\nbefore saturation"]
+```
+
+```
+Latency
+│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  — *
+│ —  —  —  —  —  —  —  —  —  —  —  —  —  * *
+│ —  —  —  —  —  —  —  —  —  —  —  — * *
+│ —  —  —  —  —  —  — * * * * *
+│* * * * * * *
+└──────────────────────────────── Requests/sec
+ —  —  ↑ —  —  —  —  —  —  —  —  —  — ↑
+Low load zone —  —  —  — Saturation point
+(latency stable) —  —  (latency explodes)
+```
+
+**Ideal goal:** Optimize **both**:
+
+- Low latency → Each user gets a fast response
+- High throughput → Many users served simultaneously
+
+### 4.4 Analogies (Multiple for Easy Memory)
+
+| Analogy | Latency | Throughput |
+|---------|---------|------------|
+| **Highway** | Time for ONE car from City A to City B | Cars passing through per hour |
+| **Restaurant** | Order to plate (30 min) | Customers served per hour (50/hour) |
+| **Water pipe** | Time for first drop from tank to tap | Liters per second |
+| **Assembly line** | Time to build ONE car (8 hours) | Cars produced per day (500/day) |
+
+- Wider highway = higher throughput; faster speed limit = lower latency.
+- A factory can produce 500 cars/day (high throughput) even if each car takes 8 hours (high latency) — many cars at different stages (**parallelism/concurrency**).
+
+### 4.5 Percentile Latency (p50, p95, p99)
+
+In production, you **NEVER** just look at **average** latency. Averages hide terrible experiences for some users.
+
+| Percentile | Meaning |
+|------------|---------|
+| **p50 (median)** | 50% of requests faster than this |
+| **p75** | 75% faster |
+| **p95** | 95% faster |
+| **p99** | 99% faster |
+| **p99.9** | 99.9% faster ("three nines") |
+
+**Example API measurements:**
+
+| Percentile | Value |
+|------------|-------|
+| p50 | 50ms — half of users under 50ms |
+| p95 | 200ms |
+| p99 | 800ms |
+| p99.9 | 3000ms — slowest 0.1% wait up to 3s |
+
+**p99 and p99.9** = **TAIL LATENCIES**. At scale:
+
+- 10 million requests/day → 1% = 100,000 requests @ 800ms
+- 0.1% = 10,000 requests @ 3 second latency
+
+Amazon found that every **100ms** of latency costs them **1%** in sales.
+
+**Why tail latency exists:**
+
+- Garbage collection pauses (JVM)
+- Disk I/O or swap
+- Network congestion
+- Database lock contention
+- Cold starts (serverless)
+- CPU scheduling delays
+
+---
+
+## Section 5 — Putting It All Together
+
+### 5.1 How These Concepts Connect
+
+```mermaid
+flowchart TD
+ —  — A["Build app on laptop"] --> B["Deploy to cloud VM\n(EC2, Droplet, etc.)"]
+ —  — B --> C["Domain name → DNS → Public IP"]
+ —  — C --> D["Port routes to correct app"]
+ —  — D --> E["Request processing = Latency"]
+ —  — E --> F["Many concurrent users = Throughput"]
+ —  — F --> G{"Traffic grows?"}
+ —  — G -->|Yes| H["Apply system design:\nscale, cache, CDN, replicas"]
+ —  — G -->|No| OK["Simple 3-tier may suffice"]
+```
+
+```
+You build an app (code on laptop)
+ —  —  — ↓
+You DEPLOY it to a CLOUD SERVER (AWS EC2, etc.)
+ —  —  — ↓
+Users access it via DOMAIN NAME → DNS resolves to SERVER IP
+ —  —  — ↓
+Request goes to correct app via PORT NUMBER
+ —  —  — ↓
+Server processes request — this takes LATENCY time
+ —  —  — ↓
+System must handle many users simultaneously — this is THROUGHPUT
+ —  —  — ↓
+As users grow, simple architecture breaks → Need SYSTEM DESIGN principles
+```
+
+### 5.2 Common Interview Questions on These Topics
+
+**Q: What is the difference between latency and throughput?**
+
+**A:** Latency measures how long **ONE** request takes (speed). Throughput measures how **MANY** requests can be handled per second (capacity).
+
+**Q: If I add more servers, does latency decrease?**
+
+**A:** Not necessarily. Latency per request stays the same. But **throughput** increases. Under heavy load, more servers prevent queue buildup, which **indirectly** keeps latency from spiking (less queuing delay).
+
+**Q: What is a single point of failure?**
+
+**A:** A component that, if it fails, brings the entire system down. Example: One server with no backup = SPOF. Solution: Redundancy — multiple servers, load balancers, DB replicas.
+
+**Q: What is the difference between scaling up and scaling out?**
+
+**A:** **Scale up (vertical):** Make one server bigger (more CPU/RAM). **Scale out (horizontal):** Add more servers and distribute load. Scale out is generally preferred for large systems.
+
+**Q: Why do we use ports?**
+
+**A:** One server runs many applications. Ports let the OS route traffic to the correct app.
+
+**Q: What is RTT?**
+
+**A:** Round Trip Time — total time for request to server **and** response back. Essentially equals latency from the user's view.
+
+---
+
+## Section 6 — Master Reference Tables
+
+### 6.1 Key Concepts Summary
+
+| Concept | Explanation |
+|---------|-------------|
+| Server | Machine (physical or virtual) that runs your app |
+| Client | App/device users use to interact with your system |
+| IP Address | Unique address for every machine on a network |
+| localhost / 127.0.0.1 | Refers to the current machine itself |
+| Public IP | IP reachable from the internet |
+| Private IP | IP only reachable within a local network |
+| Port | Number routing traffic to the correct app (0–65535) |
+| DNS | Translates domain → IP address |
+| RTT | Round Trip Time = request + response time |
+| Latency | Time for a single request to complete |
+| Throughput | Requests handled per second |
+| RPS | Requests Per Second |
+| TPS | Transactions Per Second |
+| Deployment | Putting your app on a public server |
+| EC2 | AWS virtual machine product |
+| VM | Virtual Machine — simulated computer on real hardware |
+| Hypervisor | Software that creates and manages VMs |
+| SPOF | Single Point of Failure |
+| Horizontal Scaling | Adding more servers |
+| Vertical Scaling | Upgrading existing server hardware |
+| Tail Latency | Slowest requests (p99, p99.9) |
+| CDN | Geographically distributed content servers |
+| Cache | Fast temporary storage to avoid repeated work |
+| Load Balancer | Distributes requests across multiple servers |
+
+### 6.2 Latency vs Throughput Comparison
+
+| Dimension | Latency | Throughput |
+|-----------|---------|------------|
+| Definition | Time for ONE request | Requests handled/second |
+| Measures | Speed / responsiveness | Capacity / volume |
+| Unit | ms | RPS / TPS / QPS |
+| Ideal goal | LOW | HIGH |
+| Improves with | Caching, CDN, better code | More servers, async, cache |
+| Analogy | Speed of ONE car | Cars/hour on highway |
+| User impact | How fast page loads | How many users served |
+| Bottleneck cause | Network distance, slow DB | CPU, RAM, bandwidth, I/O |
+
+### 6.3 Well-Known Port Numbers (Quick Reference)
+
+| Port | Protocol / Service |
+|------|-------------------|
+| 20 | FTP (data transfer) |
+| 21 | FTP (control) |
+| 22 | SSH |
+| 25 | SMTP |
+| 53 | DNS |
+| 80 | HTTP |
+| 110 | POP3 |
+| 143 | IMAP |
+| 443 | HTTPS |
+| 3000 | Common Node.js / React dev server |
+| 3306 | MySQL |
+| 5432 | PostgreSQL |
+| 6379 | Redis |
+| 8080 | Alternate HTTP / dev server |
+| 8443 | Alternate HTTPS |
+| 27017 | MongoDB |
+
+### 6.4 Cloud Provider Comparison (Beginner Level)
+
+| Provider | VM Product | Market | Known for |
+|----------|------------|--------|-----------|
+| AWS (Amazon) | EC2 | Largest | Widest range of services |
+| Azure (Microsoft) | Virtual Machines | 2nd | Enterprise / Windows workloads |
+| GCP (Google) | Compute Engine | 3rd | ML, big data |
+| DigitalOcean | Droplets | Smaller | Developer-friendly, simple |
+| Linode/Akamai | Linodes | Smaller | Simple, affordable |
+
+### 6.5 Latency Benchmarks (Order of Magnitude — memorize these!)
+
+Rough numbers for system design interviews:
+
+| Operation | Approx latency |
+|-----------|----------------|
+| L1 cache reference (CPU) | 0.5 ns |
+| L2 cache reference (CPU) | 7 ns |
+| RAM memory read | 100 ns |
+| SSD random read | 100 μs (0.1 ms) |
+| HDD read | 10 ms |
+| Redis / in-memory cache read | 0.1–1 ms |
+| DB query (indexed, simple) | 1–10 ms |
+| DB query (complex / no index) | 100 ms – seconds |
+| Network within same data center | 0.5–1 ms |
+| Network cross-region (Mumbai → Singapore) | 20–40 ms |
+| Network cross-continent (India → USA) | 150–200 ms |
+| DNS lookup | 10–100 ms |
+| TLS handshake (HTTPS setup) | 50–200 ms |
+
+**Key insight:** RAM is ~100,000× faster than disk. This is why **caching** (storing in RAM) dramatically reduces latency.
+
+---
+
+## Section 7 — Things to Remember / Common Mistakes
+
+| Mistake | Truth |
+|---------|-------|
+| "High throughput means low latency too." | They are **independent**. High throughput + high latency is possible (e.g., batch systems). |
+| "Adding more servers always reduces latency." | More servers increase **throughput**. Latency depends on network, DB, algorithms. More servers only reduce latency **indirectly** (less queuing under load). |
+| "Average latency is a good metric." | Averages hide outliers. Use **percentiles** (p95, p99). 50ms average with 5000ms p99 = awful experience for 1% of users. |
+| "localhost and 127.0.0.1 are different." | They're the **same**. localhost resolves to 127.0.0.1. |
+| "Port 80 and 443 are optional." | They're **default** ports — browsers assume them. Still used behind the scenes. |
+| "Vertical scaling is always better." | Vertical scaling has limits. Horizontal scaling is more scalable and fault-tolerant. One big server = SPOF. |
+| "My app works locally, so deployment is easy." | Local ≠ production. Different OS, deps, security groups, firewalls, env vars, SSL, etc. |
+
+---
+
+## Glossary — Alphabetical
+
+| Term | Definition |
+|------|------------|
+| **Bandwidth** | Maximum rate of data transfer across a network (Mbps/Gbps) |
+| **Cache** | Fast temporary storage to serve repeated data without recomputing |
+| **CDN** | Content Delivery Network — servers distributed globally near users |
+| **Client** | Any device/app that sends requests to your system |
+| **Deployment** | Moving your application to a live server for public access |
+| **DNS** | Domain Name System — translates domain names to IP addresses |
+| **EC2** | Amazon Web Services' virtual machine product |
+| **Fault Tolerance** | System's ability to continue operating despite partial failures |
+| **Horizontal Scaling** | Adding more machines to handle more load |
+| **HTTP** | HyperText Transfer Protocol — port 80 |
+| **HTTPS** | HTTP secured with SSL/TLS — port 443 |
+| **Hypervisor** | Software that creates and manages VMs on hardware |
+| **IP Address** | Numerical label identifying a device on a network |
+| **IPv4** | 32-bit IP format — ~4.3B addresses |
+| **IPv6** | 128-bit IP format — virtually unlimited addresses |
+| **Latency** | Time to complete a single request (ms) |
+| **Load Balancer** | Distributes incoming requests across multiple servers |
+| **localhost** | Hostname meaning "this machine" — resolves to 127.0.0.1 |
+| **Monolith** | Single application containing all code and functionality |
+| **p95/p99** | Latency percentiles — 95%/99% of requests faster than this |
+| **Port** | Number (0–65535) identifying a specific app on a server |
+| **Public IP** | IP reachable from the internet |
+| **Private IP** | IP only reachable within a local network |
+| **RPS** | Requests Per Second |
+| **RTT** | Round Trip Time — request + response (= latency from user view) |
+| **Scalability** | System's ability to handle increasing load |
+| **Server** | Machine that runs your application and serves requests |
+| **SPOF** | Single Point of Failure |
+| **Tail Latency** | Latency of slowest requests (p99, p99.9) |
+| **Throughput** | Number of requests handled per unit time |
+| **TLS/SSL** | Encryption for HTTPS |
+| **TPS** | Transactions Per Second |
+| **TTL** | Time To Live — how long DNS/cache entry stays valid |
+| **Vertical Scaling** | Upgrading a machine (more CPU/RAM) |
+| **Virtual Machine** | Software-simulated computer on real hardware |
+
+---
+
+## End of Chapter 1
+
+**Next →** [Chapter 2: Scaling & Estimation](<02 - Scaling & Back-of-the-Envelope Estimation.md>)

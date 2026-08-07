@@ -1,609 +1,609 @@
-—#— —S—y—s—t—e—m— —D—e—s—i—g—n— ——— —D—e—t—a—i—l—e—d— —P—e—r—s—o—n—a—l— —N—o—t—e—s— —(—C—h—a—p—t—e—r— —7—)—
-—
-—*—*—T—o—p—i—c—s—:—*—*— —E—v—e—n—t—-—D—r—i—v—e—n— —A—r—c—h—i—t—e—c—t—u—r—e— —(—E—D—A—)—,— —K—a—f—k—a— —I—n—t—e—r—n—a—l—s— —(—B—r—o—k—e—r—s—,— —T—o—p—i—c—s—,— —P—a—r—t—i—t—i—o—n—s—,— —C—o—n—s—u—m—e—r— —G—r—o—u—p—s—,— —O—f—f—s—e—t—s—)—,— —R—e—d—i—s— —P—u—b—/—S—u—b—,— —W—e—b—S—o—c—k—e—t—s—,— —P—u—l—l— —v—s— —P—u—s—h—
-—
-—T—h—e—s—e— —n—o—t—e—s— —c—o—n—t—i—n—u—e— —f—r—o—m— —[—C—h—a—p—t—e—r— —6— ——— —B—l—o—b— —S—t—o—r—a—g—e—,— —C—D—N— —&— —M—e—s—s—a—g—e— —B—r—o—k—e—r—s—]—(—<—0—6— —-— —B—l—o—b— —S—t—o—r—a—g—e—,— —C—D—N—s— —&— —M—e—s—s—a—g—e— —B—r—o—k—e—r—s—.—m—d—>—)—.— —E—v—e—r—y— —c—o—n—c—e—p—t— —i—s— —e—x—p—l—a—i—n—e—d— —f—r—o—m— —f—i—r—s—t— —p—r—i—n—c—i—p—l—e—s— —w—i—t—h— —r—e—a—l—-—w—o—r—l—d— —a—n—a—l—o—g—i—e—s—,— —d—i—a—g—r—a—m—s—,— —a—n—d— —w—o—r—k—e—d— —e—x—a—m—p—l—e—s—.—
-—
-—*—*—P—r—e—v—i—o—u—s— —←—*—*— —[—C—h—a—p—t—e—r— —6—:— —B—l—o—b— —S—t—o—r—a—g—e—,— —C—D—N— —&— —M—e—s—s—a—g—e— —B—r—o—k—e—r—s—]—(—<—0—6— —-— —B—l—o—b— —S—t—o—r—a—g—e—,— —C—D—N—s— —&— —M—e—s—s—a—g—e— —B—r—o—k—e—r—s—.—m—d—>—)—
-—
-—-—-—-—
-—
-—#—#— —T—a—b—l—e— —o—f— —C—o—n—t—e—n—t—s—
-—
-—|— —S—e—c—t—i—o—n— —|— —T—o—p—i—c— —|— —K—e—y— —I—d—e—a—s— —|—
-—|—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —*—*—1—*—*— —|— —E—v—e—n—t—-—D—r—i—v—e—n— —A—r—c—h—i—t—e—c—t—u—r—e— —&— —K—a—f—k—a— —|— —E—D—A— —f—u—n—d—a—m—e—n—t—a—l—s—,— —b—r—o—k—e—r—s—,— —t—o—p—i—c—s—,— —p—a—r—t—i—t—i—o—n—s—,— —k—e—y—s—,— —c—o—n—s—u—m—e—r— —g—r—o—u—p—s—,— —o—f—f—s—e—t—s— —|—
-—|— —*—*—2—*—*— —|— —U—b—e—r— —l—o—c—a—t—i—o—n— —c—a—s—e— —|— —H—i—g—h— —w—r—i—t—e— —t—h—r—o—u—g—h—p—u—t—,— —b—a—t—c—h—i—n—g— —t—o— —P—o—s—t—g—r—e—S—Q—L—,— —R—e—d—i—s— —h—o—t— —p—a—t—h— —|—
-—|— —*—*—3—*—*— —|— —P—u—b—/—S—u—b— —&— —W—e—b—S—o—c—k—e—t—s— —|— —P—u—s—h— —v—s— —p—u—l—l—,— —R—e—d—i—s— —c—h—a—n—n—e—l—s—,— —c—r—o—s—s—-—s—e—r—v—e—r— —c—h—a—t— —|—
-—|— —*—*—4—*—*— —|— —C—h—o—o—s—i—n—g— —t—o—o—l—s— —|— —P—u—b—/—S—u—b— —v—s— —K—a—f—k—a—,— —W—h—a—t—s—A—p—p—-—s—t—y—l—e— —a—r—c—h—i—t—e—c—t—u—r—e— —|—
-—
-—-—-—-—
-—
-—#—#— —P—A—R—T— —1—:— —E—V—E—N—T—-—D—R—I—V—E—N— —A—R—C—H—I—T—E—C—T—U—R—E— —&— —K—A—F—K—A— —I—N—T—E—R—N—A—L—S— ——— —T—h—e— —C—o—m—p—l—e—t—e— —D—e—e—p— —D—i—v—e—
-—
-—#—#—#— —U—n—d—e—r—s—t—a—n—d—i—n—g— —K—a—f—k—a—'—s— —A—r—c—h—i—t—e—c—t—u—r—e— —f—r—o—m— —F—i—r—s—t— —P—r—i—n—c—i—p—l—e—s—
-—
-—K—a—f—k—a— —w—a—s— —c—r—e—a—t—e—d— —a—t— —L—i—n—k—e—d—I—n— —i—n— —2—0—1—1— —t—o— —p—r—o—c—e—s—s— —a—c—t—i—v—i—t—y— —d—a—t—a— —(—p—a—g—e— —v—i—e—w—s—,— —s—e—a—r—c—h—e—s—,— —c—l—i—c—k—s—,— —l—i—k—e—s—)— —a—t— —a— —s—c—a—l—e— —n—o— —e—x—i—s—t—i—n—g— —m—e—s—s—a—g—e— —q—u—e—u—e— —c—o—u—l—d— —h—a—n—d—l—e— ——— —b—i—l—l—i—o—n—s— —o—f— —e—v—e—n—t—s— —p—e—r— —d—a—y—.—
-—
-—T—h—e— —d—e—s—i—g—n— ——— —a—p—p—e—n—d—-—o—n—l—y— —l—o—g—s—,— —p—a—r—t—i—t—i—o—n—s—,— —c—o—n—s—u—m—e—r— —g—r—o—u—p—s—,— —o—f—f—s—e—t—-—b—a—s—e—d— —c—o—n—s—u—m—p—t—i—o—n— ——— —a—l—l— —f—l—o—w— —f—r—o—m— —o—n—e— —r—e—q—u—i—r—e—m—e—n—t—:— —*—*—h—a—n—d—l—e— —e—n—o—r—m—o—u—s— —t—h—r—o—u—g—h—p—u—t— —w—h—i—l—e— —a—l—l—o—w—i—n—g— —m—u—l—t—i—p—l—e— —i—n—d—e—p—e—n—d—e—n—t— —c—o—n—s—u—m—e—r—s— —t—o— —p—r—o—c—e—s—s— —t—h—e— —s—a—m—e— —d—a—t—a—.—*—*—
-—
-—`—`—`—m—e—r—m—a—i—d—
-—f—l—o—w—c—h—a—r—t— —L—R—
-— — — — —P—[—"—P—r—o—d—u—c—e—r—s—"—]—
-— — — — —K—[—"—K—a—f—k—a— —C—l—u—s—t—e—r—<—b—r—/—>—T—o—p—i—c—s— —+— —P—a—r—t—i—t—i—o—n—s—"—]—
-— — — — —C—G—1—[—"—C—o—n—s—u—m—e—r— —G—r—o—u—p— —A—"—]—
-— — — — —C—G—2—[—"—C—o—n—s—u—m—e—r— —G—r—o—u—p— —B—"—]—
-—
-— — — — —P— —-—-—>— —K—
-— — — — —K— —-—-—>— —C—G—1—
-— — — — —K— —-—-—>— —C—G—2—
-—`—`—`—
-—
-—-—-—-—
-—
-—#—#—#— —B—r—o—k—e—r—s— ——— —T—h—e— —K—a—f—k—a— —S—e—r—v—e—r—s—
-—
-—A— —K—a—f—k—a— —*—*—b—r—o—k—e—r—*—*— —i—s— —a— —s—e—r—v—e—r— —t—h—a—t— —s—t—o—r—e—s— —m—e—s—s—a—g—e—s— —a—n—d— —s—e—r—v—e—s— —t—h—e—m— —t—o— —c—o—n—s—u—m—e—r—s—.— —P—r—o—d—u—c—t—i—o—n— —a—l—w—a—y—s— —u—s—e—s— —a— —*—*—c—l—u—s—t—e—r—*—*— —o—f— —b—r—o—k—e—r—s—.—
-—
-—`—`—`—
-—K—A—F—K—A— —C—L—U—S—T—E—R— —(—3— —b—r—o—k—e—r—s—)—:—
-—
-—┌—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—┐—
-—│— — — — — — — — — — — — — — — — — — — —K—a—f—k—a— —C—l—u—s—t—e—r— — — — — — — — — — — — — — — — — — — —│—
-—│— — —┌—─—─—─—─—─—─—─—─—─—─—─—─—─—┐— — —┌—─—─—─—─—─—─—─—─—─—─—─—─—─—┐— — —┌—─—─—─—─—─—─—─—─—─—─—─—─—─—┐— —│—
-—│— — —│— — —B—r—o—k—e—r— —1— — — —│— — —│— — —B—r—o—k—e—r— —2— — — —│— — —│— — —B—r—o—k—e—r— —3— — — —│— —│—
-—│— — —│— —(—L—e—a—d—e—r— —f—o—r— —│— — —│— —(—L—e—a—d—e—r— —f—o—r— —│— — —│— —(—L—e—a—d—e—r— —f—o—r—│— —│—
-—│— — —│— — —s—o—m—e— —p—a—r—t—s—)—│— — —│— — —s—o—m—e— —p—a—r—t—s—)—│— — —│— —s—o—m—e— —p—a—r—t—s—)— —│— —│—
-—│— — —└—─—─—─—─—─—─—─—─—─—─—─—─—─—┘— — —└—─—─—─—─—─—─—─—─—─—─—─—─—─—┘— — —└—─—─—─—─—─—─—─—─—─—─—─—─—─—┘— —│—
-—└—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—─—┘—
-—
-—W—H—Y— —M—U—L—T—I—P—L—E— —B—R—O—K—E—R—S—?—
-—
-—1—.— —R—e—p—l—i—c—a—t—i—o—n—:— —p—a—r—t—i—t—i—o—n— —d—a—t—a— —c—o—p—i—e—d— —a—c—r—o—s—s— —b—r—o—k—e—r—s— ——— —B—r—o—k—e—r— —1— —d—i—e—s—,— —B—r—o—k—e—r— —2— —h—a—s— —c—o—p—y—
-—2—.— —P—a—r—a—l—l—e—l—i—s—m—:— —d—i—f—f—e—r—e—n—t— —b—r—o—k—e—r—s— —s—e—r—v—e— —d—i—f—f—e—r—e—n—t— —p—a—r—t—i—t—i—o—n—s— —s—i—m—u—l—t—a—n—e—o—u—s—l—y—
-—3—.— —F—a—u—l—t— —t—o—l—e—r—a—n—c—e—:— —o—n—e— —b—r—o—k—e—r— —d—o—w—n—,— —c—l—u—s—t—e—r— —k—e—e—p—s— —w—o—r—k—i—n—g—
-—`—`—`—
-—
-—|— —K—a—f—k—a— —|— —D—a—t—a—b—a—s—e— —a—n—a—l—o—g—y— —|—
-—|—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —B—r—o—k—e—r— —|— —D—a—t—a—b—a—s—e— —s—e—r—v—e—r— —|—
-—|— —T—o—p—i—c— —|— —T—a—b—l—e— —|—
-—|— —M—e—s—s—a—g—e— —|— —R—o—w— —|—
-—|— —O—f—f—s—e—t— —|— —R—o—w— —I—D— —(—i—m—m—u—t—a—b—l—e—,— —s—e—q—u—e—n—t—i—a—l— —p—e—r— —p—a—r—t—i—t—i—o—n—)— —|—
-—
-—-—-—-—
-—
-—#—#—#— —T—o—p—i—c—s— ——— —T—h—e— —L—o—g—i—c—a—l— —C—a—t—e—g—o—r—i—e—s—
-—
-—A— —*—*—t—o—p—i—c—*—*— —i—s— —a— —n—a—m—e—d— —c—h—a—n—n—e—l—.— —P—r—o—d—u—c—e—r—s— —w—r—i—t—e— —t—o— —t—o—p—i—c—s—.— —C—o—n—s—u—m—e—r—s— —r—e—a—d— —f—r—o—m— —t—o—p—i—c—s—.—
-—
-—`—`—`—
-—R—i—d—e—-—s—h—a—r—i—n—g— —a—p—p— —t—o—p—i—c—s—:—
-—
-—-— —T—o—p—i—c—:— —"—d—r—i—v—e—r—-—l—o—c—a—t—i—o—n—-—u—p—d—a—t—e—s—"—
-—-— —P—r—o—d—u—c—e—r—:— —D—r—i—v—e—r— —m—o—b—i—l—e— —a—p—p— —v—i—a— —b—a—c—k—e—n—d—
-—-— —C—o—n—s—u—m—e—r—s—:— —R—e—a—l—-—t—i—m—e— —m—a—p—,— —E—T—A— —c—a—l—c—u—l—a—t—o—r—
-—
-—-— —T—o—p—i—c—:— —"—r—i—d—e—-—r—e—q—u—e—s—t—s—"—
-—-— —P—r—o—d—u—c—e—r—:— —U—s—e—r— —a—p—p—
-—-— —C—o—n—s—u—m—e—r—:— —R—i—d—e— —m—a—t—c—h—i—n—g— —s—e—r—v—i—c—e—
-—
-—-— —T—o—p—i—c—:— —"—p—a—y—m—e—n—t—-—e—v—e—n—t—s—"—
-—-— —P—r—o—d—u—c—e—r—:— —P—a—y—m—e—n—t— —s—e—r—v—i—c—e—
-—-— —C—o—n—s—u—m—e—r—s—:— —F—i—n—a—n—c—e— —r—e—p—o—r—t—i—n—g—,— —f—r—a—u—d— —d—e—t—e—c—t—i—o—n—,— —n—o—t—i—f—i—c—a—t—i—o—n—s—
-—
-—-— —T—o—p—i—c—:— —"—d—r—i—v—e—r—-—t—r—i—p—-—c—o—m—p—l—e—t—e—d—"—
-—-— —P—r—o—d—u—c—e—r—:— —D—r—i—v—e—r— —a—p—p—
-—-— —C—o—n—s—u—m—e—r—s—:— —P—a—y—m—e—n—t— —s—e—r—v—i—c—e—,— —r—a—t—i—n—g— —s—e—r—v—i—c—e—
-—
-—E—x—a—m—p—l—e— —m—e—s—s—a—g—e— —i—n— —"—d—r—i—v—e—r—-—l—o—c—a—t—i—o—n—-—u—p—d—a—t—e—s—"—:—
-—{—
-— — —"—d—r—i—v—e—r—_—i—d—"—:— —"—d—r—v—_—4—5—6—"—,—
-— — —"—l—a—t—i—t—u—d—e—"—:— —2—8—.—6—1—3—9—,—
-— — —"—l—o—n—g—i—t—u—d—e—"—:— —7—7—.—2—0—9—0—,—
-— — —"—t—i—m—e—s—t—a—m—p—"—:— —1—7—1—0—0—0—0—0—0—0—,—
-— — —"—s—p—e—e—d—_—k—m—h—"—:— —4—2—,—
-— — —"—h—e—a—d—i—n—g—"—:— —2—7—0—
-—}—
-—`—`—`—
-—
-—-—-—-—
-—
-—#—#—#— —T—h—e— —U—b—e—r— —L—o—c—a—t—i—o—n— —P—r—o—b—l—e—m— ——— —H—i—g—h—-—T—h—r—o—u—g—h—p—u—t— —I—n—g—e—s—t—i—o—n—
-—
-—`—`—`—
-—S—C—E—N—A—R—I—O—:—
-— — —5—0—0—,—0—0—0— —a—c—t—i—v—e— —d—r—i—v—e—r—s—
-— — —E—a—c—h— —s—e—n—d—s— —G—P—S— —u—p—d—a—t—e— —e—v—e—r—y— —2— —s—e—c—o—n—d—s—
-—
-—*—*—W—R—I—T—E—S— —P—E—R— —S—E—C—O—N—D—:—*—*—
-—-— —5—0—0—,—0—0—0— —/— —2— —=— —2—5—0—,—0—0—0— —w—r—i—t—e—s—/—s—e—c—
-—-— —P—e—r— —h—o—u—r—:— —9—0—0— —m—i—l—l—i—o—n— —w—r—i—t—e—s—
-—
-—*—*—P—O—S—T—G—R—E—S—Q—L— —D—I—R—E—C—T—L—Y—:—*—*—
-—-— —S—t—r—o—n—g— —s—e—r—v—e—r—:— —~—1—0—,—0—0—0—–—5—0—,—0—0—0— —w—r—i—t—e—s—/—s—e—c— —m—a—x—
-—-— —R—e—q—u—i—r—e—d—:— —2—5—0—,—0—0—0—/—s—e—c— —→— —s—a—t—u—r—a—t—e—d— —a—n—d— —c—r—a—s—h—i—n—g—
-—
-—E—a—c—h— —P—G— —w—r—i—t—e—:— —d—i—s—k— —I—/—O—,— —i—n—d—e—x— —u—p—d—a—t—e—,— —W—A—L—,— —r—e—p—l—i—c—a—t—i—o—n—
-—
-—K—A—F—K—A—:—
-— — —D—e—s—i—g—n—e—d— —f—o—r— —s—e—q—u—e—n—t—i—a—l— —a—p—p—e—n—d—-—o—n—l—y— —w—r—i—t—e—s—
-— — —N—o— —i—n—d—e—x— —u—p—d—a—t—e—s— —p—e—r— —m—e—s—s—a—g—e—
-— — —M—i—l—l—i—o—n—s— —o—f— —w—r—i—t—e—s—/—s—e—c— —o—n— —a— —3—-—b—r—o—k—e—r— —c—l—u—s—t—e—r—
-— — —2—5—0—,—0—0—0—/—s—e—c—:— —c—o—m—f—o—r—t—a—b—l—e—
-—`—`—`—
-—
-—*—*—B—a—t—c—h—i—n—g— —s—t—r—a—t—e—g—y—:—*—*—
-—
-—`—`—`—
-—P—r—o—d—u—c—e—r—:— —e—v—e—r—y— —d—r—i—v—e—r— —u—p—d—a—t—e— —→— —a—p—p—e—n—d— —t—o— —K—a—f—k—a— —i—m—m—e—d—i—a—t—e—l—y—
-—
-—C—o—n—s—u—m—e—r— —(—P—o—s—t—g—r—e—S—Q—L— —p—a—t—h—)—:— —b—a—t—c—h— —e—v—e—r—y— —1—0— —m—i—n—u—t—e—s—
-— — —1—0— —m—i—n— —×— —2—5—0—,—0—0—0—/—s—e—c— —×— —6—0— —=— —1—5—0— —m—i—l—l—i—o—n— —p—o—i—n—t—s—
-— — —B—u—t— —y—o—u— —o—n—l—y— —n—e—e—d— —L—A—T—E—S—T— —l—o—c—a—t—i—o—n— —p—e—r— —d—r—i—v—e—r—
-—
-—*—*—C—o—n—s—u—m—e—r— —l—o—g—i—c—:—*—*—
-—1—.— —R—e—a—d— —1—0— —m—i—n—u—t—e—s— —o—f— —K—a—f—k—a— —m—e—s—s—a—g—e—s—
-—2—.— —P—e—r— —d—r—i—v—e—r—,— —k—e—e—p— —o—n—l—y— —m—o—s—t— —r—e—c—e—n—t— —l—o—c—a—t—i—o—n—
-—3—.— —U—P—S—E—R—T— —~—5—0—0—,—0—0—0— —r—o—w—s— —i—n—t—o— —P—o—s—t—g—r—e—S—Q—L—
-—4—.— —~—8—3—3— —w—r—i—t—e—s—/—s—e—c— —t—o— —P—G— ——— —c—o—m—p—l—e—t—e—l—y— —f—i—n—e—
-—
-—*—*—R—E—F—I—N—E—D— —r—e—a—l—-—t—i—m—e— —m—a—p— —a—p—p—r—o—a—c—h—:—*—*—
-—-— —H—o—t— —p—a—t—h—:— — —K—a—f—k—a— —→— —C—o—n—s—u—m—e—r— —→— —R—e—d—i—s— —(—s—u—b—-—m—s—,— —l—i—v—e— —m—a—p—)—
-—-— —C—o—l—d— —p—a—t—h—:— —K—a—f—k—a— —→— —C—o—n—s—u—m—e—r— —b—a—t—c—h— —→— —P—o—s—t—g—r—e—S—Q—L— —(—h—i—s—t—o—r—y—,— —a—n—a—l—y—t—i—c—s—)—
-—
-— — —M—a—p— —r—e—a—d—s— —R—e—d—i—s—.— —A—n—a—l—y—t—i—c—s— —r—e—a—d—s— —P—o—s—t—g—r—e—S—Q—L—.—
-— — —S—a—m—e— —K—a—f—k—a— —s—t—r—e—a—m—.— —T—w—o— —c—o—n—s—u—m—e—r— —g—r—o—u—p—s—.— —O—n—e— —w—r—i—t—e—.—
-—`—`—`—
-—
-—-—-—-—
-—
-—#—#—#— —P—a—r—t—i—t—i—o—n—s— ——— —K—a—f—k—a—'—s— —P—a—r—a—l—l—e—l—i—s—m— —E—n—g—i—n—e—
-—
-—W—i—t—h—o—u—t— —p—a—r—t—i—t—i—o—n—s—,— —a— —t—o—p—i—c— —i—s— —o—n—e— —f—i—l—e— —o—n— —o—n—e— —b—r—o—k—e—r— ——— —o—n—l—y— —o—n—e— —c—o—n—s—u—m—e—r— —r—e—a—d—s— —a—t— —a— —t—i—m—e—.—
-—
-—#—#—#—#— —P—a—r—t—i—t—i—o—n— —A—n—a—t—o—m—y— —&— —P—h—y—s—i—c—a—l— —L—o—g—s—
-—
-—A— —p—a—r—t—i—t—i—o—n— —i—s— —a— —p—h—y—s—i—c—a—l—l—y— —s—e—p—a—r—a—t—e—,— —*—*—o—r—d—e—r—e—d—,— —i—m—m—u—t—a—b—l—e—*—*— —s—e—q—u—e—n—c—e— —o—f— —r—e—c—o—r—d—s— —o—n— —d—i—s—k— ——— —a— —l—o—g— —f—i—l—e—.—
-—
-—`—`—`—
-—T—o—p—i—c—:— —"—d—r—i—v—e—r—-—l—o—c—a—t—i—o—n—-—u—p—d—a—t—e—s—"— —w—i—t—h— —4— —p—a—r—t—i—t—i—o—n—s—:—
-—
-—P—A—R—T—I—T—I—O—N— —0— —(—B—r—o—k—e—r— —1—)—:—
-— — —O—f—f—s—e—t— —0—:— —{—d—r—i—v—e—r—:— —"—d—r—v—_—0—0—1—"—,— —l—a—t—:— —2—8—.—6—1—,— —l—n—g—:— —7—7—.—2—0—,— —t—i—m—e—:— —1—0—0—0—}—
-— — —O—f—f—s—e—t— —1—:— —{—d—r—i—v—e—r—:— —"—d—r—v—_—0—0—2—"—,— —l—a—t—:— —1—9—.—0—7—,— —l—n—g—:— —7—2—.—8—7—,— —t—i—m—e—:— —1—0—0—1—}—
-— — —O—f—f—s—e—t— —2—:— —{—d—r—i—v—e—r—:— —"—d—r—v—_—0—0—1—"—,— —l—a—t—:— —2—8—.—6—2—,— —l—n—g—:— —7—7—.—2—1—,— —t—i—m—e—:— —1—0—0—2—}—
-— — —.—.—.—
-—
-—P—A—R—T—I—T—I—O—N— —1— —(—B—r—o—k—e—r— —2—)—:—
-— — —O—f—f—s—e—t— —0—:— —{—d—r—i—v—e—r—:— —"—d—r—v—_—0—0—3—"—,— —.—.—.—}—
-— — —.—.—.—
-—
-—K—E—Y— —P—R—O—P—E—R—T—I—E—S—:—
-— — —-— —O—r—d—e—r—i—n—g— —G—U—A—R—A—N—T—E—E—D— —w—i—t—h—i—n— —a— —p—a—r—t—i—t—i—o—n—
-— — —-— —N—O— —o—r—d—e—r—i—n—g— —g—u—a—r—a—n—t—e—e— —a—c—r—o—s—s— —p—a—r—t—i—t—i—o—n—s—
-— — —-— —E—a—c—h— —p—a—r—t—i—t—i—o—n— —o—n— —o—n—e— —b—r—o—k—e—r— —(—r—e—p—l—i—c—a—t—e—d— —t—o— —o—t—h—e—r—s—)—
-— — —-— —O—n—e— —p—a—r—t—i—t—i—o—n— —r—e—a—d— —b—y— —a—t— —m—o—s—t— —O—N—E— —c—o—n—s—u—m—e—r— —p—e—r— —c—o—n—s—u—m—e—r— —g—r—o—u—p—
-—`—`—`—
-—
-—#—#—#—#— —P—r—o—d—u—c—e—r— —P—a—r—t—i—t—i—o—n—i—n—g— —S—t—r—a—t—e—g—i—e—s—
-—
-—S—T—R—A—T—E—G—Y— —1—:— —R—o—u—n—d— —R—o—b—i—n— —(—n—o— —m—e—s—s—a—g—e— —k—e—y—)—
-— — —M—e—s—s—a—g—e— —1— —→— —P—0—,— —M—e—s—s—a—g—e— —2— —→— —P—1—,— —M—e—s—s—a—g—e— —3— —→— —P—2—,— —M—e—s—s—a—g—e— —4— —→— —P—3—,— —.—.—.—
-— — —U—s—e— —w—h—e—n—:— —e—v—e—n— —d—i—s—t—r—i—b—u—t—i—o—n—,— —o—r—d—e—r—i—n—g— —d—o—e—s—n—'—t— —m—a—t—t—e—r—
-— — —P—r—o—b—l—e—m—:— —s—a—m—e— —d—r—i—v—e—r—'—s— —u—p—d—a—t—e—s— —c—a—n— —l—a—n—d— —i—n— —d—i—f—f—e—r—e—n—t— —p—a—r—t—i—t—i—o—n—s— —→— —o—u—t— —o—f— —o—r—d—e—r—
-—
-—S—T—R—A—T—E—G—Y— —2—:— —K—e—y—-—B—a—s—e—d— —P—a—r—t—i—t—i—o—n—i—n—g— —(—r—e—c—o—m—m—e—n—d—e—d— —f—o—r— —e—n—t—i—t—y— —o—r—d—e—r—i—n—g—)—
-— — —p—a—r—t—i—t—i—o—n— —=— —H—A—S—H—(—m—e—s—s—a—g—e—_—k—e—y—)— —%— —n—u—m—_—p—a—r—t—i—t—i—o—n—s—
-—
-—*—*—K—e—y— —=— —d—r—i—v—e—r—_—i—d—:—*—*—
-—-— —H—A—S—H—(—"—d—r—v—_—0—0—1—"—)— —%— —4— —=— —0— —→— —A—L—L— —d—r—v—_—0—0—1— —u—p—d—a—t—e—s— —→— —P—a—r—t—i—t—i—o—n— —0—
-—-— —H—A—S—H—(—"—d—r—v—_—0—0—2—"—)— —%— —4— —=— —1— —→— —A—L—L— —d—r—v—_—0—0—2— —u—p—d—a—t—e—s— —→— —P—a—r—t—i—t—i—o—n— —1—
-—
-— — —U—s—e— —w—h—e—n—:— —"—a—l—l— —u—p—d—a—t—e—s— —f—o—r— —d—r—i—v—e—r— —X— —m—u—s—t— —s—t—a—y— —i—n— —o—r—d—e—r—"—
-—
-—S—T—R—A—T—E—G—Y— —3—:— —C—u—s—t—o—m— —P—a—r—t—i—t—i—o—n—e—r—
-— — —Y—o—u—r— —c—o—d—e— —p—i—c—k—s— —p—a—r—t—i—t—i—o—n— —b—y— —b—u—s—i—n—e—s—s— —l—o—g—i—c—
-— — —E—x—a—m—p—l—e—:— —p—a—r—t—i—t—i—o—n— —b—y— —g—e—o—g—r—a—p—h—y— —(—N—o—r—t—h—/—S—o—u—t—h—/—E—a—s—t—/—W—e—s—t— —I—n—d—i—a—)—
-—
-—-—-—-—
-—
-—#—#—#— —C—o—n—s—u—m—e—r— —G—r—o—u—p—s— ——— —P—a—r—a—l—l—e—l—i—s—m— —a—n—d— —F—a—n—-—O—u—t—
-—
-—C—o—n—s—u—m—e—r— —g—r—o—u—p—s— —s—e—r—v—e— —*—*—t—w—o—*—*— —p—u—r—p—o—s—e—s—.—
-—
-—#—#—#—#— —1—.— —P—a—r—a—l—l—e—l— —P—r—o—c—e—s—s—i—n—g— —w—i—t—h—i—n— —a— —C—o—n—s—u—m—e—r— —G—r—o—u—p—
-—
-—T—o—p—i—c— —w—i—t—h— —4— —p—a—r—t—i—t—i—o—n—s—,— —3— —c—o—n—s—u—m—e—r—s— —i—n— —g—r—o—u—p— —`—"—e—m—a—i—l—-—w—o—r—k—e—r—s—"—`—:—
-—
-—*—*—K—a—f—k—a— —a—s—s—i—g—n—s— —p—a—r—t—i—t—i—o—n—s—:—*—*—
-—-— —C—o—n—s—u—m—e—r—-—1— —→— —P—a—r—t—i—t—i—o—n—-—0—
-—-— —C—o—n—s—u—m—e—r—-—2— —→— —P—a—r—t—i—t—i—o—n—-—1— —A—N—D— —P—a—r—t—i—t—i—o—n—-—2—
-—-— —C—o—n—s—u—m—e—r—-—3— —→— —P—a—r—t—i—t—i—o—n—-—3—
-—
-—E—a—c—h— —c—o—n—s—u—m—e—r— —o—w—n—s— —i—t—s— —p—a—r—t—i—t—i—o—n—s— —e—x—c—l—u—s—i—v—e—l—y—.—
-—H—o—r—i—z—o—n—t—a—l— —s—c—a—l—i—n—g—:— —3— —c—o—n—s—u—m—e—r—s— —≈— —3—×— —t—h—r—o—u—g—h—p—u—t—.—
-—
-—W—H—Y— —c—a—n—'—t— —t—w—o— —c—o—n—s—u—m—e—r—s— —i—n— —t—h—e— —S—A—M—E— —g—r—o—u—p— —r—e—a—d— —t—h—e— —s—a—m—e— —p—a—r—t—i—t—i—o—n—?—
-—
-— — —S—a—m—e— —m—e—s—s—a—g—e— —w—o—u—l—d— —b—e— —p—r—o—c—e—s—s—e—d— —t—w—i—c—e—.—
-— — —"—S—e—n—d— —w—e—l—c—o—m—e— —e—m—a—i—l— —t—o— —r—a—h—u—l—@—g—m—a—i—l—.—c—o—m—"—
-— — —C—o—n—s—u—m—e—r—-—1— —s—e—n—d—s— —i—t—.— —C—o—n—s—u—m—e—r—-—2— —s—e—n—d—s— —i—t— —a—g—a—i—n—.— —D—u—p—l—i—c—a—t—e—.—
-—
-—K—a—f—k—a— —a—s—s—i—g—n—s— —e—a—c—h— —p—a—r—t—i—t—i—o—n— —t—o— —a—t— —m—o—s—t— —o—n—e— —c—o—n—s—u—m—e—r— —p—e—r— —g—r—o—u—p—.—
-—
-—*—*—M—o—r—e— —c—o—n—s—u—m—e—r—s— —t—h—a—n— —p—a—r—t—i—t—i—o—n—s—:—*—*—
-—
-—4— —p—a—r—t—i—t—i—o—n—s—,— —5— —c—o—n—s—u—m—e—r—s— —i—n— —s—a—m—e— —g—r—o—u—p—:—
-—
-— — —C—o—n—s—u—m—e—r—-—1— —→— —P—0—
-— — —C—o—n—s—u—m—e—r—-—2— —→— —P—1—
-— — —C—o—n—s—u—m—e—r—-—3— —→— —P—2—
-— — —C—o—n—s—u—m—e—r—-—4— —→— —P—3—
-— — —C—o—n—s—u—m—e—r—-—5— —→— —I—D—L—E— —(—n—o— —p—a—r—t—i—t—i—o—n—)—
-—
-—R—U—L—E—:— —A—c—t—i—v—e— —c—o—n—s—u—m—e—r—s— —≤— —p—a—r—t—i—t—i—o—n—s— —i—n— —a— —g—r—o—u—p—.—
-—
-—L—E—S—S—O—N—:— —N—e—e—d— —N— —p—a—r—a—l—l—e—l— —w—o—r—k—e—r—s— —→— —c—r—e—a—t—e— —a—t— —l—e—a—s—t— —N— —p—a—r—t—i—t—i—o—n—s— —u—p—f—r—o—n—t—.—
-— — — — — — —(—A—d—d—i—n—g— —p—a—r—t—i—t—i—o—n—s— —l—a—t—e—r— —c—h—a—n—g—e—s— —H—A—S—H— —%— —N— ——— —a—f—f—e—c—t—s— —k—e—y— —o—r—d—e—r—i—n—g—)—
-—
-—#—#—#—#— —D—y—n—a—m—i—c— —C—o—n—s—u—m—e—r— —G—r—o—u—p— —R—e—b—a—l—a—n—c—i—n—g—
-—
-—R—e—b—a—l—a—n—c—i—n—g— —r—e—a—s—s—i—g—n—s— —p—a—r—t—i—t—i—o—n—s— —w—h—e—n— —g—r—o—u—p— —m—e—m—b—e—r—s—h—i—p— —c—h—a—n—g—e—s—.—
-—
-—T—R—I—G—G—E—R— —1—:— —N—e—w— —c—o—n—s—u—m—e—r— —j—o—i—n—s—
-— — —A—l—l— —c—o—n—s—u—m—e—r—s— —p—a—u—s—e— —b—r—i—e—f—l—y— —(—"—s—t—o—p— —t—h—e— —w—o—r—l—d—"—)— —d—u—r—i—n—g— —r—e—a—s—s—i—g—n—m—e—n—t—
-— — —K—a—f—k—a— —2—.—4—+— —c—o—o—p—e—r—a—t—i—v—e— —r—e—b—a—l—a—n—c—i—n—g—:— —u—n—a—f—f—e—c—t—e—d— —c—o—n—s—u—m—e—r—s— —k—e—e—p— —c—o—n—s—u—m—i—n—g—
-—
-—T—R—I—G—G—E—R— —2—:— —C—o—n—s—u—m—e—r— —c—r—a—s—h—e—s— —o—r— —l—e—a—v—e—s—
-— — —P—a—r—t—i—t—i—o—n—s— —r—e—d—i—s—t—r—i—b—u—t—e—d— —t—o— —r—e—m—a—i—n—i—n—g— —c—o—n—s—u—m—e—r—s—
-— — —R—e—s—u—m—e— —f—r—o—m— —l—a—s—t— —c—o—m—m—i—t—t—e—d— —o—f—f—s—e—t— ——— —n—o— —m—e—s—s—a—g—e— —l—o—s—s—
-—
-—T—R—I—G—G—E—R— —3—:— —S—e—s—s—i—o—n— —t—i—m—e—o—u—t— —(—n—o— —h—e—a—r—t—b—e—a—t— —i—n— —s—e—s—s—i—o—n—.—t—i—m—e—o—u—t—.—m—s—,— —d—e—f—a—u—l—t— —1—0—s—)—
-— — —K—a—f—k—a— —a—s—s—u—m—e—s— —c—o—n—s—u—m—e—r— —d—e—a—d— —→— —r—e—b—a—l—a—n—c—e—
-—
-—#—#—#—#— —2—.— —F—a—n—-—O—u—t— —a—c—r—o—s—s— —I—n—d—e—p—e—n—d—e—n—t— —C—o—n—s—u—m—e—r— —G—r—o—u—p—s—
-—
-—D—i—f—f—e—r—e—n—t— —g—r—o—u—p—s— —h—a—v—e— —*—*—i—n—d—e—p—e—n—d—e—n—t— —o—f—f—s—e—t— —p—o—i—n—t—e—r—s—*—*—.— —M—e—s—s—a—g—e—s— —a—r—e— —n—o—t— —d—e—l—e—t—e—d— —w—h—e—n— —r—e—a—d—.—
-—
-—`—`—`—
-—T—O—P—I—C—:— —"—v—i—d—e—o—-—p—r—o—c—e—s—s—"— ——— —m—e—s—s—a—g—e— —{—v—i—d—e—o—_—i—d—:— —7—8—9—,— —s—3—_—u—r—l—:— —"—.—.—.—"—,— —d—u—r—a—t—i—o—n—:— —"—1—0—m—i—n—"—}—
-—
-—G—R—O—U—P— —1—:— —"—v—i—d—e—o—-—t—r—a—n—s—c—o—d—e—r—-—g—r—o—u—p—"— —(—4— —c—o—n—s—u—m—e—r—s—)—
-— — —R—e—a—d—s— —a—l—l— —p—a—r—t—i—t—i—o—n—s—,— —t—r—a—n—s—c—o—d—e—s— —t—o— —3—6—0—p—–—4—K—,— —u—p—l—o—a—d—s— —t—o— —S—3—
-— — —O—f—f—s—e—t— —o—n— —P—0— —m—i—g—h—t— —b—e— —1—0—0—0—
-—
-—G—R—O—U—P— —2—:— —"—c—a—p—t—i—o—n—-—g—e—n—e—r—a—t—o—r—-—g—r—o—u—p—"— —(—2— —c—o—n—s—u—m—e—r—s—)—
-— — —C—o—m—p—l—e—t—e—l—y— —s—e—p—a—r—a—t—e— —o—f—f—s—e—t—s—
-— — —R—u—n—s— —s—p—e—e—c—h—-—t—o—-—t—e—x—t—,— —g—e—n—e—r—a—t—e—s— —.—s—r—t—
-— — —O—f—f—s—e—t— —o—n— —P—0— —m—i—g—h—t— —b—e— —5—0—0— —(—s—l—o—w—e—r— ——— —t—h—a—t—'—s— —f—i—n—e—)—
-—
-—G—R—O—U—P— —3—:— —"—t—h—u—m—b—n—a—i—l—-—g—e—n—e—r—a—t—o—r—-—g—r—o—u—p—"— —(—n—e—w—)—
-— — —S—t—a—r—t—s— —f—r—o—m— —o—f—f—s—e—t— —0— —o—r— —"—l—a—t—e—s—t—"— —d—e—p—e—n—d—i—n—g— —o—n— —c—o—n—f—i—g—
-— — —R—e—a—d—s— —A—L—L— —h—i—s—t—o—r—i—c—a—l— —m—e—s—s—a—g—e—s— —i—f— —f—r—o—m— —0—
-— — —T—r—a—n—s—c—o—d—e—r— —g—r—o—u—p— —u—n—a—f—f—e—c—t—e—d—
-—
-—O—n—e— —w—r—i—t—e—.— —M—a—n—y— —c—o—n—s—u—m—e—r— —g—r—o—u—p—s—.— —W—r—i—t—e— —o—n—c—e—,— —r—e—a—d— —b—y— —m—a—n—y—.—
-—`—`—`—
-—
-—#—#—#—#— —O—f—f—s—e—t— —M—a—n—a—g—e—m—e—n—t— —&— —D—e—l—i—v—e—r—y— —S—e—m—a—n—t—i—c—s—
-—
-—E—a—c—h— —g—r—o—u—p— —c—o—m—m—i—t—s— —a— —*—*—b—o—o—k—m—a—r—k—*—*— —p—e—r— —p—a—r—t—i—t—i—o—n— ——— —s—t—o—r—e—d— —i—n— —K—a—f—k—a—'—s— —i—n—t—e—r—n—a—l— —t—o—p—i—c— —`—_—_—c—o—n—s—u—m—e—r—_—o—f—f—s—e—t—s—`—.—
-—
-—*—*—G—R—O—U—P— —"—c—a—p—t—i—o—n—-—g—e—n—e—r—a—t—o—r—-—g—r—o—u—p—"—:—*—*—
-—-— —P—0—:— —c—o—m—m—i—t—t—e—d— —o—f—f—s—e—t— —=— —4—7— — —(—p—r—o—c—e—s—s—e—d— —0—–—4—6—)—
-—-— —P—1—:— —c—o—m—m—i—t—t—e—d— —o—f—f—s—e—t— —=— —5—1—
-—-— —P—2—:— —c—o—m—m—i—t—t—e—d— —o—f—f—s—e—t— —=— —4—3—
-—-— —P—3—:— —c—o—m—m—i—t—t—e—d— —o—f—f—s—e—t— —=— —4—9—
-—
-—*—*—C—O—N—S—U—M—E—R— —C—R—A—S—H— —a—t— —o—f—f—s—e—t— —5—0— —(—n—o—t— —y—e—t— —c—o—m—m—i—t—t—e—d—)—:—*—*—
-—-— —L—a—s—t— —c—o—m—m—i—t—t—e—d— —=— —4—7—
-—-— —N—e—w— —c—o—n—s—u—m—e—r— —s—t—a—r—t—s— —f—r—o—m— —4—7—
-—-— —R—e—p—r—o—c—e—s—s—e—s— —4—7—,— —4—8—,— —4—9—,— —5—0— —→— —a—t—-—l—e—a—s—t—-—o—n—c—e— —d—e—l—i—v—e—r—y—
-—-— —C—o—n—s—u—m—e—r— —c—o—d—e— —m—u—s—t— —b—e— —I—D—E—M—P—O—T—E—N—T—
-—
-—*—*—A—U—T—O—-—C—O—M—M—I—T— —(—d—e—f—a—u—l—t—)—:—*—*—
-—-— —E—v—e—r—y— —a—u—t—o—.—c—o—m—m—i—t—.—i—n—t—e—r—v—a—l—.—m—s— —(—5—s—)—,— —o—f—f—s—e—t— —a—d—v—a—n—c—e—s— —a—u—t—o—m—a—t—i—c—a—l—l—y—
-—-— —R—i—s—k—:— —m—e—s—s—a—g—e— —f—e—t—c—h—e—d— —b—u—t— —n—o—t— —p—r—o—c—e—s—s—e—d— —→— —o—f—f—s—e—t— —a—d—v—a—n—c—e—s— —→— —m—e—s—s—a—g—e— —"—l—o—s—t—"—
-—
-—M—A—N—U—A—L— —C—O—M—M—I—T— —(—r—e—c—o—m—m—e—n—d—e—d—)—:—
-— — —t—r—a—n—s—c—o—d—e—V—i—d—e—o—(—m—e—s—s—a—g—e—)—;—
-— — —u—p—l—o—a—d—T—o—S—3—(—r—e—s—u—l—t—)—;—
-— — —c—o—n—s—u—m—e—r—.—c—o—m—m—i—t—S—y—n—c—(—)—;— — —/—/— —o—n—l—y— —a—f—t—e—r— —s—u—c—c—e—s—s—
-—
-—-—-—-—
-—
-—#—#— —P—A—R—T— —2—:— —R—E—A—L—-—T—I—M—E— —P—U—B—/—S—U—B— ——— —P—u—s—h— —v—s— —P—u—l—l—
-—
-—#—#—#— —P—u—l—l— —v—s— —P—u—s—h— —A—r—c—h—i—t—e—c—t—u—r—e— —C—o—m—p—a—r—i—s—o—n—
-—
-—`—`—`—m—e—r—m—a—i—d—
-—f—l—o—w—c—h—a—r—t— —T—B—
-— — — — —s—u—b—g—r—a—p—h— —p—u—l—l—[—"—P—u—l—l— ——— —K—a—f—k—a— —/— —S—Q—S—"—]—
-— — — — — — — — —C—1—[—"—C—o—n—s—u—m—e—r— —p—o—l—l—s— —b—r—o—k—e—r—"—]—
-— — — — — — — — —B—1—[—"—B—r—o—k—e—r— —s—t—o—r—e—s— —m—e—s—s—a—g—e—s—"—]—
-— — — — — — — — —C—1— —-—-—>—|—"—p—o—l—l—"—|— —B—1—
-— — — — — — — — —B—1— —-—-—>— —C—1—
-— — — — —e—n—d—
-—
-— — — — —s—u—b—g—r—a—p—h— —p—u—s—h—[—"—P—u—s—h— ——— —R—e—d—i—s— —P—u—b—/—S—u—b—"—]—
-— — — — — — — — —B—2—[—"—B—r—o—k—e—r—"—]—
-— — — — — — — — —C—2—[—"—S—u—b—s—c—r—i—b—e—r—"—]—
-— — — — — — — — —B—2— —-—-—>—|—"—p—u—s—h— —i—m—m—e—d—i—a—t—e—l—y—"—|— —C—2—
-— — — — —e—n—d—
-—`—`—`—
-—
-—K—A—F—K—A— —/— —M—E—S—S—A—G—E— —Q—U—E—U—E— —(—P—u—l—l—)—:—
-— — —w—h—i—l—e— —T—r—u—e—:—
-— — — — —m—e—s—s—a—g—e—s— —=— —c—o—n—s—u—m—e—r—.—p—o—l—l—(—t—i—m—e—o—u—t—=—1—0—0—0—m—s—)—
-— — — — —f—o—r— —m—s—g— —i—n— —m—e—s—s—a—g—e—s—:— —p—r—o—c—e—s—s—(—m—s—g—)—
-— — — — —c—o—n—s—u—m—e—r—.—c—o—m—m—i—t—S—y—n—c—(—)—
-—
-— — —C—o—n—s—u—m—e—r— —p—u—l—l—s— —a—t— —i—t—s— —o—w—n— —p—a—c—e—
-— — —S—l—o—w— —c—o—n—s—u—m—e—r— —→— —m—e—s—s—a—g—e—s— —p—i—l—e— —u—p— —i—n— —b—r—o—k—e—r—
-— — —M—e—s—s—a—g—e—s— —r—e—t—a—i—n—e—d— —u—n—t—i—l— —T—T—L— —o—r— —a—c—k—
-—
-—*—*—R—E—D—I—S— —P—U—B—/—S—U—B— —(—P—u—s—h—)—:—*—*—
-—-— —B—r—o—k—e—r— —p—u—s—h—e—s— —t—o— —s—u—b—s—c—r—i—b—e—r—s— —t—h—e— —m—o—m—e—n—t— —m—e—s—s—a—g—e— —a—r—r—i—v—e—s—
-—-— —S—u—b—s—c—r—i—b—e—r— —n—o—t— —c—o—n—n—e—c—t—e—d— —→— —m—e—s—s—a—g—e— —L—O—S—T— —(—n—o—t— —s—t—o—r—e—d—)—
-—
-—*—*—T—r—a—d—e—-—o—f—f—:—*—*—
-—-— —P—u—b—/—S—u—b—:— —u—l—t—r—a—-—l—o—w— —l—a—t—e—n—c—y—,— —n—o— —p—e—r—s—i—s—t—e—n—c—e—
-—-— —K—a—f—k—a—:— — — —r—e—l—i—a—b—l—e— —d—e—l—i—v—e—r—y—,— —r—e—t—a—i—n—e—d— —l—o—g—
-—
-—-—-—-—
-—
-—#—#—#— —R—e—d—i—s— —P—u—b—/—S—u—b— —A—r—c—h—i—t—e—c—t—u—r—e—
-—
-—`—`—`—
-—P—U—B—L—I—S—H—E—R—:—
-— — —P—U—B—L—I—S—H— —c—h—a—t—:—r—o—o—m—:—4—2— —'—{—"—f—r—o—m—"—:— —"—r—a—h—u—l—"—,— —"—t—e—x—t—"—:— —"—H—e—l—l—o—!—"—,— —"—t—i—m—e—"—:— —1—7—1—0—0—0—0—0—0—0—}—'—
-— — —R—e—t—u—r—n—s—:— —n—u—m—b—e—r— —o—f— —s—u—b—s—c—r—i—b—e—r—s— —w—h—o— —r—e—c—e—i—v—e—d— —i—t— —N—O—W—
-— — —Z—e—r—o— —s—u—b—s—c—r—i—b—e—r—s— —→— —r—e—t—u—r—n—s— —0—.— —M—e—s—s—a—g—e— —g—o—n—e— —f—o—r—e—v—e—r—.—
-—
-—*—*—S—U—B—S—C—R—I—B—E—R—:—*—*—
-—-— —S—U—B—S—C—R—I—B—E— —c—h—a—t—:—r—o—o—m—:—4—2—
-—-— —C—o—n—n—e—c—t—i—o—n— —e—n—t—e—r—s— —s—u—b—s—c—r—i—b—e— —m—o—d—e— ——— —w—a—i—t—s— —f—o—r— —p—u—s—h—e—s—
-—
-—P—A—T—T—E—R—N— —S—U—B—S—C—R—I—B—E—:—
-— — —P—S—U—B—S—C—R—I—B—E— —c—h—a—t—:—r—o—o—m—:—*—
-— — —R—e—c—e—i—v—e—s— —a—l—l— —c—h—a—t—:—r—o—o—m—:—1—,— —c—h—a—t—:—r—o—o—m—:—2—,— —.—.—.—
-—`—`—`—
-—
-—-—-—-—
-—
-—#—#—#— —H—o—r—i—z—o—n—t—a—l— —W—e—b—S—o—c—k—e—t—s— —w—i—t—h— —R—e—d—i—s— —P—u—b—/—S—u—b—
-—
-—#—#—#—#— —W—h—y— —C—h—a—t— —N—e—e—d—s— —W—e—b—S—o—c—k—e—t—s—
-—
-—*—*—H—T—T—P— —P—O—L—L—I—N—G— —(—b—a—d—)—:—*—*—
-—-— —C—l—i—e—n—t— —a—s—k—s— —e—v—e—r—y— —s—e—c—o—n—d—:— —"—A—n—y— —m—e—s—s—a—g—e—s—?—"—
-—-— —1—M— —u—s—e—r—s— —=— —1—M— —r—e—q—u—e—s—t—s—/—s—e—c— —e—v—e—n— —w—h—e—n— —i—d—l—e—
-—-— —A—v—e—r—a—g—e— —~—5—0—0—m—s— —d—e—l—a—y—
-—-— —W—a—s—t—e—f—u—l— —c—o—n—n—e—c—t—i—o—n— —c—h—u—r—n—
-—
-—*—*—W—E—B—S—O—C—K—E—T— —(—c—o—r—r—e—c—t—)—:—*—*—
-—-— —O—n—e— —p—e—r—s—i—s—t—e—n—t— —b—i—d—i—r—e—c—t—i—o—n—a—l— —c—o—n—n—e—c—t—i—o—n—
-—-— —S—e—r—v—e—r— —p—u—s—h—e—s— —i—n—s—t—a—n—t—l—y— —w—h—e—n— —m—e—s—s—a—g—e— —a—r—r—i—v—e—s—
-—-— —C—l—i—e—n—t— —s—e—n—d—s— —w—i—t—h—o—u—t— —n—e—w— —H—T—T—P— —h—a—n—d—s—h—a—k—e—
-—
-—#—#—#—#— —M—u—l—t—i—-—N—o—d—e— —W—e—b—S—o—c—k—e—t— —R—o—u—t—i—n—g— —C—h—a—l—l—e—n—g—e—
-—
-—*—*—R—o—o—m— —#—4—2—:—*—*—
-—-— —R—a—h—u—l— — —→— —W—e—b—S—o—c—k—e—t— —o—n— —S—e—r—v—e—r—-—1—
-—-— —A—n—k—i—t— — —→— —W—e—b—S—o—c—k—e—t— —o—n— —S—e—r—v—e—r—-—1—
-—-— —S—h—i—v—a—m— —→— —W—e—b—S—o—c—k—e—t— —o—n— —S—e—r—v—e—r—-—2—
-—
-—R—a—h—u—l— —s—e—n—d—s— —"—H—e—y— —S—h—i—v—a—m—!—"— —t—o— —S—e—r—v—e—r—-—1—
-—S—e—r—v—e—r—-—1— —o—n—l—y— —k—n—o—w—s— —i—t—s— —o—w—n— —c—o—n—n—e—c—t—i—o—n—s— —(—R—a—h—u—l—,— —A—n—k—i—t—)—
-—S—h—i—v—a—m— —i—s— —o—n— —S—e—r—v—e—r—-—2— ——— —S—e—r—v—e—r—-—1— —c—a—n—n—o—t— —p—u—s—h— —t—o— —h—i—m—
-—M—e—s—s—a—g—e— —n—e—v—e—r— —r—e—a—c—h—e—s— —S—h—i—v—a—m—.— —C—h—a—t— —b—r—o—k—e—n—.—
-—
-—#—#—#—#— —R—e—d—i—s— —P—u—b—/—S—u—b— —a—s— —t—h—e— —C—r—o—s—s—-—S—e—r—v—e—r— —M—e—s—s—a—g—e— —B—u—s—
-—
-—`—`—`—m—e—r—m—a—i—d—
-—s—e—q—u—e—n—c—e—D—i—a—g—r—a—m—
-— — — — —p—a—r—t—i—c—i—p—a—n—t— —R— —a—s— —R—a—h—u—l— —(—S—e—r—v—e—r—-—1—)—
-— — — — —p—a—r—t—i—c—i—p—a—n—t— —S—1— —a—s— —S—e—r—v—e—r—-—1—
-— — — — —p—a—r—t—i—c—i—p—a—n—t— —R—e—d—i—s— —a—s— —R—e—d—i—s— —P—u—b—/—S—u—b—
-— — — — —p—a—r—t—i—c—i—p—a—n—t— —S—2— —a—s— —S—e—r—v—e—r—-—2—
-— — — — —p—a—r—t—i—c—i—p—a—n—t— —S—h— —a—s— —S—h—i—v—a—m— —(—S—e—r—v—e—r—-—2—)—
-—
-— — — — —R—-—>—>—S—1—:— —"—H—e—y— —S—h—i—v—a—m—!—"— —(—W—e—b—S—o—c—k—e—t—)—
-— — — — —S—1—-—>—>—R—e—d—i—s—:— —P—U—B—L—I—S—H— —c—h—a—t—:—r—o—o—m—:—4—2—
-— — — — —R—e—d—i—s—-—>—>—S—1—:— —p—u—s—h— —m—e—s—s—a—g—e—
-— — — — —R—e—d—i—s—-—>—>—S—2—:— —p—u—s—h— —m—e—s—s—a—g—e—
-— — — — —S—1—-—>—>—R—:— —e—c—h—o— —t—o— —R—a—h—u—l— —+— —A—n—k—i—t—
-— — — — —S—2—-—>—>—S—h—:— —d—e—l—i—v—e—r— —t—o— —S—h—i—v—a—m—
-—`—`—`—
-—
-—B—o—t—h— —S—e—r—v—e—r—-—1— —a—n—d— —S—e—r—v—e—r—-—2— —S—U—B—S—C—R—I—B—E— —t—o— —"—c—h—a—t—:—r—o—o—m—:—4—2—"—
-—
-—*—*—R—a—h—u—l— —s—e—n—d—s— —m—e—s—s—a—g—e—:—*—*—
-—1—.— —C—l—i—e—n—t—-—1— —→— —S—e—r—v—e—r—-—1— —(—W—e—b—S—o—c—k—e—t—)—
-—2—.— —S—e—r—v—e—r—-—1— —→— —P—U—B—L—I—S—H— —c—h—a—t—:—r—o—o—m—:—4—2—
-—3—.— —R—e—d—i—s— —p—u—s—h—e—s— —t—o— —A—L—L— —s—u—b—s—c—r—i—b—e—d— —s—e—r—v—e—r—s—
-—4—.— —S—e—r—v—e—r—-—1— —→— —W—e—b—S—o—c—k—e—t— —t—o— —R—a—h—u—l— —+— —A—n—k—i—t—
-—5—.— —S—e—r—v—e—r—-—2— —→— —W—e—b—S—o—c—k—e—t— —t—o— —S—h—i—v—a—m—
-—
-—A—d—d— —S—e—r—v—e—r—-—3—,— —S—e—r—v—e—r—-—4— ——— —a—l—l— —s—u—b—s—c—r—i—b—e—.— —A—l—l— —d—e—l—i—v—e—r— —t—o— —t—h—e—i—r— —c—l—i—e—n—t—s—.—
-—S—c—a—l—e—s— —h—o—r—i—z—o—n—t—a—l—l—y—.—
-—
-—#—#—#—#— —I—m—p—l—e—m—e—n—t—a—t—i—o—n— —C—o—d—e— —A—r—c—h—i—t—e—c—t—u—r—e—
-—
-—`—`—`—j—a—v—a—s—c—r—i—p—t—
-—c—o—n—s—t— —W—e—b—S—o—c—k—e—t— —=— —r—e—q—u—i—r—e—(—'—w—s—'—)—;—
-—c—o—n—s—t— —R—e—d—i—s— —=— —r—e—q—u—i—r—e—(—'—i—o—r—e—d—i—s—'—)—;—
-—
-—/—/— —T—w—o— —c—o—n—n—e—c—t—i—o—n—s—:— —s—u—b—s—c—r—i—b—e—r— —m—o—d—e— —b—l—o—c—k—s— —o—t—h—e—r— —c—o—m—m—a—n—d—s—
-—c—o—n—s—t— —r—e—d—i—s—P—u—b—l—i—s—h—e—r— —=— —n—e—w— —R—e—d—i—s—(—)—;—
-—c—o—n—s—t— —r—e—d—i—s—S—u—b—s—c—r—i—b—e—r— —=— —n—e—w— —R—e—d—i—s—(—)—;—
-—
-—c—o—n—s—t— —r—o—o—m—C—o—n—n—e—c—t—i—o—n—s— —=— —n—e—w— —M—a—p—(—)—;— —/—/— —c—h—a—n—n—e—l— —→— —S—e—t— —o—f— —W—e—b—S—o—c—k—e—t—s—
-—
-—w—s—s—.—o—n—(—'—c—o—n—n—e—c—t—i—o—n—'—,— —(—w—s—)— —=—>— —{—
-— — — — —w—s—.—o—n—(—'—m—e—s—s—a—g—e—'—,— —a—s—y—n—c— —(—r—a—w—M—e—s—s—a—g—e—)— —=—>— —{—
-— — — — — — — — —c—o—n—s—t— —m—e—s—s—a—g—e— —=— —J—S—O—N—.—p—a—r—s—e—(—r—a—w—M—e—s—s—a—g—e—)—;—
-—
-— — — — — — — — —i—f— —(—m—e—s—s—a—g—e—.—t—y—p—e— —=—=—=— —'—j—o—i—n—_—r—o—o—m—'—)— —{—
-— — — — — — — — — — — — —c—o—n—s—t— —r—o—o—m—C—h—a—n—n—e—l— —=— —`—c—h—a—t—:—r—o—o—m—:—$—{—m—e—s—s—a—g—e—.—r—o—o—m—I—d—}—`—;—
-— — — — — — — — — — — — —i—f— —(—!—r—o—o—m—C—o—n—n—e—c—t—i—o—n—s—.—h—a—s—(—r—o—o—m—C—h—a—n—n—e—l—)—)— —{—
-— — — — — — — — — — — — — — — — —r—o—o—m—C—o—n—n—e—c—t—i—o—n—s—.—s—e—t—(—r—o—o—m—C—h—a—n—n—e—l—,— —n—e—w— —S—e—t—(—)—)—;—
-— — — — — — — — — — — — — — — — —r—e—d—i—s—S—u—b—s—c—r—i—b—e—r—.—s—u—b—s—c—r—i—b—e—(—r—o—o—m—C—h—a—n—n—e—l—)—;—
-— — — — — — — — — — — — —}—
-— — — — — — — — — — — — —r—o—o—m—C—o—n—n—e—c—t—i—o—n—s—.—g—e—t—(—r—o—o—m—C—h—a—n—n—e—l—)—.—a—d—d—(—w—s—)—;—
-— — — — — — — — — — — — —w—s—.—c—u—r—r—e—n—t—R—o—o—m— —=— —r—o—o—m—C—h—a—n—n—e—l—;—
-— — — — — — — — —}—
-—
-— — — — — — — — —i—f— —(—m—e—s—s—a—g—e—.—t—y—p—e— —=—=—=— —'—c—h—a—t—_—m—e—s—s—a—g—e—'—)— —{—
-— — — — — — — — — — — — —c—o—n—s—t— —p—a—y—l—o—a—d— —=— —J—S—O—N—.—s—t—r—i—n—g—i—f—y—(—{—
-— — — — — — — — — — — — — — — — —f—r—o—m—:— —m—e—s—s—a—g—e—.—u—s—e—r—I—d—,—
-— — — — — — — — — — — — — — — — —t—e—x—t—:— —m—e—s—s—a—g—e—.—t—e—x—t—,—
-— — — — — — — — — — — — — — — — —t—i—m—e—:— —D—a—t—e—.—n—o—w—(—)—,—
-— — — — — — — — — — — — — — — — —r—o—o—m—:— —m—e—s—s—a—g—e—.—r—o—o—m—I—d—
-— — — — — — — — — — — — —}—)—;—
-— — — — — — — — — — — — —a—w—a—i—t— —r—e—d—i—s—P—u—b—l—i—s—h—e—r—.—p—u—b—l—i—s—h—(—`—c—h—a—t—:—r—o—o—m—:—$—{—m—e—s—s—a—g—e—.—r—o—o—m—I—d—}—`—,— —p—a—y—l—o—a—d—)—;—
-— — — — — — — — — — — — —a—w—a—i—t— —d—a—t—a—b—a—s—e—.—m—e—s—s—a—g—e—s—.—i—n—s—e—r—t—(—{— —/—*— —.—.—.— —*—/— —}—)—;—
-— — — — — — — — —}—
-— — — — —}—)—;—
-—
-— — — — —w—s—.—o—n—(—'—c—l—o—s—e—'—,— —(—)— —=—>— —{—
-— — — — — — — — —i—f— —(—w—s—.—c—u—r—r—e—n—t—R—o—o—m— —&—&— —r—o—o—m—C—o—n—n—e—c—t—i—o—n—s—.—h—a—s—(—w—s—.—c—u—r—r—e—n—t—R—o—o—m—)—)— —{—
-— — — — — — — — — — — — —r—o—o—m—C—o—n—n—e—c—t—i—o—n—s—.—g—e—t—(—w—s—.—c—u—r—r—e—n—t—R—o—o—m—)—.—d—e—l—e—t—e—(—w—s—)—;—
-— — — — — — — — —}—
-— — — — —}—)—;—
-—}—)—;—
-—
-—r—e—d—i—s—S—u—b—s—c—r—i—b—e—r—.—o—n—(—'—m—e—s—s—a—g—e—'—,— —(—c—h—a—n—n—e—l—,— —m—e—s—s—a—g—e—)— —=—>— —{—
-— — — — —c—o—n—s—t— —c—o—n—n—e—c—t—i—o—n—s— —=— —r—o—o—m—C—o—n—n—e—c—t—i—o—n—s—.—g—e—t—(—c—h—a—n—n—e—l—)— —|—|— —n—e—w— —S—e—t—(—)—;—
-— — — — —c—o—n—n—e—c—t—i—o—n—s—.—f—o—r—E—a—c—h—(—(—c—l—i—e—n—t—W—s—)— —=—>— —{—
-— — — — — — — — —i—f— —(—c—l—i—e—n—t—W—s—.—r—e—a—d—y—S—t—a—t—e— —=—=—=— —W—e—b—S—o—c—k—e—t—.—O—P—E—N—)— —{—
-— — — — — — — — — — — — —c—l—i—e—n—t—W—s—.—s—e—n—d—(—m—e—s—s—a—g—e—)—;—
-— — — — — — — — —}—
-— — — — —}—)—;—
-—}—)—;—
-—`—`—`—
-—
-—-—-—-—
-—
-—#—#— —P—A—R—T— —3—:— —C—H—O—O—S—I—N—G— —T—H—E— —R—I—G—H—T— —T—O—O—L—
-—
-—#—#—#— —R—e—d—i—s— —P—u—b—/—S—u—b— —v—s— —A—p—a—c—h—e— —K—a—f—k—a— —C—o—m—p—a—r—i—s—o—n—
-—
-—|— —D—i—m—e—n—s—i—o—n— —|— —R—e—d—i—s— —P—u—b—/—S—u—b— —|— —K—a—f—k—a— —|—
-—|—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—|—
-—|— —*—*—S—t—o—r—a—g—e—*—*— —|— —N—o— ——— —f—i—r—e— —a—n—d— —f—o—r—g—e—t— —|— —Y—e—s— ——— —r—e—t—a—i—n—e—d— —d—a—y—s—/—w—e—e—k—s— —|—
-—|— —*—*—C—o—n—s—u—m—e—r— —o—f—f—l—i—n—e—*—*— —|— —M—e—s—s—a—g—e— —l—o—s—t— —|— —M—e—s—s—a—g—e— —w—a—i—t—s— —i—n— —l—o—g— —|—
-—|— —*—*—L—a—t—e—n—c—y—*—*— —|— —S—u—b—-—m—i—l—l—i—s—e—c—o—n—d— —|— —L—o—w— —m—i—l—l—i—s—e—c—o—n—d—s— —|—
-—|— —*—*—R—e—p—l—a—y—*—*— —|— —N—o—t— —p—o—s—s—i—b—l—e— —|— —Y—e—s— ——— —f—r—o—m— —a—n—y— —o—f—f—s—e—t— —|—
-—|— —*—*—M—o—d—e—l—*—*— —|— —P—u—s—h— —t—o— —s—u—b—s—c—r—i—b—e—r—s— —|— —P—u—l—l— —(—p—o—l—l—)— —|—
-—|— —*—*—D—e—l—i—v—e—r—y—*—*— —|— —A—t—-—m—o—s—t—-—o—n—c—e— —|— —A—t—-—l—e—a—s—t—-—o—n—c—e— —(—w—i—t—h— —a—c—k—)— —|—
-—|— —*—*—T—h—r—o—u—g—h—p—u—t—*—*— —|— —V—e—r—y— —h—i—g—h— —(—i—n—-—m—e—m—o—r—y—)— —|— —E—x—t—r—e—m—e—l—y— —h—i—g—h— —(—m—i—l—l—i—o—n—s—/—s—e—c—)— —|—
-—|— —*—*—B—e—s—t— —f—o—r—*—*— —|— —L—i—v—e— —c—h—a—t—,— —s—c—o—r—e—s—,— —n—o—t—i—f—i—c—a—t—i—o—n—s— —|— —P—i—p—e—l—i—n—e—s—,— —a—u—d—i—t— —l—o—g—,— —e—v—e—n—t— —b—u—s— —|—
-—
-—#—#—#—#— —D—e—c—i—s—i—o—n— —F—r—a—m—e—w—o—r—k—:— —K—a—f—k—a— —v—s— —P—u—b—/—S—u—b—
-—
-—`—`—`—
-—Q—:— —"—W—h—a—t— —i—f— —c—o—n—s—u—m—e—r— —i—s— —o—f—f—l—i—n—e— —w—h—e—n— —m—e—s—s—a—g—e— —a—r—r—i—v—e—s—?—"—
-—
-— — —"—F—i—n—e— —t—o— —m—i—s—s— —i—t— ——— —r—e—a—l—-—t—i—m—e— —o—r— —n—o—t—h—i—n—g—"—
-— — — — —→— —R—e—d—i—s— —P—u—b—/—S—u—b—
-— — — — —E—x—a—m—p—l—e—:— —l—i—v—e— —s—p—o—r—t—s— —t—i—c—k— —u—p—d—a—t—e—s—
-—
-— — —"—M—u—s—t— —e—v—e—n—t—u—a—l—l—y— —p—r—o—c—e—s—s— ——— —l—o—s—i—n—g— —i—t— —i—s— —u—n—a—c—c—e—p—t—a—b—l—e—"—
-— — — — —→— —K—a—f—k—a— —o—r— —m—e—s—s—a—g—e— —q—u—e—u—e—
-— — — — —E—x—a—m—p—l—e—:— —p—a—y—m—e—n—t— —c—o—n—f—i—r—m—a—t—i—o—n— —e—m—a—i—l—
-—
-—Q—:— —"—N—e—e—d— —t—o— —r—e—p—r—o—c—e—s—s— —o—l—d— —m—e—s—s—a—g—e—s—?—"—
-—
-— — —"—Y—e—s— ——— —n—e—w— —s—e—r—v—i—c—e— —o—r— —b—u—g— —f—i—x— —r—e—p—l—a—y—"—
-— — — — —→— —K—a—f—k—a— —(—s—t—a—r—t— —f—r—o—m— —o—f—f—s—e—t— —0—,— —r—e—p—l—a—y— —r—e—t—e—n—t—i—o—n— —w—i—n—d—o—w—)—
-—
-— — —"—N—o— ——— —o—n—l—y— —c—a—r—e— —a—b—o—u—t— —n—o—w—"—
-— — — — —→— —P—u—b—/—S—u—b— —o—r— —n—o—n—-—r—e—p—l—a—y—a—b—l—e— —q—u—e—u—e—
-—`—`—`—
-—
-—-—-—-—
-—
-—#—#—#— —E—n—d—-—t—o—-—E—n—d— —A—r—c—h—i—t—e—c—t—u—r—e—:— —W—h—a—t—s—A—p—p—-—S—t—y—l—e— —C—h—a—t— —S—y—s—t—e—m—
-—
-—`—`—`—m—e—r—m—a—i—d—
-—f—l—o—w—c—h—a—r—t— —T—B—
-— — — — —L—B—[—"—L—o—a—d— —B—a—l—a—n—c—e—r—"—]—
-— — — — —W—S—1—[—"—W—e—b—S—o—c—k—e—t— —S—e—r—v—e—r— —1—"—]—
-— — — — —W—S—2—[—"—W—e—b—S—o—c—k—e—t— —S—e—r—v—e—r— —3—"—]—
-— — — — —R—e—d—i—s—[—"—R—e—d—i—s— —P—u—b—/—S—u—b—"—]—
-— — — — —K—a—f—k—a—[—"—K—a—f—k—a—:— —c—h—a—t—-—m—e—s—s—a—g—e—s—"—]—
-— — — — —C—a—s—s—[—(—"—C—a—s—s—a—n—d—r—a— —h—i—s—t—o—r—y—"—)—]—
-— — — — —E—S—[—"—E—l—a—s—t—i—c—s—e—a—r—c—h— —s—e—a—r—c—h—"—]—
-—
-— — — — —L—B— —-—-—>— —W—S—1— —&— —W—S—2—
-— — — — —W—S—1— —&— —W—S—2— —<—-—-—>— —R—e—d—i—s—
-— — — — —W—S—1— —&— —W—S—2— —-—-—>— —K—a—f—k—a—
-— — — — —K—a—f—k—a— —-—-—>— —C—a—s—s—
-— — — — —K—a—f—k—a— —-—-—>— —E—S—
-—`—`—`—
-—
-—`—`—`—
-—I—N—F—R—A—S—T—R—U—C—T—U—R—E—:—
-— — —-— —L—o—a—d— —B—a—l—a—n—c—e—r— —(—W—e—b—S—o—c—k—e—t— —c—o—n—n—e—c—t—i—o—n—s—)—
-— — —-— —5— —W—e—b—S—o—c—k—e—t— —s—e—r—v—e—r—s—
-— — —-— —R—e—d—i—s— —P—u—b—/—S—u—b— —p—e—r— —r—o—o—m— —c—h—a—n—n—e—l—
-— — —-— —K—a—f—k—a— —t—o—p—i—c— —"—c—h—a—t—-—m—e—s—s—a—g—e—s—"—
-— — —-— —P—o—s—t—g—r—e—S—Q—L— —/— —C—a—s—s—a—n—d—r—a— —f—o—r— —h—i—s—t—o—r—y—
-— — —-— —E—l—a—s—t—i—c—s—e—a—r—c—h— —f—o—r— —s—e—a—r—c—h—
-—
-—R—a—h—u—l— —(—D—e—l—h—i—)— —→— —L—o—a—d— —B—a—l—a—n—c—e—r— —→— —S—e—r—v—e—r—-—1— —→— —j—o—i—n—s— —r—o—o—m— —4—2—
-—S—h—i—v—a—m— —(—M—u—m—b—a—i—)— —→— —L—o—a—d— —B—a—l—a—n—c—e—r— —→— —S—e—r—v—e—r—-—3— —→— —j—o—i—n—s— —r—o—o—m— —4—2—
-—
-—R—a—h—u—l— —s—e—n—d—s—:— —"—K—y—a— —h—a—a—l— —h—a—i— —b—h—a—i—?—"—
-—
-— — —S—t—e—p— —1—:— —W—e—b—S—o—c—k—e—t— —→— —S—e—r—v—e—r—-—1—
-—
-—*—*—S—t—e—p— —2—:— —S—e—r—v—e—r—-—1— —s—i—m—u—l—t—a—n—e—o—u—s—l—y—:—*—*—
-—1—.— —a—)— —P—U—B—L—I—S—H— —R—e—d—i—s— —"—c—h—a—t—:—r—o—o—m—:—4—2—"— — — — — —(—r—e—a—l—-—t—i—m—e—)—
-—2—.— —b—)— —P—R—O—D—U—C—E— —K—a—f—k—a— —"—c—h—a—t—-—m—e—s—s—a—g—e—s—"— — — — —(—d—u—r—a—b—l—e—)—
-—
-—*—*—S—t—e—p— —3—a— ——— —R—e—d—i—s— —p—a—t—h— —(—~—5—m—s—)—:—*—*—
-—1—.— —R—e—d—i—s— —→— —a—l—l— —s—e—r—v—e—r—s— —s—u—b—s—c—r—i—b—e—d— —t—o— —r—o—o—m— —4—2—
-—2—.— —S—e—r—v—e—r—-—1— —→— —R—a—h—u—l—'—s— —s—o—c—k—e—t—
-—3—.— —S—e—r—v—e—r—-—3— —→— —S—h—i—v—a—m—'—s— —s—o—c—k—e—t—
-—
-—*—*—S—t—e—p— —3—b— ——— —K—a—f—k—a— —p—a—t—h—:—*—*—
-—1—.— —P—e—r—s—i—s—t—e—d— —t—o— —d—i—s—k—
-—2—.— —C—o—n—s—u—m—e—r— —"—p—e—r—s—i—s—t—e—n—c—e—"— —→— —C—a—s—s—a—n—d—r—a—
-—3—.— —C—o—n—s—u—m—e—r— —"—s—e—a—r—c—h—-—i—n—d—e—x—e—r—"— —→— —E—l—a—s—t—i—c—s—e—a—r—c—h—
-—4—.— —C—o—n—s—u—m—e—r— —"—n—o—t—i—f—i—c—a—t—i—o—n—"— —→— —p—u—s—h— —i—f— —S—h—i—v—a—m— —o—f—f—l—i—n—e—
-—
-—*—*—S—h—i—v—a—m— —o—f—f—l—i—n—e— —2— —h—o—u—r—s—,— —t—h—e—n— —o—p—e—n—s— —a—p—p—:—*—*—
-—-— —G—E—T— —/—a—p—i—/—c—h—a—t—/—r—o—o—m—/—4—2—/—m—e—s—s—a—g—e—s— —→— —C—a—s—s—a—n—d—r—a— —h—i—s—t—o—r—y—
-—-— —W—e—b—S—o—c—k—e—t— —r—e—c—o—n—n—e—c—t—s— —f—o—r— —n—e—w— —m—e—s—s—a—g—e—s—
-—
-—W—H—Y— —B—O—T—H—?—
-—
-—R—e—d—i—s— —P—u—b—/—S—u—b—:— —s—p—e—e—d— ——— —d—e—l—i—v—e—r— —t—o— —e—v—e—r—y—o—n—e— —c—o—n—n—e—c—t—e—d— —R—I—G—H—T— —N—O—W—
-—K—a—f—k—a—:— — — — — — — — — —r—e—l—i—a—b—i—l—i—t—y— ——— —p—e—r—s—i—s—t—,— —f—a—n—-—o—u—t—,— —r—e—p—l—a—y—,— —n—o—t—i—f—i—c—a—t—i—o—n—s—
-—
-—R—e—d—i—s— —h—a—n—d—l—e—s— —s—p—e—e—d—.— —K—a—f—k—a— —h—a—n—d—l—e—s— —d—u—r—a—b—i—l—i—t—y—.—
-—D—i—f—f—e—r—e—n—t— —t—o—o—l—s—.— —D—i—f—f—e—r—e—n—t— —s—t—r—e—n—g—t—h—s—.— —T—o—g—e—t—h—e—r—.—
-—`—`—`—
-—
-—-—-—-—
-—
-—#—#— —Q—u—i—c—k— —R—e—f—e—r—e—n—c—e— ——— —C—h—a—p—t—e—r— —7—
-—
-—|— —C—o—n—c—e—p—t— —|— —O—n—e—-—l—i—n—e— —s—u—m—m—a—r—y— —|—
-—|—-—-—-—-—-—-—-—-—-—|—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—-—|—
-—|— —B—r—o—k—e—r— —|— —K—a—f—k—a— —s—e—r—v—e—r— ——— —c—l—u—s—t—e—r— —f—o—r— —r—e—p—l—i—c—a—t—i—o—n— —a—n—d— —p—a—r—a—l—l—e—l—i—s—m— —|—
-—|— —T—o—p—i—c— —|— —N—a—m—e—d— —c—h—a—n—n—e—l— ——— —l—o—g—i—c—a—l— —c—a—t—e—g—o—r—y— —o—f— —e—v—e—n—t—s— —|—
-—|— —P—a—r—t—i—t—i—o—n— —|— —O—r—d—e—r—e—d— —l—o—g— —s—h—a—r—d— ——— —p—a—r—a—l—l—e—l—i—s—m— —+— —p—e—r—-—k—e—y— —o—r—d—e—r—i—n—g— —|—
-—|— —M—e—s—s—a—g—e— —k—e—y— —|— —H—A—S—H—(—k—e—y—)— —%— —N— ——— —k—e—e—p—s— —o—n—e— —e—n—t—i—t—y—'—s— —e—v—e—n—t—s— —i—n— —o—r—d—e—r— —|—
-—|— —C—o—n—s—u—m—e—r— —g—r—o—u—p— —|— —C—o—m—p—e—t—i—n—g— —w—o—r—k—e—r—s— —s—h—a—r—e— —p—a—r—t—i—t—i—o—n—s— ——— —o—n—e— —r—e—a—d—e—r— —p—e—r— —p—a—r—t—i—t—i—o—n— —|—
-—|— —F—a—n—-—o—u—t— —|— —D—i—f—f—e—r—e—n—t— —g—r—o—u—p—s— —=— —i—n—d—e—p—e—n—d—e—n—t— —o—f—f—s—e—t—s— —o—n— —s—a—m—e— —t—o—p—i—c— —|—
-—|— —R—e—b—a—l—a—n—c—e— —|— —P—a—r—t—i—t—i—o—n— —r—e—a—s—s—i—g—n—m—e—n—t— —w—h—e—n— —c—o—n—s—u—m—e—r—s— —j—o—i—n—/—l—e—a—v—e— —|—
-—|— —O—f—f—s—e—t— —|— —B—o—o—k—m—a—r—k— —p—e—r— —p—a—r—t—i—t—i—o—n— ——— —a—t—-—l—e—a—s—t—-—o—n—c—e— —n—e—e—d—s— —i—d—e—m—p—o—t—e—n—t— —h—a—n—d—l—e—r—s— —|—
-—|— —P—u—l—l— —v—s— —p—u—s—h— —|— —K—a—f—k—a— —p—u—l—l—s— —a—n—d— —r—e—t—a—i—n—s—;— —P—u—b—/—S—u—b— —p—u—s—h—e—s— —a—n—d— —f—o—r—g—e—t—s— —|—
-—|— —R—e—d—i—s— —P—u—b—/—S—u—b— —|— —C—r—o—s—s—-—s—e—r—v—e—r— —W—e—b—S—o—c—k—e—t— —f—a—n—-—o—u—t— —f—o—r— —c—h—a—t— —|—
-—|— —K—a—f—k—a— —+— —R—e—d—i—s— —|— —K—a—f—k—a— —f—o—r— —d—u—r—a—b—l—e— —p—i—p—e—l—i—n—e—;— —R—e—d—i—s— —f—o—r— —l—i—v—e— —d—e—l—i—v—e—r—y— —|—
-—
-—*—*—P—r—e—v—i—o—u—s— —←—*—*— —[—C—h—a—p—t—e—r— —6—:— —B—l—o—b— —S—t—o—r—a—g—e—,— —C—D—N— —&— —M—e—s—s—a—g—e— —B—r—o—k—e—r—s—]—(—<—0—6— —-— —B—l—o—b— —S—t—o—r—a—g—e—,— —C—D—N—s— —&— —M—e—s—s—a—g—e— —B—r—o—k—e—r—s—.—m—d—>—)—
+# System Design — Detailed Personal Notes (Chapter 7)
+
+**Topics:** Event-Driven Architecture (EDA), Kafka Internals (Brokers, Topics, Partitions, Consumer Groups, Offsets), Redis Pub/Sub, WebSockets, Pull vs Push
+
+These notes continue from [Chapter 6 — Blob Storage, CDN & Message Brokers](<06 - Blob Storage, CDNs & Message Brokers.md>). Every concept is explained from first principles with real-world analogies, diagrams, and worked examples.
+
+**Previous ←** [Chapter 6: Blob Storage, CDN & Message Brokers](<06 - Blob Storage, CDNs & Message Brokers.md>)
+
+---
+
+## Table of Contents
+
+| Section | Topic | Key Ideas |
+|---------|-------|-----------|
+| **1** | Event-Driven Architecture & Kafka | EDA fundamentals, brokers, topics, partitions, keys, consumer groups, offsets |
+| **2** | Uber location case | High write throughput, batching to PostgreSQL, Redis hot path |
+| **3** | Pub/Sub & WebSockets | Push vs pull, Redis channels, cross-server chat |
+| **4** | Choosing tools | Pub/Sub vs Kafka, WhatsApp-style architecture |
+
+---
+
+# PART 1: KAFKA INTERNALS — The Complete Deep Dive
+
+## Understanding Kafka's Architecture From First Principles
+
+Kafka was created at LinkedIn in 2011 to process activity data (page views, searches, clicks, likes) at a scale no existing message queue could handle — billions of events per day.
+
+The design — append-only logs, partitions, consumer groups, offset-based consumption — all flow from one requirement: **handle enormous throughput while allowing multiple independent consumers to process the same data.**
+
+```mermaid
+flowchart LR
+ —  — P["Producers"]
+ —  — K["Kafka Cluster<br/>Topics + Partitions"]
+ —  — CG1["Consumer Group A"]
+ —  — CG2["Consumer Group B"]
+
+ —  — P --> K
+ —  — K --> CG1
+ —  — K --> CG2
+```
+
+---
+
+## Brokers — The Kafka Servers
+
+A Kafka **broker** is a server that stores messages and serves them to consumers. Production always uses a **cluster** of brokers.
+
+```
+KAFKA CLUSTER (3 brokers):
+
+┌───────────────────────────────────────────────────┐
+│ —  —  —  —  —  —  —  —  —  Kafka Cluster —  —  —  —  —  —  —  —  —  │
+│ — ┌─────────────┐ — ┌─────────────┐ — ┌─────────────┐ │
+│ — │ — Broker 1 —  │ — │ — Broker 2 —  │ — │ — Broker 3 —  │ │
+│ — │ (Leader for │ — │ (Leader for │ — │ (Leader for│ │
+│ — │ — some parts)│ — │ — some parts)│ — │ some parts) │ │
+│ — └─────────────┘ — └─────────────┘ — └─────────────┘ │
+└───────────────────────────────────────────────────┘
+
+WHY MULTIPLE BROKERS?
+
+1. Replication: partition data copied across brokers — Broker 1 dies, Broker 2 has copy
+2. Parallelism: different brokers serve different partitions simultaneously
+3. Fault tolerance: one broker down, cluster keeps working
+```
+
+| Kafka | Database analogy |
+|-------|------------------|
+| Broker | Database server |
+| Topic | Table |
+| Message | Row |
+| Offset | Row ID (immutable, sequential per partition) |
+
+---
+
+## Topics — The Logical Categories
+
+A **topic** is a named channel. Producers write to topics. Consumers read from topics.
+
+```
+Ride-sharing app topics:
+
+- Topic: "driver-location-updates"
+- Producer: Driver mobile app via backend
+- Consumers: Real-time map, ETA calculator
+
+- Topic: "ride-requests"
+- Producer: User app
+- Consumer: Ride matching service
+
+- Topic: "payment-events"
+- Producer: Payment service
+- Consumers: Finance reporting, fraud detection, notifications
+
+- Topic: "driver-trip-completed"
+- Producer: Driver app
+- Consumers: Payment service, rating service
+
+Example message in "driver-location-updates":
+{
+ — "driver_id": "drv_456",
+ — "latitude": 28.6139,
+ — "longitude": 77.2090,
+ — "timestamp": 1710000000,
+ — "speed_kmh": 42,
+ — "heading": 270
+}
+```
+
+---
+
+## The Uber Location Problem — Why Kafka's Throughput Matters
+
+```
+SCENARIO:
+ — 500,000 active drivers
+ — Each sends GPS update every 2 seconds
+
+**WRITES PER SECOND:**
+- 500,000 / 2 = 250,000 writes/sec
+- Per hour: 900 million writes
+
+**POSTGRESQL DIRECTLY:**
+- Strong server: ~10,000–50,000 writes/sec max
+- Required: 250,000/sec → saturated and crashing
+
+Each PG write: disk I/O, index update, WAL, replication
+
+KAFKA:
+ — Designed for sequential append-only writes
+ — No index updates per message
+ — Millions of writes/sec on a 3-broker cluster
+ — 250,000/sec: comfortable
+```
+
+**Batching strategy:**
+
+```
+Producer: every driver update → append to Kafka immediately
+
+Consumer (PostgreSQL path): batch every 10 minutes
+ — 10 min × 250,000/sec × 60 = 150 million points
+ — But you only need LATEST location per driver
+
+**Consumer logic:**
+1. Read 10 minutes of Kafka messages
+2. Per driver, keep only most recent location
+3. UPSERT ~500,000 rows into PostgreSQL
+4. ~833 writes/sec to PG — completely fine
+
+**REFINED real-time map approach:**
+- Hot path: — Kafka → Consumer → Redis (sub-ms, live map)
+- Cold path: Kafka → Consumer batch → PostgreSQL (history, analytics)
+
+ — Map reads Redis. Analytics reads PostgreSQL.
+ — Same Kafka stream. Two consumer groups. One write.
+```
+
+---
+
+## Partitions — Kafka's Parallelism Engine
+
+Without partitions, a topic is one file on one broker — only one consumer reads at a time.
+
+### What a Partition Actually Is
+
+A partition is a physically separate, **ordered, immutable** sequence of records on disk — a log file.
+
+```
+Topic: "driver-location-updates" with 4 partitions:
+
+PARTITION 0 (Broker 1):
+ — Offset 0: {driver: "drv_001", lat: 28.61, lng: 77.20, time: 1000}
+ — Offset 1: {driver: "drv_002", lat: 19.07, lng: 72.87, time: 1001}
+ — Offset 2: {driver: "drv_001", lat: 28.62, lng: 77.21, time: 1002}
+ — ...
+
+PARTITION 1 (Broker 2):
+ — Offset 0: {driver: "drv_003", ...}
+ — ...
+
+KEY PROPERTIES:
+ — - Ordering GUARANTEED within a partition
+ — - NO ordering guarantee across partitions
+ — - Each partition on one broker (replicated to others)
+ — - One partition read by at most ONE consumer per consumer group
+```
+
+### How Producers Choose a Partition
+
+STRATEGY 1: Round Robin (no message key)
+ — Message 1 → P0, Message 2 → P1, Message 3 → P2, Message 4 → P3, ...
+ — Use when: even distribution, ordering doesn't matter
+ — Problem: same driver's updates can land in different partitions → out of order
+
+STRATEGY 2: Key-Based Partitioning (recommended for entity ordering)
+ — partition = HASH(message_key) % num_partitions
+
+**Key = driver_id:**
+- HASH("drv_001") % 4 = 0 → ALL drv_001 updates → Partition 0
+- HASH("drv_002") % 4 = 1 → ALL drv_002 updates → Partition 1
+
+ — Use when: "all updates for driver X must stay in order"
+
+STRATEGY 3: Custom Partitioner
+ — Your code picks partition by business logic
+ — Example: partition by geography (North/South/East/West India)
+
+---
+
+## Consumer Groups — Parallelism and Fan-Out
+
+Consumer groups serve **two** purposes.
+
+### Purpose 1: Parallel Processing Within One Group
+
+Topic with 4 partitions, 3 consumers in group `"email-workers"`:
+
+**Kafka assigns partitions:**
+- Consumer-1 → Partition-0
+- Consumer-2 → Partition-1 AND Partition-2
+- Consumer-3 → Partition-3
+
+Each consumer owns its partitions exclusively.
+Horizontal scaling: 3 consumers ≈ 3× throughput.
+
+WHY can't two consumers in the SAME group read the same partition?
+
+ — Same message would be processed twice.
+ — "Send welcome email to rahul@gmail.com"
+ — Consumer-1 sends it. Consumer-2 sends it again. Duplicate.
+
+Kafka assigns each partition to at most one consumer per group.
+
+**More consumers than partitions:**
+
+4 partitions, 5 consumers in same group:
+
+ — Consumer-1 → P0
+ — Consumer-2 → P1
+ — Consumer-3 → P2
+ — Consumer-4 → P3
+ — Consumer-5 → IDLE (no partition)
+
+RULE: Active consumers ≤ partitions in a group.
+
+LESSON: Need N parallel workers → create at least N partitions upfront.
+ —  —  — (Adding partitions later changes HASH % N — affects key ordering)
+
+### Kafka Rebalancing
+
+Rebalancing reassigns partitions when group membership changes.
+
+TRIGGER 1: New consumer joins
+ — All consumers pause briefly ("stop the world") during reassignment
+ — Kafka 2.4+ cooperative rebalancing: unaffected consumers keep consuming
+
+TRIGGER 2: Consumer crashes or leaves
+ — Partitions redistributed to remaining consumers
+ — Resume from last committed offset — no message loss
+
+TRIGGER 3: Session timeout (no heartbeat in session.timeout.ms, default 10s)
+ — Kafka assumes consumer dead → rebalance
+
+### Purpose 2: Fan-Out Across Different Consumer Groups
+
+Different groups have **independent offset pointers**. Messages are not deleted when read.
+
+```
+TOPIC: "video-process" — message {video_id: 789, s3_url: "...", duration: "10min"}
+
+GROUP 1: "video-transcoder-group" (4 consumers)
+ — Reads all partitions, transcodes to 360p–4K, uploads to S3
+ — Offset on P0 might be 1000
+
+GROUP 2: "caption-generator-group" (2 consumers)
+ — Completely separate offsets
+ — Runs speech-to-text, generates .srt
+ — Offset on P0 might be 500 (slower — that's fine)
+
+GROUP 3: "thumbnail-generator-group" (new)
+ — Starts from offset 0 or "latest" depending on config
+ — Reads ALL historical messages if from 0
+ — Transcoder group unaffected
+
+One write. Many consumer groups. Write once, read by many.
+```
+
+### Offset Management
+
+Each group commits a **bookmark** per partition — stored in Kafka's internal topic `__consumer_offsets`.
+
+**GROUP "caption-generator-group":**
+- P0: committed offset = 47 — (processed 0–46)
+- P1: committed offset = 51
+- P2: committed offset = 43
+- P3: committed offset = 49
+
+**CONSUMER CRASH at offset 50 (not yet committed):**
+- Last committed = 47
+- New consumer starts from 47
+- Reprocesses 47, 48, 49, 50 → at-least-once delivery
+- Consumer code must be IDEMPOTENT
+
+**AUTO-COMMIT (default):**
+- Every auto.commit.interval.ms (5s), offset advances automatically
+- Risk: message fetched but not processed → offset advances → message "lost"
+
+MANUAL COMMIT (recommended):
+ — transcodeVideo(message);
+ — uploadToS3(result);
+ — consumer.commitSync(); — // only after success
+
+---
+
+# PART 2: REAL-TIME PUB/SUB — Push vs Pull
+
+## The Core Difference
+
+```mermaid
+flowchart TB
+ —  — subgraph pull["Pull — Kafka / SQS"]
+ —  —  —  — C1["Consumer polls broker"]
+ —  —  —  — B1["Broker stores messages"]
+ —  —  —  — C1 -->|"poll"| B1
+ —  —  —  — B1 --> C1
+ —  — end
+
+ —  — subgraph push["Push — Redis Pub/Sub"]
+ —  —  —  — B2["Broker"]
+ —  —  —  — C2["Subscriber"]
+ —  —  —  — B2 -->|"push immediately"| C2
+ —  — end
+```
+
+KAFKA / MESSAGE QUEUE (Pull):
+ — while True:
+ —  — messages = consumer.poll(timeout=1000ms)
+ —  — for msg in messages: process(msg)
+ —  — consumer.commitSync()
+
+ — Consumer pulls at its own pace
+ — Slow consumer → messages pile up in broker
+ — Messages retained until TTL or ack
+
+**REDIS PUB/SUB (Push):**
+- Broker pushes to subscribers the moment message arrives
+- Subscriber not connected → message LOST (not stored)
+
+**Trade-off:**
+- Pub/Sub: ultra-low latency, no persistence
+- Kafka: —  reliable delivery, retained log
+
+---
+
+## Redis Pub/Sub
+
+```
+PUBLISHER:
+ — PUBLISH chat:room:42 '{"from": "rahul", "text": "Hello!", "time": 1710000000}'
+ — Returns: number of subscribers who received it NOW
+ — Zero subscribers → returns 0. Message gone forever.
+
+**SUBSCRIBER:**
+- SUBSCRIBE chat:room:42
+- Connection enters subscribe mode — waits for pushes
+
+PATTERN SUBSCRIBE:
+ — PSUBSCRIBE chat:room:*
+ — Receives all chat:room:1, chat:room:2, ...
+```
+
+---
+
+## WebSockets + Redis Pub/Sub — Real-Time Chat
+
+### Why Chat Needs WebSockets
+
+**HTTP POLLING (bad):**
+- Client asks every second: "Any messages?"
+- 1M users = 1M requests/sec even when idle
+- Average ~500ms delay
+- Wasteful connection churn
+
+**WEBSOCKET (correct):**
+- One persistent bidirectional connection
+- Server pushes instantly when message arrives
+- Client sends without new HTTP handshake
+
+### The Horizontal Scaling Problem
+
+**Room #42:**
+- Rahul — → WebSocket on Server-1
+- Ankit — → WebSocket on Server-1
+- Shivam → WebSocket on Server-2
+
+Rahul sends "Hey Shivam!" to Server-1
+Server-1 only knows its own connections (Rahul, Ankit)
+Shivam is on Server-2 — Server-1 cannot push to him
+Message never reaches Shivam. Chat broken.
+
+### Redis Pub/Sub as Cross-Server Bus
+
+```mermaid
+sequenceDiagram
+ —  — participant R as Rahul (Server-1)
+ —  — participant S1 as Server-1
+ —  — participant Redis as Redis Pub/Sub
+ —  — participant S2 as Server-2
+ —  — participant Sh as Shivam (Server-2)
+
+ —  — R->>S1: "Hey Shivam!" (WebSocket)
+ —  — S1->>Redis: PUBLISH chat:room:42
+ —  — Redis->>S1: push message
+ —  — Redis->>S2: push message
+ —  — S1->>R: echo to Rahul + Ankit
+ —  — S2->>Sh: deliver to Shivam
+```
+
+Both Server-1 and Server-2 SUBSCRIBE to "chat:room:42"
+
+**Rahul sends message:**
+1. Client-1 → Server-1 (WebSocket)
+2. Server-1 → PUBLISH chat:room:42
+3. Redis pushes to ALL subscribed servers
+4. Server-1 → WebSocket to Rahul + Ankit
+5. Server-2 → WebSocket to Shivam
+
+Add Server-3, Server-4 — all subscribe. All deliver to their clients.
+Scales horizontally.
+
+### Complete Code Architecture
+
+```javascript
+const WebSocket = require('ws');
+const Redis = require('ioredis');
+
+// Two connections: subscriber mode blocks other commands
+const redisPublisher = new Redis();
+const redisSubscriber = new Redis();
+
+const roomConnections = new Map(); // channel → Set of WebSockets
+
+wss.on('connection', (ws) => {
+ —  — ws.on('message', async (rawMessage) => {
+ —  —  —  — const message = JSON.parse(rawMessage);
+
+ —  —  —  — if (message.type === 'join_room') {
+ —  —  —  —  —  — const roomChannel = `chat:room:${message.roomId}`;
+ —  —  —  —  —  — if (!roomConnections.has(roomChannel)) {
+ —  —  —  —  —  —  —  — roomConnections.set(roomChannel, new Set());
+ —  —  —  —  —  —  —  — redisSubscriber.subscribe(roomChannel);
+ —  —  —  —  —  — }
+ —  —  —  —  —  — roomConnections.get(roomChannel).add(ws);
+ —  —  —  —  —  — ws.currentRoom = roomChannel;
+ —  —  —  — }
+
+ —  —  —  — if (message.type === 'chat_message') {
+ —  —  —  —  —  — const payload = JSON.stringify({
+ —  —  —  —  —  —  —  — from: message.userId,
+ —  —  —  —  —  —  —  — text: message.text,
+ —  —  —  —  —  —  —  — time: Date.now(),
+ —  —  —  —  —  —  —  — room: message.roomId
+ —  —  —  —  —  — });
+ —  —  —  —  —  — await redisPublisher.publish(`chat:room:${message.roomId}`, payload);
+ —  —  —  —  —  — await database.messages.insert({ /* ... */ });
+ —  —  —  — }
+ —  — });
+
+ —  — ws.on('close', () => {
+ —  —  —  — if (ws.currentRoom && roomConnections.has(ws.currentRoom)) {
+ —  —  —  —  —  — roomConnections.get(ws.currentRoom).delete(ws);
+ —  —  —  — }
+ —  — });
+});
+
+redisSubscriber.on('message', (channel, message) => {
+ —  — const connections = roomConnections.get(channel) || new Set();
+ —  — connections.forEach((clientWs) => {
+ —  —  —  — if (clientWs.readyState === WebSocket.OPEN) {
+ —  —  —  —  —  — clientWs.send(message);
+ —  —  —  — }
+ —  — });
+});
+```
+
+---
+
+# PART 3: CHOOSING THE RIGHT TOOL
+
+## Pub/Sub vs Kafka
+
+| Dimension | Redis Pub/Sub | Kafka |
+|-----------|---------------|-------|
+| **Storage** | No — fire and forget | Yes — retained days/weeks |
+| **Consumer offline** | Message lost | Message waits in log |
+| **Latency** | Sub-millisecond | Low milliseconds |
+| **Replay** | Not possible | Yes — from any offset |
+| **Model** | Push to subscribers | Pull (poll) |
+| **Delivery** | At-most-once | At-least-once (with ack) |
+| **Throughput** | Very high (in-memory) | Extremely high (millions/sec) |
+| **Best for** | Live chat, scores, notifications | Pipelines, audit log, event bus |
+
+### Decision Framework
+
+```
+Q: "What if consumer is offline when message arrives?"
+
+ — "Fine to miss it — real-time or nothing"
+ —  — → Redis Pub/Sub
+ —  — Example: live sports tick updates
+
+ — "Must eventually process — losing it is unacceptable"
+ —  — → Kafka or message queue
+ —  — Example: payment confirmation email
+
+Q: "Need to reprocess old messages?"
+
+ — "Yes — new service or bug fix replay"
+ —  — → Kafka (start from offset 0, replay retention window)
+
+ — "No — only care about now"
+ —  — → Pub/Sub or non-replayable queue
+```
+
+---
+
+## A Complete Real-World System — WhatsApp-Style Chat
+
+```mermaid
+flowchart TB
+ —  — LB["Load Balancer"]
+ —  — WS1["WebSocket Server 1"]
+ —  — WS2["WebSocket Server 3"]
+ —  — Redis["Redis Pub/Sub"]
+ —  — Kafka["Kafka: chat-messages"]
+ —  — Cass[("Cassandra history")]
+ —  — ES["Elasticsearch search"]
+
+ —  — LB --> WS1 & WS2
+ —  — WS1 & WS2 <--> Redis
+ —  — WS1 & WS2 --> Kafka
+ —  — Kafka --> Cass
+ —  — Kafka --> ES
+```
+
+```
+INFRASTRUCTURE:
+ — - Load Balancer (WebSocket connections)
+ — - 5 WebSocket servers
+ — - Redis Pub/Sub per room channel
+ — - Kafka topic "chat-messages"
+ — - PostgreSQL / Cassandra for history
+ — - Elasticsearch for search
+
+Rahul (Delhi) → Load Balancer → Server-1 → joins room 42
+Shivam (Mumbai) → Load Balancer → Server-3 → joins room 42
+
+Rahul sends: "Kya haal hai bhai?"
+
+ — Step 1: WebSocket → Server-1
+
+**Step 2: Server-1 simultaneously:**
+1. a) PUBLISH Redis "chat:room:42" —  —  (real-time)
+2. b) PRODUCE Kafka "chat-messages" —  — (durable)
+
+**Step 3a — Redis path (~5ms):**
+1. Redis → all servers subscribed to room 42
+2. Server-1 → Rahul's socket
+3. Server-3 → Shivam's socket
+
+**Step 3b — Kafka path:**
+1. Persisted to disk
+2. Consumer "persistence" → Cassandra
+3. Consumer "search-indexer" → Elasticsearch
+4. Consumer "notification" → push if Shivam offline
+
+**Shivam offline 2 hours, then opens app:**
+- GET /api/chat/room/42/messages → Cassandra history
+- WebSocket reconnects for new messages
+
+WHY BOTH?
+
+Redis Pub/Sub: speed — deliver to everyone connected RIGHT NOW
+Kafka: —  —  —  —  reliability — persist, fan-out, replay, notifications
+
+Redis handles speed. Kafka handles durability.
+Different tools. Different strengths. Together.
+```
+
+---
+
+## Quick Reference — Chapter 7
+
+| Concept | One-line summary |
+|---------|------------------|
+| Broker | Kafka server — cluster for replication and parallelism |
+| Topic | Named channel — logical category of events |
+| Partition | Ordered log shard — parallelism + per-key ordering |
+| Message key | HASH(key) % N — keeps one entity's events in order |
+| Consumer group | Competing workers share partitions — one reader per partition |
+| Fan-out | Different groups = independent offsets on same topic |
+| Rebalance | Partition reassignment when consumers join/leave |
+| Offset | Bookmark per partition — at-least-once needs idempotent handlers |
+| Pull vs push | Kafka pulls and retains; Pub/Sub pushes and forgets |
+| Redis Pub/Sub | Cross-server WebSocket fan-out for chat |
+| Kafka + Redis | Kafka for durable pipeline; Redis for live delivery |
+
+**Previous ←** [Chapter 6: Blob Storage, CDN & Message Brokers](<06 - Blob Storage, CDNs & Message Brokers.md>)
