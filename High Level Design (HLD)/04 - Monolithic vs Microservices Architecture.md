@@ -18,9 +18,9 @@ These notes continue from [Chapter 3 — CAP & Database Scaling](<03 - Databases
 
 ---
 
-# PART 1: SQL vs NoSQL Databases
+## PART 1: SQL vs NoSQL Databases
 
-## Why Choosing the Right Database Is Critical
+### Why Choosing the Right Database Is Critical
 
 This is not a trivial decision. The database you choose in the early stages of your system design determines how your data is structured, how it scales, how consistent it is, and how complex your queries can be. Getting this wrong means either rewriting your entire data layer later (extremely painful) or running a system that is slow, inconsistent, or expensive to operate.
 
@@ -40,9 +40,9 @@ flowchart LR
 
 ---
 
-## SQL Databases — The Full Picture
+### SQL Databases — The Full Picture
 
-### What SQL Actually Is
+#### What SQL Actually Is
 
 SQL (Structured Query Language) databases store data in **tables** — just like an Excel spreadsheet, but far more powerful. Every table has rows (records) and columns (fields), and every column has a specific data type defined upfront.
 
@@ -85,7 +85,7 @@ erDiagram
     }
 ```
 
-### The Predefined Schema — What It Means in Practice
+#### The Predefined Schema — What It Means in Practice
 
 When you create a SQL table, you define its structure before inserting any data:
 
@@ -117,7 +117,7 @@ This runs a migration — the database updates the schema for all existing rows.
 
 Because it gives you **guarantees**. You know with 100% certainty that every row in the `users` table has a valid email. Your application code can rely on this — no need to defensively check "does this object have an email field?" before using it. The database already guaranteed it.
 
-### ACID Properties — The Heart of SQL
+#### ACID Properties — The Heart of SQL
 
 ACID is the set of guarantees SQL databases provide. Understanding these deeply is essential because this is exactly why you choose SQL for financial and critical systems.
 
@@ -234,7 +234,7 @@ Without Durability:
   After restart at t=3, the database replays its transaction log.
   The order is fully restored. Nothing was lost.
 
-### What SQL Is Great At — JOINs and Complex Queries
+#### What SQL Is Great At — JOINs and Complex Queries
 
 SQL's relational model shines when you need to combine data from multiple tables and ask complex questions:
 
@@ -259,7 +259,7 @@ This single query crosses two tables, filters by date, groups by user, aggregate
 
 ---
 
-## NoSQL Databases — The Full Picture
+### NoSQL Databases — The Full Picture
 
 NoSQL doesn't mean "no SQL" — it means **"Not Only SQL."** It's an umbrella term for databases that don't follow the relational table model. There are four fundamentally different types, and understanding each is important.
 
@@ -272,7 +272,7 @@ flowchart TB
     NOSQL --> GRAPH["Graph<br/>Neo4j"]
 ```
 
-### Type 1: Document Databases (MongoDB)
+#### Type 1: Document Databases (MongoDB)
 
 Data is stored as documents — JSON or BSON objects. Think of each document as a flexible row that can have different fields from every other document in the same collection.
 
@@ -333,7 +333,7 @@ In MongoDB: Just start inserting documents with the new field.
 
 This flexibility is incredible during early product development when requirements change every week.
 
-### Type 2: Key-Value Stores (Redis, DynamoDB)
+#### Type 2: Key-Value Stores (Redis, DynamoDB)
 
 The simplest NoSQL type. Exactly what the name says — you store a value associated with a key. Like a giant dictionary/hashmap.
 
@@ -364,7 +364,7 @@ GET otp:9876543210 → nil        (after 5 minutes — auto-deleted)
 
 You **cannot** do complex queries on Redis. You can't say "give me all sessions where the user logged in from Delhi." You can only get, set, and delete by exact key. That's intentional — the simplicity is what makes it so fast.
 
-### Type 3: Column-Family Stores (Apache Cassandra)
+#### Type 3: Column-Family Stores (Apache Cassandra)
 
 This is more complex and worth understanding because Cassandra is used at massive scale (Discord, Netflix, Instagram).
 
@@ -411,7 +411,7 @@ Cassandra's design for this:
 
 Cassandra sacrifices some consistency (it's an AP system in CAP terms) and doesn't support JOINs at all. But it can handle write volumes that would destroy a SQL database.
 
-### Type 4: Graph Databases (Neo4j)
+#### Type 4: Graph Databases (Neo4j)
 
 Graph databases store data as **nodes** (entities) and **edges** (relationships between entities). They're designed specifically for data where relationships are first-class citizens.
 
@@ -459,7 +459,7 @@ Graph databases also power fraud detection — if a new credit card application 
 
 ---
 
-## SQL vs NoSQL — Scaling Differences
+### SQL vs NoSQL — Scaling Differences
 
 This is a fundamental architectural difference, not just a performance difference.
 
@@ -521,7 +521,7 @@ Why is NoSQL easier to shard? Because NoSQL doesn't have JOINs or foreign keys a
 
 ---
 
-## When to Use Which — The Real Framework
+### When to Use Which — The Real Framework
 
 Don't think of this as a simple checklist. Think about it as a series of questions you ask about your specific use case.
 
@@ -617,7 +617,7 @@ When the relationships between entities ARE the data.
 When you need multi-hop traversals (friends of friends of friends).
 ```
 
-### Real E-Commerce App — Polyglot Persistence
+#### Real E-Commerce App — Polyglot Persistence
 
 In practice, you almost never use ONLY SQL or ONLY NoSQL. Real systems mix them — **polyglot persistence**.
 
@@ -668,13 +668,13 @@ Neo4j (Graph):
 
 ---
 
-# PART 2: Microservices — The Complete Deep Dive
+## PART 2: Microservices — The Complete Deep Dive
 
-## Starting Point: Understanding Monolithic Architecture
+### Starting Point: Understanding Monolithic Architecture
 
 Before you can appreciate why microservices exist, you need to deeply understand what a monolith is and what problems it creates at scale.
 
-### What Is a Monolith?
+#### What Is a Monolith?
 
 A monolithic application is one where ALL the functionality lives in a single codebase, runs as a single process, and is deployed as a single unit.
 
@@ -711,7 +711,7 @@ All of this runs as a single application.
 
 When you deploy this app, you deploy the entire thing. When you restart it, everything restarts. When it crashes, everything crashes.
 
-### Problems With Monoliths at Scale
+#### Problems With Monoliths at Scale
 
 | Problem | What happens |
 |---------|----------------|
@@ -792,9 +792,9 @@ One bad deployment by Developer A can block Developers B through Z.
 
 ---
 
-## Microservices — The Complete Solution
+### Microservices — The Complete Solution
 
-### What Microservices Actually Are
+#### What Microservices Actually Are
 
 Microservices is an architectural style where you break your application into small, independent services that:
 - Each handle one specific business capability
@@ -866,7 +866,7 @@ flowchart TB
     PAY --> PAYDB[("Payments DB")]
 ```
 
-### Independent Scaling — The Biggest Win
+#### Independent Scaling — The Biggest Win
 
 DIWALI SALE TRAFFIC:
 
@@ -885,7 +885,7 @@ Even User Service runs at 80 instances when 2 is enough.
 Microservices: Pay for exactly what each service needs.
 Monolith:      Pay for the maximum any single module needs, applied to ALL.
 
-### Fault Isolation — Failures Stay Contained
+#### Fault Isolation — Failures Stay Contained
 
 **Scenario:** The Recommendation Service has a memory leak bug.
 
@@ -898,7 +898,7 @@ Monolith:      Pay for the maximum any single module needs, applied to ALL.
 - **t=0** — Recommendation module leaks memory → entire app crashes.
     Login, products, checkout, payments: all down.
 
-### Technology Flexibility — Each Service Uses the Best Tool
+#### Technology Flexibility — Each Service Uses the Best Tool
 
 | Service | Stack | Why |
 |---------|-------|-----|
@@ -909,9 +909,9 @@ Monolith:      Pay for the maximum any single module needs, applied to ALL.
 
 ---
 
-## API Gateway — The Front Door to Your Microservices
+### API Gateway — The Front Door to Your Microservices
 
-### The Problem Without an API Gateway
+#### The Problem Without an API Gateway
 
 **WITHOUT API GATEWAY:**
 
@@ -928,7 +928,7 @@ PROBLEMS:
 4. SSL on every service
 5. Debugging spans 6 log formats
 
-### What the API Gateway Does
+#### What the API Gateway Does
 
 The API Gateway is a single entry point in front of all microservices. The client ONLY talks to the gateway.
 
@@ -976,7 +976,7 @@ User     Product              Payment
 Service  Service              Service
 ```
 
-### API Gateway With Per-Service Load Balancers
+#### API Gateway With Per-Service Load Balancers
 
 ```
 Client → API Gateway
@@ -989,9 +989,9 @@ The gateway talks to each service's load balancer — it doesn't need to know in
 
 ---
 
-## When to Use Microservices vs Monolith
+### When to Use Microservices vs Monolith
 
-### Start With a Monolith
+#### Start With a Monolith
 
 EARLY-STAGE STARTUP:
 
@@ -1011,7 +1011,7 @@ If you have 1 team of 5 people        → Monolith is fine
 If you have 2 teams (User vs Product) → ~2 services
 If you have 5 teams                   → ~5 services (one per team)
 
-### Signs You're Ready for Microservices
+#### Signs You're Ready for Microservices
 
 | Signal | Why it matters |
 |--------|----------------|
@@ -1023,9 +1023,9 @@ If you have 5 teams                   → ~5 services (one per team)
 
 ---
 
-# PART 3: Load Balancer Deep Dive
+## PART 3: Load Balancer Deep Dive
 
-## Why a Load Balancer Is Not Optional
+### Why a Load Balancer Is Not Optional
 
 We covered load balancing conceptually in [Chapter 2](<02 - Scaling & Back-of-the-Envelope Estimation.md>). Here we go deeper on **algorithms** — because your choice has real performance implications.
 
@@ -1036,9 +1036,9 @@ The load balancer must decide, for each request, which server handles it. That d
 
 ---
 
-## Algorithm 1: Round Robin
+### Algorithm 1: Round Robin
 
-### How It Works — Full Detail
+#### How It Works — Full Detail
 
 Round Robin maintains a counter that cycles through servers in order.
 
@@ -1054,7 +1054,7 @@ Request 4 → Server-1  (wraps)
 Over 9 requests: each server gets exactly 3. Perfectly even.
 ```
 
-### The Fundamental Problem With Round Robin
+#### The Fundamental Problem With Round Robin
 
 Round Robin assumes all requests and all servers are equal. Both are often wrong.
 
@@ -1066,7 +1066,7 @@ Round Robin still sends some to Server-1 while it's at 95% CPU.
 Users on Server-1 wait seconds for a simple profile page.
 Server-2 and Server-3 are mostly idle.
 
-### When Round Robin Is Appropriate
+#### When Round Robin Is Appropriate
 
 - Stateless, similar-duration requests (uniform JSON APIs)
 - Identical server hardware
@@ -1074,9 +1074,9 @@ Server-2 and Server-3 are mostly idle.
 
 ---
 
-## Algorithm 2: Weighted Round Robin
+### Algorithm 2: Weighted Round Robin
 
-### How It Works — Full Detail
+#### How It Works — Full Detail
 
 Each server has a **weight**. Weight 3 gets 3× the traffic of weight 1.
 
@@ -1091,7 +1091,7 @@ Server-1: 2 (20%)
 Server-2: 2 (20%)
 Server-3: 6 (60%)  ← matches 3/5 weight ratio
 
-### The Limitation
+#### The Limitation
 
 Weights are **static**. If Server-3 runs a background job and effective capacity drops, the LB still sends 60% traffic there.
 
@@ -1099,9 +1099,9 @@ Weights are **static**. If Server-3 runs a background job and effective capacity
 
 ---
 
-## Algorithm 3: Least Connections
+### Algorithm 3: Least Connections
 
-### How It Works — Full Detail
+#### How It Works — Full Detail
 
 Route each new request to the server with the **fewest active connections**.
 
@@ -1111,13 +1111,13 @@ Route each new request to the server with the **fewest active connections**.
 
 After routing: Server-2 has 13 connections.
 
-### Why This Beats Round Robin for Variable Workloads
+#### Why This Beats Round Robin for Variable Workloads
 
 Heavy video on Server-1 (30s, 11 connections).
 Light profile requests go to Server-2 and Server-3 (fewest connections).
 Server-1 protected until the video finishes.
 
-### The Subtlety: Connections ≠ CPU
+#### The Subtlety: Connections ≠ CPU
 
 Server-1: 50 idle WebSocket connections (0.01% CPU each)
 Server-2: 5 heavy DB queries (100% CPU total)
@@ -1129,9 +1129,9 @@ Advanced LBs can route by actual CPU utilization instead.
 
 ---
 
-## Algorithm 4: Hash-Based (Sticky Sessions)
+### Algorithm 4: Hash-Based (Sticky Sessions)
 
-### The Problem It Solves
+#### The Problem It Solves
 
 ```
 Cart stored in server memory (no Redis):
@@ -1141,14 +1141,14 @@ Request 2: Add Mouse  → Server-2 (doesn't know about Laptop!)
 Request 3: View cart  → Server-3 (empty cart!)
 ```
 
-### How IP Hash Works
+#### How IP Hash Works
 
 server_index = HASH(client_IP) % number_of_servers
 
 192.168.1.100 → always Server-1
 10.0.0.55     → always Server-3
 
-### Problems With IP Hash
+#### Problems With IP Hash
 
 | Problem | Effect |
 |---------|--------|
@@ -1157,7 +1157,7 @@ server_index = HASH(client_IP) % number_of_servers
 
 **Better:** Hash on `user_id` from JWT (more even, works behind NAT).
 
-### Modern Solution: Redis Session Store
+#### Modern Solution: Redis Session Store
 
 ```
 Request 1: Server-1 writes cart to Redis
@@ -1170,7 +1170,7 @@ Stateless servers + shared cache = best practice.
 
 ---
 
-## Which Algorithm to Choose?
+### Which Algorithm to Choose?
 
 ```mermaid
 flowchart TD

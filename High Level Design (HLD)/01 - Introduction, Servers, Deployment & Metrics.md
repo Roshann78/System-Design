@@ -14,18 +14,6 @@ These notes are written for self-study and revision. Every concept is explained 
 
 When you build a project in college, your setup typically looks like this:
 
-```
-[ Client (Browser / App) ]
-          |
-          |  HTTP Request
-          ↓
-[ Backend Server (Node.js / Django / Spring) ]
-          |
-          |  CRUD Operations (Create, Read, Update, Delete)
-          ↓
-[ Database (MySQL / MongoDB / PostgreSQL) ]
-```
-
 ```mermaid
 flowchart TD
     C["Client (Browser / App)"]
@@ -48,18 +36,16 @@ For a college project or prototype with 10–100 users → This works perfectly 
 
 ### 1.2 Why This Breaks in the Real World
 
-Imagine Instagram using this architecture. They have 2+ **BILLION** users. On a Monday morning, millions of people open the app simultaneously.
+Imagine Instagram using this architecture. They have 2+ **billion** users. On a Monday morning, millions of people open the app simultaneously.
 
 What happens to our simple server?
 
-| Problem | Description |
-|--------|-------------|
-| **1 — Server overload** | Your single server can only handle, say, 1000 requests/second. If 1,000,000 requests arrive per second → Server crashes. All users see an error page. Business loses money. |
-| **2 — Single point of failure** | If your ONE server goes down (hardware failure, power cut, software bug), your ENTIRE application goes down. 100% downtime. No redundancy, no backup. This is called a **Single Point of Failure (SPOF)**. |
-| **3 — No scalability** | Your app becomes popular overnight (viral moment). You have no way to quickly add capacity. Users leave because the site is slow/down. |
-| **4 — Data bottleneck** | One database server handling millions of reads and writes simultaneously becomes a bottleneck. Queries slow down, locks happen, data gets corrupted. |
-| **5 — Geographic distance** | If your server is in Mumbai and a user is in New York, every request has to travel halfway around the world. This adds significant **latency** (delay). |
-| **6 — Security** | A single server with all your code and data exposed is easy to attack. DDoS attacks, SQL injections, data breaches become critical concerns. |
+- **1 — Server overload** — Your single server can only handle, say, 1000 requests/second. If 1,000,000 requests arrive per second → Server crashes. All users see an error page. Business loses money.
+- **2 — Single point of failure (SPOF)** — If your one server goes down (hardware failure, power cut, software bug), your entire application goes down. 100% downtime. No redundancy, no backup. This is called a **Single Point of Failure (SPOF)**.
+- **3 — No scalability** — Your app becomes popular overnight (viral moment). You have no way to quickly add capacity. Users leave because the site is slow/down.
+- **4 — Data bottleneck** — One database server handling millions of reads and writes simultaneously becomes a bottleneck. Queries slow down, locks happen, data gets corrupted.
+- **5 — Geographic distance** — If your server is in Mumbai and a user is in New York, every request has to travel halfway around the world. This adds significant **latency** (delay).
+- **6 — Security** — A single server with all your code and data exposed is easy to attack. DDoS attacks, SQL injections, data breaches become critical concerns.
 
 ### 1.3 What System Design Teaches You
 
@@ -92,7 +78,8 @@ In system design diagrams, **"Client"** means **ANY** device or application that
 - A CLI tool (command-line script hitting an API)
 - A smartwatch, IoT device, smart TV, etc.
 
-**Important:** When we draw a "Client" box in system design, we mean: *"Whatever the end user is using to interact with our system."*
+> [!IMPORTANT]
+> When we draw a "Client" box in system design, we mean: *"Whatever the end user is using to interact with our system."*
 
 The client does **NOT** contain your business logic. It just sends requests and displays responses. All the heavy lifting happens on the server side.
 
@@ -137,21 +124,22 @@ Server running on http://localhost:8080
 - **IP** = Internet Protocol
 - An IP address is a unique numerical label assigned to every device connected to a network. It's like a home address for computers.
 
-**Two versions exist:**
+#### IP Address Versions
 
 | Version | Format | Notes |
 |---------|--------|-------|
 | **IPv4** | `xxx.xxx.xxx.xxx` (e.g., 192.168.1.1) | 4 numbers, each 0–255. ~4.3 billion addresses (running out!) |
 | **IPv6** | `xxxx:xxxx:...` (long hex groups) | Example: `2001:0db8:85a3:0000:0000:8a2e:0370:7334`. Virtually unlimited |
 
-**Private vs public IP addresses:**
+#### Private vs Public IP Addresses
 
 | Type | Scope | Examples |
 |------|-------|----------|
 | **Private IP** | Only within your local network (home/office WiFi) | 192.168.x.x, 10.x.x.x, 172.16.x.x–172.31.x.x. **NOT** reachable from the internet. |
 | **Public IP** | Assigned by ISP; reachable worldwide | Every website/server you visit has a public IP. |
 
-**Key insight:** Your college project on `localhost:8080` uses your private/loopback IP. No one outside your machine can access it. To make it accessible worldwide, you need a **PUBLIC IP ADDRESS** attached to your machine/server.
+> [!TIP]
+> Your college project on `localhost:8080` uses your private/loopback IP. No one outside your machine can access it. To make it accessible worldwide, you need a **public IP address** attached to your machine/server.
 
 ### 2.3 What Is a Port?
 
@@ -183,7 +171,7 @@ So `35.154.33.64:8080` means: *"Go to the machine at IP 35.154.33.64, and talk t
 | 6379 | Redis cache |
 | 8080 | Common alternate HTTP (dev servers) |
 
-**Port ranges:**
+#### Port Ranges
 
 - **0–1023** — System/well-known ports (reserved, need admin access)
 - **1024–49151** — Registered ports (common apps)
@@ -238,7 +226,7 @@ flowchart TD
 | **TXT** | Text records (verification, SPF, DKIM) |
 | **NS** | Nameserver records — who manages DNS for this domain |
 
-**TTL (Time To Live):**
+#### TTL (Time To Live)
 
 - Every DNS record has a TTL — how many seconds it should be cached.
 - After TTL expires, the resolver fetches fresh data.
@@ -283,7 +271,8 @@ Let's trace **exactly** what happens when you visit `https://abc.com`:
 [YOU SEE THE WEBPAGE]
 ```
 
-> **Note:** Steps 3–8 happen in milliseconds for a fast, well-designed system.
+> [!NOTE]
+> Steps 3–8 happen in milliseconds for a fast, well-designed system.
 
 ---
 
@@ -293,14 +282,12 @@ Let's trace **exactly** what happens when you visit `https://abc.com`:
 
 Theoretically, you **COULD** host your app on your own laptop and expose it to the internet. But here's why nobody does this for production:
 
-| Challenge | Issue |
-|-----------|-------|
-| **Static public IP** | Most home/college connections have a **dynamic** IP. It changes when you reconnect. Domain breaks constantly. Static IP costs extra. |
-| **Always on** | Laptop sleeps, shuts down, moves → app goes offline. Servers need 24/7/365. |
-| **Hardware maintenance** | Disk dies, RAM fails, power cut → app gone. Need backups, UPS, redundant hardware. Expensive and complex. |
-| **Bandwidth** | Millions of users need enormous bandwidth. Home internet isn't designed for this. |
-| **Security** | Exposing laptop to internet is dangerous. Need firewalls, DDoS protection, intrusion detection. |
-| **Scalability** | Traffic spikes — you can't instantly add more CPU/RAM to your laptop. |
+- **Static public IP** — Most home/college connections have a dynamic IP. It changes when you reconnect. Domain breaks constantly. Static IP costs extra.
+- **Always on** — Laptop sleeps, shuts down, moves → app goes offline. Servers need 24/7/365.
+- **Hardware maintenance** — Disk dies, RAM fails, power cut → app gone. Need backups, UPS, redundant hardware. Expensive and complex.
+- **Bandwidth** — Millions of users need enormous bandwidth. Home internet isn't designed for this.
+- **Security** — Exposing laptop to internet is dangerous. Need firewalls, DDoS protection, intrusion detection.
+- **Scalability** — Traffic spikes — you can't instantly add more CPU/RAM to your laptop.
 
 ### 3.2 Cloud Providers — The Solution
 
@@ -317,7 +304,7 @@ Cloud providers own **MASSIVE** data centers with thousands of physical servers.
 | Linode / Akamai | Linode Instances |
 | Vultr | Cloud Compute Instances |
 
-**What you get from a cloud provider:**
+#### What You Get from a Cloud Provider
 
 - A Virtual Machine (VM) with dedicated CPU, RAM, Disk
 - A public static IP address (or elastic IP)
@@ -352,7 +339,7 @@ Physical Server (e.g., 128 CPU cores, 512GB RAM)
 
 **DEPLOYMENT** = The process of making your application accessible to users by running it on a server (usually in the cloud).
 
-**Simplified deployment steps:**
+#### Simplified Deployment Steps
 
 1. Write code on your **LOCAL** machine (laptop)
 2. Test it locally (`localhost:8080`)
@@ -365,7 +352,7 @@ Physical Server (e.g., 128 CPU cores, 512GB RAM)
 9. (Optional) Set up HTTPS with SSL certificate (Let's Encrypt)
 10. App is now **LIVE** and accessible worldwide!
 
-**Modern deployment approaches:**
+#### Modern Deployment Approaches
 
 - **CI/CD Pipelines** (GitHub Actions, Jenkins, GitLab CI) — Automatically test and deploy on push to main
 - **Docker Containers** — Package app + dependencies for consistent environments
@@ -375,11 +362,9 @@ Physical Server (e.g., 128 CPU cores, 512GB RAM)
 
 ### 3.5 Local vs Production Environment
 
-| Environment | Characteristics |
-|-------------|-----------------|
-| **LOCAL (Development)** | Runs on laptop; only you can access (`localhost`); easy to test/debug; not optimized for performance |
-| **STAGING** | Copy of production for testing before going live; same setup as production but test data; QA finds bugs before release |
-| **PRODUCTION** | Live environment real users use; must be highly available, fast, secure; mistakes impact users; changes deployed carefully (often with rollback plans) |
+- **LOCAL (Development)** — Runs on laptop; only you can access (`localhost`); easy to test/debug; not optimized for performance.
+- **STAGING** — Copy of production for testing before going live; same setup as production but test data; QA finds bugs before release.
+- **PRODUCTION** — Live environment real users use; must be highly available, fast, secure; mistakes impact users; changes deployed carefully (often with rollback plans).
 
 ---
 
@@ -417,7 +402,7 @@ Latency is made up of multiple parts:
 
 #### RTT — Round Trip Time
 
-**RTT** is the time for a request to go **FROM** the client **TO** the server, **AND** for the response to travel **BACK** to the client.
+**RTT** is the time for a request to go from the client to the server, and for the response to travel back to the client.
 
 ```
 RTT = Time to send request + Server processing time + Time to receive response
@@ -442,7 +427,7 @@ $ ping google.com
 | Video streaming (buffering) | < 500ms | > 3 seconds |
 | Database query | < 10ms | > 100ms |
 
-**Human perception:**
+#### Human Perception of Latency
 
 | Latency | User experience |
 |---------|-----------------|
@@ -553,7 +538,7 @@ Low load zone        Saturation point
 (latency stable)     (latency explodes)
 ```
 
-**Ideal goal:** Optimize **both**:
+#### Ideal Goal Optimize **both**:
 
 - Low latency → Each user gets a fast response
 - High throughput → Many users served simultaneously
@@ -598,7 +583,7 @@ In production, you **NEVER** just look at **average** latency. Averages hide ter
 
 Amazon found that every **100ms** of latency costs them **1%** in sales.
 
-**Why tail latency exists:**
+#### Why Tail Latency Exists
 
 - Garbage collection pauses (JVM)
 - Disk I/O or swap
@@ -625,47 +610,51 @@ flowchart TD
     G -->|"No"| OK["Simple 3-tier may suffice"]
 ```
 
-```
-You build an app (code on laptop)
-      ↓
-You DEPLOY it to a CLOUD SERVER (AWS EC2, etc.)
-      ↓
-Users access it via DOMAIN NAME → DNS resolves to SERVER IP
-      ↓
-Request goes to correct app via PORT NUMBER
-      ↓
-Server processes request — this takes LATENCY time
-      ↓
-System must handle many users simultaneously — this is THROUGHPUT
-      ↓
-As users grow, simple architecture breaks → Need SYSTEM DESIGN principles
-```
+
 
 ### 5.2 Common Interview Questions on These Topics
 
-**Q: What is the difference between latency and throughput?**
+<details>
+<summary><b>Q: What is the difference between latency and throughput?</b></summary>
 
 **A:** Latency measures how long **ONE** request takes (speed). Throughput measures how **MANY** requests can be handled per second (capacity).
 
-**Q: If I add more servers, does latency decrease?**
+</details>
+
+<details>
+<summary><b>Q: If I add more servers, does latency decrease?</b></summary>
 
 **A:** Not necessarily. Latency per request stays the same. But **throughput** increases. Under heavy load, more servers prevent queue buildup, which **indirectly** keeps latency from spiking (less queuing delay).
 
-**Q: What is a single point of failure?**
+</details>
+
+<details>
+<summary><b>Q: What is a single point of failure?</b></summary>
 
 **A:** A component that, if it fails, brings the entire system down. Example: One server with no backup = SPOF. Solution: Redundancy — multiple servers, load balancers, DB replicas.
 
-**Q: What is the difference between scaling up and scaling out?**
+</details>
+
+<details>
+<summary><b>Q: What is the difference between scaling up and scaling out?</b></summary>
 
 **A:** **Scale up (vertical):** Make one server bigger (more CPU/RAM). **Scale out (horizontal):** Add more servers and distribute load. Scale out is generally preferred for large systems.
 
-**Q: Why do we use ports?**
+</details>
+
+<details>
+<summary><b>Q: Why do we use ports?</b></summary>
 
 **A:** One server runs many applications. Ports let the OS route traffic to the correct app.
 
-**Q: What is RTT?**
+</details>
+
+<details>
+<summary><b>Q: What is RTT?</b></summary>
 
 **A:** Round Trip Time — total time for request to server **and** response back. Essentially equals latency from the user's view.
+
+</details>
 
 ---
 
@@ -764,63 +753,289 @@ Rough numbers for system design interviews:
 | DNS lookup | 10–100 ms |
 | TLS handshake (HTTPS setup) | 50–200 ms |
 
-**Key insight:** RAM is ~100,000× faster than disk. This is why **caching** (storing in RAM) dramatically reduces latency.
+> [!TIP]
+> RAM is ~100,000× faster than disk. This is why caching (storing in RAM) dramatically reduces latency.
 
 ---
 
 ## Section 7 — Things to Remember / Common Mistakes
 
-| Mistake | Truth |
-|---------|-------|
-| "High throughput means low latency too." | They are **independent**. High throughput + high latency is possible (e.g., batch systems). |
-| "Adding more servers always reduces latency." | More servers increase **throughput**. Latency depends on network, DB, algorithms. More servers only reduce latency **indirectly** (less queuing under load). |
-| "Average latency is a good metric." | Averages hide outliers. Use **percentiles** (p95, p99). 50ms average with 5000ms p99 = awful experience for 1% of users. |
-| "localhost and 127.0.0.1 are different." | They're the **same**. localhost resolves to 127.0.0.1. |
-| "Port 80 and 443 are optional." | They're **default** ports — browsers assume them. Still used behind the scenes. |
-| "Vertical scaling is always better." | Vertical scaling has limits. Horizontal scaling is more scalable and fault-tolerant. One big server = SPOF. |
-| "My app works locally, so deployment is easy." | Local ≠ production. Different OS, deps, security groups, firewalls, env vars, SSL, etc. |
+> [!WARNING]
+> **Mistake:** "High throughput means low latency too."
+> **Truth:** They are **independent**. High throughput + high latency is possible (e.g., batch systems).
+
+> [!WARNING]
+> **Mistake:** "Adding more servers always reduces latency."
+> **Truth:** More servers increase **throughput**. Latency depends on network, DB, algorithms. More servers only reduce latency **indirectly** (less queuing under load).
+
+> [!WARNING]
+> **Mistake:** "Average latency is a good metric."
+> **Truth:** Averages hide outliers. Use **percentiles** (p95, p99). 50ms average with 5000ms p99 = awful experience for 1% of users.
+
+> [!WARNING]
+> **Mistake:** "localhost and 127.0.0.1 are different."
+> **Truth:** They're the **same**. localhost resolves to 127.0.0.1.
+
+> [!WARNING]
+> **Mistake:** "Port 80 and 443 are optional."
+> **Truth:** They're **default** ports — browsers assume them. Still used behind the scenes.
+
+> [!WARNING]
+> **Mistake:** "Vertical scaling is always better."
+> **Truth:** Vertical scaling has limits. Horizontal scaling is more scalable and fault-tolerant. One big server = SPOF.
+
+> [!WARNING]
+> **Mistake:** "My app works locally, so deployment is easy."
+> **Truth:** Local ≠ production. Different OS, deps, security groups, firewalls, env vars, SSL, etc.
 
 ---
 
 ## Glossary — Alphabetical
 
-| Term | Definition |
-|------|------------|
-| **Bandwidth** | Maximum rate of data transfer across a network (Mbps/Gbps) |
-| **Cache** | Fast temporary storage to serve repeated data without recomputing |
-| **CDN** | Content Delivery Network — servers distributed globally near users |
-| **Client** | Any device/app that sends requests to your system |
-| **Deployment** | Moving your application to a live server for public access |
-| **DNS** | Domain Name System — translates domain names to IP addresses |
-| **EC2** | Amazon Web Services' virtual machine product |
-| **Fault Tolerance** | System's ability to continue operating despite partial failures |
-| **Horizontal Scaling** | Adding more machines to handle more load |
-| **HTTP** | HyperText Transfer Protocol — port 80 |
-| **HTTPS** | HTTP secured with SSL/TLS — port 443 |
-| **Hypervisor** | Software that creates and manages VMs on hardware |
-| **IP Address** | Numerical label identifying a device on a network |
-| **IPv4** | 32-bit IP format — ~4.3B addresses |
-| **IPv6** | 128-bit IP format — virtually unlimited addresses |
-| **Latency** | Time to complete a single request (ms) |
-| **Load Balancer** | Distributes incoming requests across multiple servers |
-| **localhost** | Hostname meaning "this machine" — resolves to 127.0.0.1 |
-| **Monolith** | Single application containing all code and functionality |
-| **p95/p99** | Latency percentiles — 95%/99% of requests faster than this |
-| **Port** | Number (0–65535) identifying a specific app on a server |
-| **Public IP** | IP reachable from the internet |
-| **Private IP** | IP only reachable within a local network |
-| **RPS** | Requests Per Second |
-| **RTT** | Round Trip Time — request + response (= latency from user view) |
-| **Scalability** | System's ability to handle increasing load |
-| **Server** | Machine that runs your application and serves requests |
-| **SPOF** | Single Point of Failure |
-| **Tail Latency** | Latency of slowest requests (p99, p99.9) |
-| **Throughput** | Number of requests handled per unit time |
-| **TLS/SSL** | Encryption for HTTPS |
-| **TPS** | Transactions Per Second |
-| **TTL** | Time To Live — how long DNS/cache entry stays valid |
-| **Vertical Scaling** | Upgrading a machine (more CPU/RAM) |
-| **Virtual Machine** | Software-simulated computer on real hardware |
+<details>
+<summary><b>Bandwidth</b></summary>
+
+Maximum rate of data transfer across a network (Mbps/Gbps)
+
+</details>
+
+<details>
+<summary><b>Cache</b></summary>
+
+Fast temporary storage to serve repeated data without recomputing
+
+</details>
+
+<details>
+<summary><b>CDN</b></summary>
+
+Content Delivery Network — servers distributed globally near users
+
+</details>
+
+<details>
+<summary><b>Client</b></summary>
+
+Any device/app that sends requests to your system
+
+</details>
+
+<details>
+<summary><b>Deployment</b></summary>
+
+Moving your application to a live server for public access
+
+</details>
+
+<details>
+<summary><b>DNS</b></summary>
+
+Domain Name System — translates domain names to IP addresses
+
+</details>
+
+<details>
+<summary><b>EC2</b></summary>
+
+Amazon Web Services' virtual machine product
+
+</details>
+
+<details>
+<summary><b>Fault Tolerance</b></summary>
+
+System's ability to continue operating despite partial failures
+
+</details>
+
+<details>
+<summary><b>Horizontal Scaling</b></summary>
+
+Adding more machines to handle more load
+
+</details>
+
+<details>
+<summary><b>HTTP</b></summary>
+
+HyperText Transfer Protocol — port 80
+
+</details>
+
+<details>
+<summary><b>HTTPS</b></summary>
+
+HTTP secured with SSL/TLS — port 443
+
+</details>
+
+<details>
+<summary><b>Hypervisor</b></summary>
+
+Software that creates and manages VMs on hardware
+
+</details>
+
+<details>
+<summary><b>IP Address</b></summary>
+
+Numerical label identifying a device on a network
+
+</details>
+
+<details>
+<summary><b>IPv4</b></summary>
+
+32-bit IP format — ~4.3B addresses
+
+</details>
+
+<details>
+<summary><b>IPv6</b></summary>
+
+128-bit IP format — virtually unlimited addresses
+
+</details>
+
+<details>
+<summary><b>Latency</b></summary>
+
+Time to complete a single request (ms)
+
+</details>
+
+<details>
+<summary><b>Load Balancer</b></summary>
+
+Distributes incoming requests across multiple servers
+
+</details>
+
+<details>
+<summary><b>localhost</b></summary>
+
+Hostname meaning "this machine" — resolves to 127.0.0.1
+
+</details>
+
+<details>
+<summary><b>Monolith</b></summary>
+
+Single application containing all code and functionality
+
+</details>
+
+<details>
+<summary><b>p95/p99</b></summary>
+
+Latency percentiles — 95%/99% of requests faster than this
+
+</details>
+
+<details>
+<summary><b>Port</b></summary>
+
+Number (0–65535) identifying a specific app on a server
+
+</details>
+
+<details>
+<summary><b>Public IP</b></summary>
+
+IP reachable from the internet
+
+</details>
+
+<details>
+<summary><b>Private IP</b></summary>
+
+IP only reachable within a local network
+
+</details>
+
+<details>
+<summary><b>RPS</b></summary>
+
+Requests Per Second
+
+</details>
+
+<details>
+<summary><b>RTT</b></summary>
+
+Round Trip Time — request + response (= latency from user view)
+
+</details>
+
+<details>
+<summary><b>Scalability</b></summary>
+
+System's ability to handle increasing load
+
+</details>
+
+<details>
+<summary><b>Server</b></summary>
+
+Machine that runs your application and serves requests
+
+</details>
+
+<details>
+<summary><b>SPOF</b></summary>
+
+Single Point of Failure
+
+</details>
+
+<details>
+<summary><b>Tail Latency</b></summary>
+
+Latency of slowest requests (p99, p99.9)
+
+</details>
+
+<details>
+<summary><b>Throughput</b></summary>
+
+Number of requests handled per unit time
+
+</details>
+
+<details>
+<summary><b>TLS/SSL</b></summary>
+
+Encryption for HTTPS
+
+</details>
+
+<details>
+<summary><b>TPS</b></summary>
+
+Transactions Per Second
+
+</details>
+
+<details>
+<summary><b>TTL</b></summary>
+
+Time To Live — how long DNS/cache entry stays valid
+
+</details>
+
+<details>
+<summary><b>Vertical Scaling</b></summary>
+
+Upgrading a machine (more CPU/RAM)
+
+</details>
+
+<details>
+<summary><b>Virtual Machine</b></summary>
+
+Software-simulated computer on real hardware
+
+</details>
 
 ---
 

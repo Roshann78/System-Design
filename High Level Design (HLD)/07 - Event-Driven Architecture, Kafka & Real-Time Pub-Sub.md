@@ -1,4 +1,4 @@
-# System Design — Detailed Personal Notes (Chapter 7: Event-Driven Architecture, Kafka & Real-Time Pub-Sub)
+# System Design — Detailed Personal Notes (Chapter 7)
 
 **Topics:** Event-Driven Architecture (EDA), Kafka Internals (Brokers, Topics, Partitions, Consumer Groups, Offsets), Redis Pub/Sub, WebSockets, Pull vs Push
 
@@ -19,9 +19,9 @@ These notes continue from [Chapter 6 — Blob Storage, CDN & Message Brokers](<0
 
 ---
 
-# PART 1: KAFKA INTERNALS — The Complete Deep Dive
+## PART 1: KAFKA INTERNALS — The Complete Deep Dive
 
-## Understanding Kafka's Architecture From First Principles
+### Understanding Kafka's Architecture From First Principles
 
 Kafka was created at LinkedIn in 2011 to process activity data (page views, searches, clicks, likes) at a scale no existing message queue could handle — billions of events per day.
 
@@ -41,7 +41,7 @@ flowchart LR
 
 ---
 
-## Brokers — The Kafka Servers
+### Brokers — The Kafka Servers
 
 A Kafka **broker** is a server that stores messages and serves them to consumers. Production always uses a **cluster** of brokers.
 
@@ -73,7 +73,7 @@ WHY MULTIPLE BROKERS?
 
 ---
 
-## Topics — The Logical Categories
+### Topics — The Logical Categories
 
 A **topic** is a named channel. Producers write to topics. Consumers read from topics.
 
@@ -109,7 +109,7 @@ Example message in "driver-location-updates":
 
 ---
 
-## The Uber Location Problem — Why Kafka's Throughput Matters
+### The Uber Location Problem — Why Kafka's Throughput Matters
 
 ```
 SCENARIO:
@@ -158,11 +158,11 @@ Consumer (PostgreSQL path): batch every 10 minutes
 
 ---
 
-## Partitions — Kafka's Parallelism Engine
+### Partitions — Kafka's Parallelism Engine
 
 Without partitions, a topic is one file on one broker — only one consumer reads at a time.
 
-### What a Partition Actually Is
+#### What a Partition Actually Is
 
 A partition is a physically separate, **ordered, immutable** sequence of records on disk — a log file.
 
@@ -186,7 +186,7 @@ KEY PROPERTIES:
   - One partition read by at most ONE consumer per consumer group
 ```
 
-### How Producers Choose a Partition
+#### How Producers Choose a Partition
 
 STRATEGY 1: Round Robin (no message key)
   Message 1 → P0, Message 2 → P1, Message 3 → P2, Message 4 → P3, ...
@@ -208,11 +208,11 @@ STRATEGY 3: Custom Partitioner
 
 ---
 
-## Consumer Groups — Parallelism and Fan-Out
+### Consumer Groups — Parallelism and Fan-Out
 
 Consumer groups serve **two** purposes.
 
-### Purpose 1: Parallel Processing Within One Group
+#### Purpose 1: Parallel Processing Within One Group
 
 Topic with 4 partitions, 3 consumers in group `"email-workers"`:
 
@@ -247,7 +247,7 @@ RULE: Active consumers ≤ partitions in a group.
 LESSON: Need N parallel workers → create at least N partitions upfront.
       (Adding partitions later changes HASH % N — affects key ordering)
 
-### Kafka Rebalancing
+#### Kafka Rebalancing
 
 Rebalancing reassigns partitions when group membership changes.
 
@@ -262,7 +262,7 @@ TRIGGER 2: Consumer crashes or leaves
 TRIGGER 3: Session timeout (no heartbeat in session.timeout.ms, default 10s)
   Kafka assumes consumer dead → rebalance
 
-### Purpose 2: Fan-Out Across Different Consumer Groups
+#### Purpose 2: Fan-Out Across Different Consumer Groups
 
 Different groups have **independent offset pointers**. Messages are not deleted when read.
 
@@ -286,7 +286,7 @@ GROUP 3: "thumbnail-generator-group" (new)
 One write. Many consumer groups. Write once, read by many.
 ```
 
-### Offset Management
+#### Offset Management
 
 Each group commits a **bookmark** per partition — stored in Kafka's internal topic `__consumer_offsets`.
 
@@ -313,9 +313,9 @@ MANUAL COMMIT (recommended):
 
 ---
 
-# PART 2: REAL-TIME PUB/SUB — Push vs Pull
+## PART 2: REAL-TIME PUB/SUB — Push vs Pull
 
-## The Core Difference
+### The Core Difference
 
 ```mermaid
 flowchart TB
@@ -353,7 +353,7 @@ KAFKA / MESSAGE QUEUE (Pull):
 
 ---
 
-## Redis Pub/Sub
+### Redis Pub/Sub
 
 ```
 PUBLISHER:
@@ -372,9 +372,9 @@ PATTERN SUBSCRIBE:
 
 ---
 
-## WebSockets + Redis Pub/Sub — Real-Time Chat
+### WebSockets + Redis Pub/Sub — Real-Time Chat
 
-### Why Chat Needs WebSockets
+#### Why Chat Needs WebSockets
 
 **HTTP POLLING (bad):**
 - Client asks every second: "Any messages?"
@@ -387,7 +387,7 @@ PATTERN SUBSCRIBE:
 - Server pushes instantly when message arrives
 - Client sends without new HTTP handshake
 
-### The Horizontal Scaling Problem
+#### The Horizontal Scaling Problem
 
 **Room #42:**
 - Rahul  → WebSocket on Server-1
@@ -399,7 +399,7 @@ Server-1 only knows its own connections (Rahul, Ankit)
 Shivam is on Server-2 — Server-1 cannot push to him
 Message never reaches Shivam. Chat broken.
 
-### Redis Pub/Sub as Cross-Server Bus
+#### Redis Pub/Sub as Cross-Server Bus
 
 ```mermaid
 sequenceDiagram
@@ -429,7 +429,7 @@ Both Server-1 and Server-2 SUBSCRIBE to "chat:room:42"
 Add Server-3, Server-4 — all subscribe. All deliver to their clients.
 Scales horizontally.
 
-### Complete Code Architecture
+#### Complete Code Architecture
 
 ```javascript
 const WebSocket = require('ws');
@@ -486,9 +486,9 @@ redisSubscriber.on('message', (channel, message) => {
 
 ---
 
-# PART 3: CHOOSING THE RIGHT TOOL
+## PART 3: CHOOSING THE RIGHT TOOL
 
-## Pub/Sub vs Kafka
+### Pub/Sub vs Kafka
 
 | Dimension | Redis Pub/Sub | Kafka |
 |-----------|---------------|-------|
@@ -501,7 +501,7 @@ redisSubscriber.on('message', (channel, message) => {
 | **Throughput** | Very high (in-memory) | Extremely high (millions/sec) |
 | **Best for** | Live chat, scores, notifications | Pipelines, audit log, event bus |
 
-### Decision Framework
+#### Decision Framework
 
 ```
 Q: "What if consumer is offline when message arrives?"
@@ -525,7 +525,7 @@ Q: "Need to reprocess old messages?"
 
 ---
 
-## A Complete Real-World System — WhatsApp-Style Chat
+### A Complete Real-World System — WhatsApp-Style Chat
 
 ```mermaid
 flowchart TB

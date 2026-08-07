@@ -8,9 +8,9 @@ These notes continue from [Chapter 4 — SQL/NoSQL, Microservices & Load Balanci
 
 ---
 
-# PART 1: CACHING — The Complete Deep Dive
+## PART 1: CACHING — The Complete Deep Dive
 
-## Why Caching Exists — Building The Intuition From Scratch
+### Why Caching Exists — Building The Intuition From Scratch
 
 Before diving into Redis commands and code, let's build a completely solid mental model of WHY caching is necessary and what problem it's actually solving.
 
@@ -68,11 +68,11 @@ That's not a 2x improvement. That's a 9,999x reduction in database load and an 1
 
 ---
 
-## The Mental Model — Cache Hit vs Cache Miss
+### The Mental Model — Cache Hit vs Cache Miss
 
 These two terms are the foundation of all caching logic. Every caching system in existence operates on this exact two-path model.
 
-### Cache Hit — The Happy Path
+#### Cache Hit — The Happy Path
 
 A cache hit means: "The data the user requested is already in the cache. Serve it directly."
 
@@ -96,7 +96,7 @@ TOTAL TIME: ~20-60ms
 DATABASE: Never touched. Didn't even know a request happened.
 ```
 
-### Cache Miss — The Slower Path (But Still Correct)
+#### Cache Miss — The Slower Path (But Still Correct)
 
 A cache miss means: "The data isn't in the cache. We need to go to the database, then populate the cache so next time is fast."
 
@@ -134,7 +134,7 @@ The first request after a cache miss (or after cache expiry) always pays the ful
 
 ---
 
-## Cache Invalidation — The Hardest Problem in Caching
+### Cache Invalidation — The Hardest Problem in Caching
 
 There's a famous quote in computer science by Phil Karlton: *"There are only two hard things in Computer Science: cache invalidation and naming things."*
 
@@ -144,7 +144,7 @@ Why is this hard? Because your cache is a copy of the database. The moment the d
 
 Let's go through all the real strategies with their trade-offs.
 
-### Strategy 1: TTL (Time to Live) — Expiry-Based Invalidation
+#### Strategy 1: TTL (Time to Live) — Expiry-Based Invalidation
 
 The simplest strategy. You store data in the cache with an expiry time. After that time passes, Redis automatically deletes it. The next request will be a cache miss, fetch fresh data from DB, and repopulate the cache.
 
@@ -184,7 +184,7 @@ Long TTL (hours to days):
 - Good for: Truly static data (country list, currency codes)
 - Trade-off: Must invalidate manually when data changes
 
-### Strategy 2: Active Invalidation on Write — Delete or Update Cache When Data Changes
+#### Strategy 2: Active Invalidation on Write — Delete or Update Cache When Data Changes
 
 Instead of waiting for TTL to expire, you actively delete or update the cache the moment the underlying data changes.
 
@@ -209,7 +209,7 @@ await database.insert(newBlog);         // Save to DB
 await redisClient.del('blogData');      // Invalidate cache
 // Done. Next request will re-populate the cache automatically.
 
-**Pattern: Cache-Aside (most common)**
+##### Pattern: Cache-Aside (Most Common)
 
 This is the most widely used caching pattern. The application code manages when to read from cache and when to invalidate.
 
@@ -226,7 +226,7 @@ WRITE path (cache-aside):
 Simple, but requires both DB write AND cache delete to succeed.
 If cache delete fails, cache is stale until TTL expires.
 
-**Pattern: Write-Through Cache**
+##### Pattern: Write-Through Cache
 
 Write to the cache AND the database simultaneously on every write operation. Cache is always up-to-date.
 
@@ -255,7 +255,7 @@ DISADVANTAGE: Every single write operation hits BOTH the database
               (Write-through caches data whether it's popular or not)
 ```
 
-**Pattern: Write-Back (Write-Behind) Cache**
+##### Pattern: Write-Back (Write-Behind) Cache
 
 The riskiest but fastest pattern. Write to cache FIRST, database LATER (asynchronously).
 
@@ -284,11 +284,11 @@ Use only when: You can tolerate data loss for this particular data,
 
 ---
 
-## Types of Caches — Where Caching Happens
+### Types of Caches — Where Caching Happens
 
 Caching isn't just Redis on a server. It happens at multiple layers of the entire request journey.
 
-### 1. Client-Side Cache (Browser Cache)
+#### 1. Client-Side Cache (Browser Cache)
 
 When you visit a website, your browser automatically caches certain resources locally on your device. The next time you visit, those resources load from your local disk instead of being downloaded again.
 
@@ -340,11 +340,11 @@ This gives you:
   - Instant cache busting on new deployments (new filename = cache miss)
 This technique is called "cache busting."
 
-### 2. Server-Side Cache (Redis, Memcached)
+#### 2. Server-Side Cache (Redis, Memcached)
 
 This is what most people mean when they say "caching" in a backend context. Data is stored in a fast in-memory store on the server side. We'll go deep on Redis in the next section.
 
-### 3. CDN Cache (Content Delivery Network)
+#### 3. CDN Cache (Content Delivery Network)
 
 A CDN is a globally distributed network of servers (called "edge servers" or "Points of Presence" — PoPs) that cache your content close to your users geographically.
 
@@ -399,7 +399,7 @@ doesn't have the content yet.
 - Payment pages
 - Any page showing personalized data
 
-### 4. Application-Level Cache
+#### 4. Application-Level Cache
 
 This is caching within the application code itself, often in-process (in the same memory as the application).
 
@@ -441,9 +441,9 @@ async function getExpensiveComputationResult(input) {
 
 ---
 
-## Redis — Complete Deep Dive
+### Redis — Complete Deep Dive
 
-### What Redis Actually Is
+#### What Redis Actually Is
 
 Redis stands for **RE**mote **DI**ctionary **S**erver. The word "dictionary" is the key insight — it's fundamentally a dictionary (key-value store) that lives in RAM.
 
@@ -478,7 +478,7 @@ Redis can handle 100,000 to 1,000,000 operations/sec on one instance.
 So we cache only hot data in Redis.
 80/20 rule: 80% of requests often hit 20% of data.
 
-### Redis Key Naming Conventions
+#### Redis Key Naming Conventions
 
 Redis keys are strings, but conventions matter.
 
@@ -499,9 +499,9 @@ SCAN 0 MATCH "user:*"
 
 ---
 
-## Redis Data Types — In Depth
+### Redis Data Types — In Depth
 
-### Data Type 1: Strings
+#### Data Type 1: Strings
 
 ```
 SET user:1 "Shivam"
@@ -525,7 +525,7 @@ Real-world string use cases:
 - OTP storage
 - Feature flags
 
-### Data Type 2: Lists
+#### Data Type 2: Lists
 
 LPUSH user Amit
 RPUSH user Abhay
@@ -541,7 +541,7 @@ Use cases:
 - Recently viewed lists
 - Background workers
 
-### Data Type 3: Hashes
+#### Data Type 3: Hashes
 
 - HSET user:1 name "Shivam" age 21 city "Delhi" email "shivam@gmail.com"
 - HGET user:1 name
@@ -555,7 +555,7 @@ Use cases:
 - Product metadata
 - Config blobs
 
-### Data Type 4: Sets
+#### Data Type 4: Sets
 
 SADD active_users "user_1" "user_2" "user_3"
 SMEMBERS active_users
@@ -572,7 +572,7 @@ Use cases:
 - Mutual friends
 - Tag collections
 
-### Data Type 5: Sorted Sets (ZSets)
+#### Data Type 5: Sorted Sets (ZSets)
 
 ZADD leaderboard 9850 "player_rahul"
 ZADD leaderboard 9920 "player_shivam"
@@ -592,7 +592,7 @@ Use cases:
 
 ---
 
-## The Blog Cache — Complete Code Walkthrough
+### The Blog Cache — Complete Code Walkthrough
 
 ```javascript
 const Redis = require('ioredis');
@@ -655,7 +655,7 @@ async function submitSolution(userId, problemId, solution) {
 
 ---
 
-## Cache Hit Rate — The Metric That Tells You If Caching Is Working
+### Cache Hit Rate — The Metric That Tells You If Caching Is Working
 
 Cache hit rate = (cache hits) / (total requests) × 100%
 
@@ -680,9 +680,9 @@ redis-cli INFO stats | grep keyspace_misses
 
 ---
 
-## Common Caching Problems and How to Handle Them
+### Common Caching Problems and How to Handle Them
 
-### Problem 1: Cache Stampede (Thundering Herd)
+#### Problem 1: Cache Stampede (Thundering Herd)
 
 A hot key expires and thousands of requests hit DB at once.
 
@@ -691,7 +691,7 @@ Mitigations:
 - Probabilistic early refresh
 - TTL jitter (randomized expiry)
 
-### Problem 2: Cache Penetration
+#### Problem 2: Cache Penetration
 
 Attackers request non-existent IDs repeatedly, bypassing cache.
 
@@ -699,7 +699,7 @@ Mitigations:
 - Cache null/not-found responses briefly
 - Bloom filters for fast non-existent checks
 
-### Problem 3: Hot Key Problem
+#### Problem 3: Hot Key Problem
 
 One viral key receives huge read traffic.
 
@@ -709,9 +709,9 @@ Mitigations:
 
 ---
 
-## Redis in Production — What You Actually Need to Know
+### Redis in Production — What You Actually Need to Know
 
-### Redis Persistence
+#### Redis Persistence
 
 RDB snapshots:
   save 900 1
@@ -724,7 +724,7 @@ AOF:
 Common production setup:
   Use both RDB + AOF.
 
-### Redis Cluster
+#### Redis Cluster
 
 ```
 Redis Cluster uses 16384 hash slots.
@@ -741,7 +741,7 @@ Replicas provide failover.
 
 ---
 
-## Summary — The Mental Model for When to Cache What
+### Summary — The Mental Model for When to Cache What
 
 Use this checklist:
 

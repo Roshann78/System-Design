@@ -17,9 +17,9 @@ These notes continue from [Chapter 1](<01 - Introduction, Servers, Deployment & 
 
 ---
 
-# PART 1: SCALING — The Complete Deep Dive
+## PART 1: SCALING — The Complete Deep Dive
 
-## Why Does Scaling Even Exist As A Problem?
+### Why Does Scaling Even Exist As A Problem?
 
 Let's build the mental model from the very beginning.
 
@@ -61,13 +61,14 @@ flowchart TD
     style OK fill:#efe,stroke:#060
 ```
 
-> **Key takeaway:** Scaling is about adding capacity — not fixing application logic. You scale when hardware limits are the bottleneck.
+> [!TIP]
+> Scaling is about adding capacity — not fixing application logic. You scale when hardware limits are the bottleneck.
 
 ---
 
-## Vertical Scaling — Explained With Full Depth
+### Vertical Scaling — Explained With Full Depth
 
-### The Core Idea
+#### The Core Idea
 
 Vertical scaling means you take the same machine your application is already running on, and you make it more powerful. You upgrade its specs.
 
@@ -106,7 +107,7 @@ AFTER VERTICAL SCALING:
 
 You didn't change anything about your application code. You didn't change your architecture. You just told AWS "give me a bigger machine." AWS stopped your old instance, migrated it to a bigger physical host, and restarted it. From your application's perspective, nothing changed — it just has more resources now.
 
-### Why Is Vertical Scaling Used For SQL Databases and Stateful Apps?
+#### Why Is Vertical Scaling Used For SQL Databases and Stateful Apps?
 
 This is a very important nuance that is worth understanding deeply.
 
@@ -135,13 +136,13 @@ A "stateful" application is one that remembers information between requests. For
 - User adds item to cart → server updates: `session["user_123"].cart.append("item_456")`
 - User checks out → server reads `session["user_123"].cart`
 
-All three requests MUST go to the SAME server because that's where the session data is stored in memory.
+All three requests must go to the same server because that's where the session data is stored in memory.
 
 If you had 3 servers and these requests got distributed across all three (which is what horizontal scaling does), Server 2 wouldn't know about the session that Server 1 created. The user's cart would appear empty.
 
 Solutions exist (like storing sessions in a shared Redis cache instead of in-memory), but they add complexity. For simpler stateful systems, vertical scaling keeps everything on one machine and avoids this problem entirely.
 
-### The Fundamental Limitation of Vertical Scaling
+#### The Fundamental Limitation of Vertical Scaling
 
 Here is the hard truth that makes vertical scaling insufficient by itself:
 
@@ -191,9 +192,9 @@ end
 
 ---
 
-## Horizontal Scaling — Explained With Full Depth
+### Horizontal Scaling — Explained With Full Depth
 
-### The Core Idea
+#### The Core Idea
 
 Horizontal scaling says: instead of making one machine bigger and bigger until we hit a ceiling, let's add more machines of the same size and divide the work between them.
 
@@ -241,7 +242,7 @@ Balancer                 ├─────────▶│  CPU: 33%         
 
 Each server is only handling one-third of the load. Each one is comfortable. Response times are fast. If traffic doubles, you just add a 4th server and the load gets divided further.
 
-### The Load Balancer — What It Is and How It Works
+#### The Load Balancer — What It Is and How It Works
 
 This is the component that makes horizontal scaling possible, so it deserves deep explanation.
 
@@ -274,7 +275,7 @@ Server 2 sends response back to Load Balancer
 Load balancer forwards response back to the user
 
 From the user's perspective: They talked to www.flipkart.com
-They have NO IDEA that 3 servers exist behind the scenes.
+They have no idea that 3 servers exist behind the scenes.
 
 The load balancer acts as a **reverse proxy** — it is the single point of contact for the outside world, and it internally distributes work to backend servers.
 
@@ -384,9 +385,9 @@ flowchart TD
 
 ---
 
-## Auto Scaling — The Full Deep Dive
+### Auto Scaling — The Full Deep Dive
 
-### The Problem That Auto Scaling Solves
+#### The Problem That Auto Scaling Solves
 
 Let's think very carefully about the business reality here.
 
@@ -431,7 +432,7 @@ Suppose 1 EC2 instance can handle 1,000 users. Then:
 | **B — Manual scaling** | Lower | Less waste | Daily ops burden | No (sick day = outage) |
 | **C — Auto Scaling** | Pay for what you use | Minimal | Set rules once | Yes |
 
-### How Auto Scaling Actually Works
+#### How Auto Scaling Actually Works
 
 You define rules (called **scaling policies**) and the system automatically adds or removes servers based on real-time metrics.
 
@@ -441,7 +442,7 @@ AUTO SCALING CONFIGURATION:
 - Maximum instances: 20  ← never go above 20 (cost cap)
 - Desired instances: 2   ← start with 2
 
-**Scale-OUT trigger:**
+##### Scale-OUT Trigger
 - "If AVERAGE CPU across all instances > 70%
 - for 3 consecutive minutes,
 - ADD 2 new instances"
@@ -518,7 +519,7 @@ Now let's trace through what happens in real life:
 
 You're paying only for exactly what you need, exactly when you need it.
 
-### Metrics You Can Scale On
+#### Metrics You Can Scale On
 
 CPU is the most common, but you can trigger auto scaling on many metrics:
 
@@ -541,7 +542,7 @@ Custom Metrics:        You can publish ANY metric to CloudWatch and
                      scale based on it. Business logic, database 
                      connection pool usage — anything.
 
-### How Do You Find the Right Threshold?
+#### How Do You Find the Right Threshold?
 
 This is where **Load Testing** comes in.
 
@@ -582,13 +583,14 @@ flowchart TD
     style SI fill:#fef,stroke:#660
 ```
 
-> **Rule of thumb:** Scale **out** fast (traffic spikes hurt users immediately). Scale **in** slow (removing capacity too early causes another spike).
+> [!TIP]
+> Scale **out** fast (traffic spikes hurt users immediately). Scale **in** slow (removing capacity too early causes another spike).
 
 ---
 
-# PART 2: BACK-OF-THE-ENVELOPE ESTIMATION — Complete Deep Dive
+## PART 2: BACK-OF-THE-ENVELOPE ESTIMATION — Complete Deep Dive
 
-## Why This Matters In System Design
+### Why This Matters In System Design
 
 When you're designing a large system, you can't just start drawing boxes without understanding the scale. The scale of the system fundamentally changes your design decisions.
 
@@ -617,9 +619,10 @@ flowchart LR
     style A fill:#eef,stroke:#336
 ```
 
-**Interview workflow:** Assumptions → Load (QPS) → Storage → Bandwidth → Servers. Always state numbers out loud before calculating.
+> [!NOTE]
+> **Interview Workflow:** Assumptions → Load (QPS) → Storage → Bandwidth → Servers. Always state numbers out loud before calculating.
 
-## The Memory Table — Why These Numbers and What They Mean
+### The Memory Table — Why These Numbers and What They Mean
 
 ```
 ┌──────────────┬────────────────────┬─────────────┬──────────┬───────────┐
@@ -639,7 +642,7 @@ The key mental shortcut: **every 10 powers of 2 is roughly 10x in decimal terms.
 
 So 2^10 ≈ 10^3, 2^20 ≈ 10^6, 2^30 ≈ 10^9 — and these correspond to KB, MB, GB respectively.
 
-## Also Memorize: Time Units
+### Also Memorize: Time Units
 
 1 minute    =  60 seconds
 1 hour      =  3,600 seconds
@@ -649,7 +652,7 @@ So 2^10 ≈ 10^3, 2^20 ≈ 10^6, 2^30 ≈ 10^9 — and these correspond to KB, M
 
 The approximation of 1 day ≈ 100,000 seconds is very commonly used in interviews. It slightly overestimates (86,400 vs 100,000) but makes math much easier.
 
-## Also Memorize: Common Data Sizes
+### Also Memorize: Common Data Sizes
 
 1 ASCII character        =  1 byte
 1 Unicode character      =  2 bytes  (covers most languages including Hindi)
@@ -665,9 +668,9 @@ The approximation of 1 day ≈ 100,000 seconds is very commonly used in intervie
 
 ---
 
-## Twitter Estimation — Step by Step With Full Working
+### Twitter Estimation — Step by Step With Full Working
 
-### Setting Up The Problem
+#### Setting Up The Problem
 
 Before any calculation, establish your assumptions out loud (in an interview, always state your assumptions — it shows you know the numbers aren't exact):
 
@@ -683,9 +686,9 @@ Assumptions:
 
 ---
 
-### Load Estimation — Full Working
+#### Load Estimation — Full Working
 
-**Write Load:**
+##### Write Load
 
 Total tweets per day:
 = Number of users × tweets per user per day
@@ -701,7 +704,7 @@ Now convert to per second (Tweets Per Second / TPS):
 
 This is your WRITE QPS (Queries Per Second) = ~10,000/sec
 
-**Read Load:**
+##### Read Load
 
 Total tweet reads per day:
 = Number of users × reads per user per day
@@ -717,14 +720,14 @@ Convert to per second:
 
 This is your READ QPS = ~1,000,000/sec
 
-**The Read/Write Ratio:**
+##### The Read/Write Ratio
 Read QPS  : Write QPS
 1,000,000 : 10,000
 = 100 : 1
 
 Twitter is 100x read-heavy compared to writes.
 
-This is a CRITICAL design insight.
+This is a critical design insight.
 It tells you:
 → Optimize your database for reads
 → Consider aggressive caching (memcached, Redis)
@@ -739,9 +742,9 @@ It tells you:
 
 ---
 
-### Storage Estimation — Full Working
+#### Storage Estimation — Full Working
 
-**Text storage per day:**
+##### Text Storage per Day
 
 Size of one tweet (text only):
 = 200 characters × 2 bytes/character
@@ -754,7 +757,7 @@ Total text storage per day:
 = 500 GB per day
 ≈ 0.5 TB per day (text only)
 
-**Photo storage per day:**
+##### Photo Storage per Day
 
 Number of tweets with photos:
 = 10% × 1,000,000,000
@@ -767,7 +770,7 @@ Total photo storage per day:
 = 200,000 GB
 = 200 TB per day
 
-**Combined storage per day:**
+##### Combined Storage per Day
 
 ```
 Total = text storage + photo storage
@@ -779,7 +782,7 @@ Note: We dropped the 0.5 TB because 0.5 TB is only 0.25% of 200 TB.
 At this scale, it doesn't matter. This is correct approximation practice.
 ```
 
-**Storage for 5 years:**
+##### Storage for 5 Years
 
 Daily storage needed   ≈ 200 TB/day
 Annual storage needed  = 200 TB × 365 days ≈ 73,000 TB = 73 PB/year
@@ -791,7 +794,7 @@ just for tweets and photos over 5 years.
 For reference: 1 PB = 1,000 TB = 1,000,000 GB
 400 PB = a genuinely staggering amount of storage.
 
-**Important addition — bandwidth estimation:**
+##### Bandwidth Estimation
 
 Outbound bandwidth (serving reads):
 = Reads per second × average size of one tweet (with photo probability)
@@ -814,7 +817,7 @@ That's why they have multiple data centers and use CDNs
 
 ---
 
-### Resource Estimation — Full Working
+#### Resource Estimation — Full Working
 
 Given:
 - 10,000 requests per second (write QPS from above)

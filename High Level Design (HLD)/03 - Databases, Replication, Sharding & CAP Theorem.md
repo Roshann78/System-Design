@@ -17,11 +17,11 @@ These notes continue from [Chapter 2 — Scaling & Estimation](<02 - Scaling & B
 
 ---
 
-# PART 1: CAP THEOREM — Complete Deep Dive
+## PART 1: CAP THEOREM — Complete Deep Dive
 
-## Building The Mental Model From Scratch
+### Building The Mental Model From Scratch
 
-### What Is A Distributed System?
+#### What Is A Distributed System?
 
 Before you can understand CAP theorem, you need to deeply understand what a distributed system is and why it's hard.
 
@@ -78,9 +78,9 @@ end
 
 ---
 
-## The Three Guarantees — Deep Explanation
+### The Three Guarantees — Deep Explanation
 
-### Consistency (C)
+#### Consistency (C)
 
 Consistency in CAP theorem means: **no matter which node you read from, you always get the most up-to-date data.**
 
@@ -113,7 +113,7 @@ CONSISTENT SYSTEM response:   Hyderabad returns age = 22
 
 Achieving consistency means: before any node responds to a read, it must be guaranteed that it has received all recent writes. This requires coordination between nodes — communication must happen before responding.
 
-### Availability (A)
+#### Availability (A)
 
 Availability means: **the system always responds to requests. Every request gets a response (not an error).**
 
@@ -143,7 +143,7 @@ NOT AVAILABLE response:
 
 Availability is essentially: "I will always answer you, even if my answer might be slightly outdated."
 
-### Partition Tolerance (P)
+#### Partition Tolerance (P)
 
 A network partition is when the network connection between some nodes breaks. The nodes themselves are still running fine, but they can't communicate with each other.
 
@@ -174,7 +174,7 @@ If you don't have partition tolerance, your system shuts down whenever a network
 
 ---
 
-## The CAP Theorem — The Actual Statement and Full Proof
+### The CAP Theorem — The Actual Statement and Full Proof
 
 **Statement: In a distributed system, when a network partition occurs, you must choose between Consistency and Availability. You cannot have both.**
 
@@ -281,13 +281,13 @@ flowchart TD
 
 > **Remember:** In production distributed systems, **P is non-negotiable**. Partitions happen. The real choice is **CP vs AP**.
 
-### Why P Is Always Chosen
+#### Why P Is Always Chosen
 
 In a real distributed system, P (Partition Tolerance) is non-negotiable. If you choose to not have partition tolerance, your system goes down every time a network glitch happens. For a production system serving millions of users across multiple data centers, this means the system would be down frequently.
 
 So the real choice is always: **CP vs AP**. Not CA vs CP vs AP.
 
-### Real-World Examples
+#### Real-World Examples
 
 CP Systems (Consistency over Availability):
 HBase, Zookeeper, MongoDB (in certain configs)
@@ -307,7 +307,7 @@ They're seeing slightly different values for the same data.
 This is called "eventual consistency" — given time with no new writes,
 all nodes will eventually converge to the same value.
 
-### Eventual Consistency — A Key AP Concept
+#### Eventual Consistency — A Key AP Concept
 
 When you choose AP, you accept that nodes might temporarily have different values. But the system promises that once the partition heals, all nodes will sync and converge to the same value. This is called **eventual consistency**.
 
@@ -350,9 +350,9 @@ This is "eventual" consistency — not instant, but guaranteed.
 
 ---
 
-# PART 2: DATABASE SCALING — Complete Deep Dive
+## PART 2: DATABASE SCALING — Complete Deep Dive
 
-## The Starting Point — Understanding the Problem Deeply
+### The Starting Point — Understanding the Problem Deeply
 
 Your application starts simple. One app server, one database server.
 
@@ -409,9 +409,9 @@ flowchart TD
 
 ---
 
-## Step 1: Indexing — Explained With Complete Depth
+### Step 1: Indexing — Explained With Complete Depth
 
-### Why Queries Get Slow Without Indexes
+#### Why Queries Get Slow Without Indexes
 
 Imagine the `users` table has 50 million rows. A user visits their profile page. Your app runs:
 
@@ -435,7 +435,7 @@ Read row 7,432,891: id=7,432,891? YES! Found it.
 
 If this query runs 10,000 times per second (10,000 users loading their profiles), you're doing 500 billion row comparisons per second. Your database melts.
 
-### How Indexing Solves This — The B-Tree Explained
+#### How Indexing Solves This — The B-Tree Explained
 
 When you create an index on the `id` column, the database builds a **B-Tree (Balanced Tree)** data structure and maintains it automatically.
 
@@ -491,7 +491,7 @@ flowchart TD
     style IDX fill:#efe,stroke:#060
 ```
 
-### Creating Indexes — What Happens Behind the Scenes
+#### Creating Indexes — What Happens Behind the Scenes
 
 ```sql
 -- Creating a simple index
@@ -536,9 +536,9 @@ CREATE INDEX idx_name_city ON users(last_name, city);
 
 ---
 
-## Step 2: Partitioning — Explained With Complete Depth
+### Step 2: Partitioning — Explained With Complete Depth
 
-### Why Indexing Alone Eventually Fails
+#### Why Indexing Alone Eventually Fails
 
 Your table now has 10 billion rows. Even with a B-Tree index, there are new problems:
 
@@ -571,7 +571,7 @@ During VACUUM, performance degrades.
 You can't escape this maintenance — it's mandatory.
 ```
 
-### What Partitioning Does
+#### What Partitioning Does
 
 Partitioning breaks one giant table into multiple smaller tables, all still sitting on the **same database server**. Each smaller table is called a **partition**.
 
@@ -647,9 +647,9 @@ Ensures even distribution regardless of id values.
 
 ---
 
-## Step 3: Master-Slave Architecture — Complete Deep Dive
+### Step 3: Master-Slave Architecture — Complete Deep Dive
 
-### When Do You Need This?
+#### When Do You Need This?
 
 After indexing and partitioning, your single database server can still get overwhelmed if you have millions of read requests per second. From our Twitter estimation: 1 million reads per second.
 
@@ -705,7 +705,7 @@ end
     APP --> readPath
 ```
 
-### How Master-Slave Works — Full Detail
+#### How Master-Slave Works — Full Detail
 
 ```
 WRITE PATH:
@@ -771,7 +771,7 @@ Application Layer
 └────────┘  └────────┘  └────────┘
 ```
 
-### Synchronous vs Asynchronous Replication — Critical Difference
+#### Synchronous vs Asynchronous Replication — Critical Difference
 
 This is one of the most important subtleties of master-slave architecture.
 
@@ -823,7 +823,7 @@ Most production systems use **semi-synchronous** — at least one slave must con
 | **Semi-synchronous** | At least 1 slave | Balanced | Stronger durability | Most production defaults |
 | **Synchronous** | All slaves | Slowest | Fully consistent at confirm time | Banking, inventory — correctness critical |
 
-### Replication Lag — When It's a Problem and Solutions
+#### Replication Lag — When It's a Problem and Solutions
 
 Scenario where lag is a REAL problem:
 1. User posts a tweet: "Just got promoted! 🎉"
@@ -859,7 +859,7 @@ SOLUTIONS:
   just accept the slight staleness. Nobody cares if the 
   "1,247 likes" is actually 1,249 for a few milliseconds.
 
-### What Happens When Master Fails — Failover
+#### What Happens When Master Fails — Failover
 
 ```
 Normal operation:
@@ -913,9 +913,9 @@ flowchart TD
 
 ---
 
-## Step 4: Multi-Master Architecture — Complete Deep Dive
+### Step 4: Multi-Master Architecture — Complete Deep Dive
 
-### When You Need It
+#### When You Need It
 
 You've reached the point where your single master server is the bottleneck. Maybe:
 - Your write QPS is 50,000/sec and one server maxes out at 30,000/sec
@@ -983,7 +983,7 @@ end
     US["South users<br/>~5ms writes"] --> SM
 ```
 
-### The Hardest Problem: Conflict Resolution
+#### The Hardest Problem: Conflict Resolution
 
 This is where multi-master becomes genuinely complex. Let me walk through every scenario.
 
@@ -1077,9 +1077,9 @@ This is the most correct but worst UX. Only practical for certain document types
 
 ---
 
-## Step 5: Database Sharding — The Complete Deep Dive
+### Step 5: Database Sharding — The Complete Deep Dive
 
-### Why Sharding Is Necessary
+#### Why Sharding Is Necessary
 
 Even with master-slave and multi-master, there comes a point where the sheer volume of data is too large to fit on any single machine.
 
@@ -1112,7 +1112,7 @@ flowchart TB
     SH3 --> SR3["Own read replicas"]
 ```
 
-### How Sharding Works — Full Detail
+#### How Sharding Works — Full Detail
 
 Sharding splits your data horizontally (by rows) and distributes chunks to completely separate database servers.
 
@@ -1148,7 +1148,7 @@ Shard 3 (DB Server in Hyderabad):
 
 Each shard is an independent database server with its own master-slave setup. You can scale each shard independently based on its load.
 
-### The Application Layer Must Know About Shards
+#### The Application Layer Must Know About Shards
 
 This is the fundamental difference from partitioning. With partitioning (same server), PostgreSQL routes automatically. With sharding (different servers), **your application code must route queries manually**.
 
@@ -1173,7 +1173,7 @@ function getTweetById(tweet_id):
 
 This routing logic is now YOUR responsibility. Every read, every write must be routed to the correct shard. If you get it wrong, you write to shard 2 but read from shard 1 — data not found.
 
-### All 4 Sharding Strategies — Deep Dive
+#### All 4 Sharding Strategies — Deep Dive
 
 **1. Range-Based Sharding**
 
@@ -1316,7 +1316,7 @@ SOLUTIONS:
 - Use a high-performance key-value store (Redis) for the directory
 ```
 
-### Why Cross-Shard JOINs Are a Nightmare
+#### Why Cross-Shard JOINs Are a Nightmare
 
 ```
 SIMPLE QUERY ON AN UNSHARDED DATABASE:
@@ -1385,7 +1385,7 @@ flowchart TD
 
 ---
 
-## The Full Database Scaling Decision Tree — With Context
+### The Full Database Scaling Decision Tree — With Context
 
 START: You have a single database.
 

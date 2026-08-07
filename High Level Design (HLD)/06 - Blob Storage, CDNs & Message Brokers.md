@@ -18,9 +18,9 @@ These notes continue from [Chapter 5 — Caching & Redis](<05 - Caching Strategi
 
 ---
 
-# PART 1: BLOB STORAGE — The Complete Deep Dive
+## PART 1: BLOB STORAGE — The Complete Deep Dive
 
-## Why Files Can't Go Into Regular Databases
+### Why Files Can't Go Into Regular Databases
 
 To understand why blob storage exists, you need to understand what a relational database is actually optimized for — and where it completely breaks down.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## What a Blob Actually Is
+### What a Blob Actually Is
 
 BLOB stands for **Binary Large Object**. It's the binary representation of any file — the raw 0s and 1s that make up the file's content.
 
@@ -84,11 +84,11 @@ At the storage level, they're all just bytes. The difference is how an applicati
 
 ---
 
-## AWS S3 — How It Works Internally
+### AWS S3 — How It Works Internally
 
 S3 (Simple Storage Service) is Amazon's blob storage service.
 
-### The Fundamental Data Model: Buckets and Objects
+#### The Fundamental Data Model: Buckets and Objects
 
 ```
 BUCKET: A named container (globally unique name)
@@ -109,7 +109,7 @@ my-company-bucket/
 
 Important: The `/` in S3 keys is a naming convention. S3 is a **flat key-value store** — `"videos/tutorials/redis.mp4"` is one long key string, not a real folder hierarchy.
 
-### How S3 Achieves 11 Nines of Durability
+#### How S3 Achieves 11 Nines of Durability
 
 99.999999999% durability means: if you store 10 million objects, you might lose one every 10,000 years.
 
@@ -124,7 +124,7 @@ For ap-south-1 (Mumbai):
 Your file's chunks live across all three simultaneously.
 Losing data requires catastrophic simultaneous failure across all AZs.
 
-### Pre-Signed URLs — The Right Way to Handle Uploads and Downloads
+#### Pre-Signed URLs — The Right Way to Handle Uploads and Downloads
 
 **Wrong approach — going through your server:**
 
@@ -178,7 +178,7 @@ const presignedUrl = await s3.getSignedUrlPromise('putObject', {
 
 Same pattern works for **downloads** — pre-signed GET URL, user downloads directly from S3.
 
-### S3 Storage Classes — Cost Optimization
+#### S3 Storage Classes — Cost Optimization
 
 | Storage Class | Cost/GB/month | Access | Use case |
 |---------------|---------------|--------|----------|
@@ -199,9 +199,9 @@ Archive old content at minimum cost.
 
 ---
 
-# PART 2: CDN (Content Delivery Network) — The Complete Deep Dive
+## PART 2: CDN (Content Delivery Network) — The Complete Deep Dive
 
-## The Physics Problem That CDNs Solve
+### The Physics Problem That CDNs Solve
 
 Signals in fiber move at roughly 200,000 km/s. Physics sets a floor on latency.
 
@@ -217,7 +217,7 @@ User in New York, origin in Mumbai — loading 15 assets:
   Distance: ~20 km → ~2ms per asset
   Total: ~30ms — roughly 100x improvement
 
-## How CDN Routing Works — GeoDNS
+### How CDN Routing Works — GeoDNS
 
 **WITHOUT CDN:**
 DNS always returns same IP → Mumbai server for everyone
@@ -230,7 +230,7 @@ DNS always returns same IP → Mumbai server for everyone
 Same domain, different IPs based on user location.
 Each user hits the geographically closest edge server.
 
-## First Request vs Subsequent — Cache Miss vs Hit at Edge
+### First Request vs Subsequent — Cache Miss vs Hit at Edge
 
 **First user at an edge (cache miss):**
 
@@ -247,7 +247,7 @@ Each user hits the geographically closest edge server.
 3. Edge → User directly (~15ms)
   S3 never contacted
 
-## TTL Strategy — Balancing Freshness vs Performance
+### TTL Strategy — Balancing Freshness vs Performance
 
 **STATIC ASSETS (content hash in filename):**
 - main.a3f8b2c1.js
@@ -267,7 +267,7 @@ DYNAMIC / PERSONALIZED:
   no-cache = revalidate with origin before serving
   no-store  = never cache at all
 
-## CDN Cache Invalidation
+### CDN Cache Invalidation
 
 When you must clear cache before TTL expires:
 
@@ -289,7 +289,7 @@ await cloudfront.createInvalidation({
 
 Invalidations cost money after free tier — another reason content-hashed filenames are preferred.
 
-## CDN With S3 — The Standard Architecture
+### CDN With S3 — The Standard Architecture
 
 ```mermaid
 flowchart LR
@@ -315,9 +315,9 @@ COMPLETE ARCHITECTURE:
 
 ---
 
-# PART 3: MESSAGE BROKER — The Complete Deep Dive
+## PART 3: MESSAGE BROKER — The Complete Deep Dive
 
-## Starting From Synchronous — Understanding the Baseline
+### Starting From Synchronous — Understanding the Baseline
 
 ```
 SYNCHRONOUS REQUEST-RESPONSE:
@@ -339,7 +339,7 @@ Payment and order creation **must** be synchronous — user needs confirmation.
 
 Email sending does **not** need to block the response. If email service is down, the order should still succeed.
 
-## The Spectrum of Asynchronous Tasks
+### The Spectrum of Asynchronous Tasks
 
 **MUST BE SYNCHRONOUS (user waits):**
 - Validating user input
@@ -364,7 +364,7 @@ Email sending does **not** need to block the response. If email service is down,
 
 **Key question:** *Does the user need this result before they can continue?* If no → async candidate.
 
-## The Problem With Naive Async (No Broker)
+### The Problem With Naive Async (No Broker)
 
 ```javascript
 app.post('/orders', async (req, res) => {
@@ -386,7 +386,7 @@ app.post('/orders', async (req, res) => {
 
 A message broker fixes all four.
 
-## Message Broker — What It Is and How It Works
+### Message Broker — What It Is and How It Works
 
 ```mermaid
 flowchart LR
@@ -408,7 +408,7 @@ Consumer acks when done → message removed.
 
 **Critical difference:** Task is durable in the broker **before** the server responds. Server crash does not lose the task.
 
-### Three Guarantees
+#### Three Guarantees
 
 **1. Durability** — tasks survive crashes (broker persists to disk before ack to producer)
 
@@ -418,9 +418,9 @@ Consumer acks when done → message removed.
 
 ---
 
-## Message Queue vs Message Stream — The Critical Distinction
+### Message Queue vs Message Stream — The Critical Distinction
 
-### Message Queue (RabbitMQ, AWS SQS)
+#### Message Queue (RabbitMQ, AWS SQS)
 
 **Competing consumers:** each message processed by **exactly one** consumer, then **deleted**.
 
@@ -439,7 +439,7 @@ Scale: add more consumers → queue drains faster
 
 **Consumer crash mid-job:** visibility timeout expires → message reappears → another consumer retries. **At-least-once delivery.**
 
-### Why Queues Fail for Multiple Consumer Types
+#### Why Queues Fail for Multiple Consumer Types
 
 **Video uploaded — naive approach writes to 4 separate queues:**
 - Transcoder queue
@@ -453,7 +453,7 @@ Scale: add more consumers → queue drains faster
 
 Can't atomically write to 4 queues in one operation.
 
-### Message Stream (Apache Kafka, AWS Kinesis)
+#### Message Stream (Apache Kafka, AWS Kinesis)
 
 **Pub/sub:** multiple **consumer groups** each read **every** message. Messages retained by **time**, not deleted on read.
 
@@ -487,7 +487,7 @@ Caption service crash? Others unaffected. Catches up from its offset.
 
 **Write once, read by many** — Kafka's core power.
 
-### Why Kafka Is So Fast
+#### Why Kafka Is So Fast
 
 Not primarily "in-memory" — Kafka writes to DISK sequentially.
 
@@ -503,7 +503,7 @@ Result: millions of messages/sec per broker
 
 ---
 
-## Microservice Communication: REST vs Message Broker
+### Microservice Communication: REST vs Message Broker
 
 | | REST (sync) | Message Broker (async) |
 |---|-------------|------------------------|
@@ -524,7 +524,7 @@ Result: millions of messages/sec per broker
 - One event → many independent services
 - Rate-controlled processing
 
-### Decision Framework
+#### Decision Framework
 
 **Q1:** Does caller need the result to continue?
   YES → REST    NO → Broker
@@ -543,7 +543,7 @@ Result: millions of messages/sec per broker
 
 ---
 
-## RabbitMQ/SQS vs Kafka — When to Use Which
+### RabbitMQ/SQS vs Kafka — When to Use Which
 
 | Use **Queue** (RabbitMQ, SQS) | Use **Stream** (Kafka, Kinesis) |
 |-------------------------------|----------------------------------|
@@ -559,7 +559,7 @@ Result: millions of messages/sec per broker
 
 ---
 
-## Putting It All Together — A Real Video Platform
+### Putting It All Together — A Real Video Platform
 
 ```mermaid
 flowchart TB
