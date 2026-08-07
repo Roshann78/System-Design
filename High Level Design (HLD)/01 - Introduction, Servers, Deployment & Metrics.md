@@ -16,25 +16,25 @@ When you build a project in college, your setup typically looks like this:
 
 ```
 [ Client (Browser / App) ]
- —  —  —  —  — |
- —  —  —  —  — | — HTTP Request
- —  —  —  —  — ↓
+          |
+          |  HTTP Request
+          ↓
 [ Backend Server (Node.js / Django / Spring) ]
- —  —  —  —  — |
- —  —  —  —  — | — CRUD Operations (Create, Read, Update, Delete)
- —  —  —  —  — ↓
+          |
+          |  CRUD Operations (Create, Read, Update, Delete)
+          ↓
 [ Database (MySQL / MongoDB / PostgreSQL) ]
 ```
 
 ```mermaid
 flowchart TD
- —  — C["Client (Browser / App)"]
- —  — S["Backend Server"]
- —  — D[("Database")]
- —  — C -->|"HTTP Request"| S
- —  — S -->|"CRUD"| D
- —  — D -->|"Data"| S
- —  — S -->|"HTTP Response"| C
+    C["Client (Browser / App)"]
+    S["Backend Server"]
+    D[("Database")]
+    C -->|"HTTP Request"| S
+    S -->|"CRUD"| D
+    D -->|"Data"| S
+    S -->|"HTTP Response"| C
 ```
 
 - Client sends a request (e.g., "Get me the list of products")
@@ -163,8 +163,8 @@ So when a request arrives at IP address `35.154.33.64`, **HOW** does the server 
 
 - A **Port** is a number (0–65535) that identifies a specific application/service running on a machine.
 - Think of it as a door number inside an apartment building.
- — - **IP Address** = The apartment building address (e.g., 35.154.33.64)
- — - **Port** = The specific flat/apartment number (e.g., 8080)
+  - **IP Address** = The apartment building address (e.g., 35.154.33.64)
+  - **Port** = The specific flat/apartment number (e.g., 8080)
 
 So `35.154.33.64:8080` means: *"Go to the machine at IP 35.154.33.64, and talk to the app on door 8080"*
 
@@ -205,9 +205,9 @@ When you type `https://google.com`, your browser automatically uses port **443**
 3. If not cached, your OS checks its local DNS cache and the **hosts file** (`/etc/hosts` on Linux/Mac, `C:\Windows\System32\drivers\etc\hosts` on Windows). If found → skip to step 6.
 4. If still not found, your OS sends the query to a **DNS RESOLVER** (usually ISP or public: Google `8.8.8.8`, Cloudflare `1.1.1.1`).
 5. The DNS Resolver goes through a hierarchy:
- —  - **ROOT NAME SERVERS** → Know where `.com`, `.in`, `.org` etc. servers are
- —  - **TLD NAME SERVERS** → `.com` servers know where `abc.com`'s nameserver is
- —  - **AUTHORITATIVE NAME SERVER** → Has the actual IP address for `abc.com`
+   - **ROOT NAME SERVERS** → Know where `.com`, `.in`, `.org` etc. servers are
+   - **TLD NAME SERVERS** → `.com` servers know where `abc.com`'s nameserver is
+   - **AUTHORITATIVE NAME SERVER** → Has the actual IP address for `abc.com`
 6. The IP address (e.g., `35.154.33.64`) is returned to your browser.
 7. Browser connects to `35.154.33.64:443` and requests the page.
 
@@ -215,16 +215,16 @@ When you type `https://google.com`, your browser automatically uses port **443**
 
 ```mermaid
 flowchart TD
- —  — Start(["User enters abc.com"]) --> BC{"Browser DNS\ncache hit?"}
- —  — BC -->|Yes| IP["Return IP address"]
- —  — BC -->|No| OS{"OS cache or\nhosts file?"}
- —  — OS -->|Yes| IP
- —  — OS -->|No| DR["DNS Resolver\n(8.8.8.8 / 1.1.1.1)"]
- —  — DR --> Root["Root Name Server"]
- —  — Root --> TLD["TLD Server (.com)"]
- —  — TLD --> Auth["Authoritative NS\nfor abc.com"]
- —  — Auth --> IP
- —  — IP --> Conn["Browser connects\n35.154.33.64:443"]
+    Start(["User enters abc.com"]) --> BC{"Browser DNS\ncache hit?"}
+    BC -->|"Yes"| IP["Return IP address"]
+    BC -->|"No"| OS{"OS cache or\nhosts file?"}
+    OS -->|"Yes"| IP
+    OS -->|"No"| DR["DNS Resolver\n(8.8.8.8 / 1.1.1.1)"]
+    DR --> Root["Root Name Server"]
+    Root --> TLD["TLD Server (.com)"]
+    TLD --> Auth["Authoritative NS\nfor abc.com"]
+    Auth --> IP
+    IP --> Conn["Browser connects\n35.154.33.64:443"]
 ```
 
 #### DNS record types (common ones)
@@ -251,35 +251,35 @@ Let's trace **exactly** what happens when you visit `https://abc.com`:
 
 ```
 [YOUR BROWSER]
- —  —  |
- —  —  | — 1. User types https://abc.com and presses Enter
- —  —  ↓
+     |
+     |  1. User types https://abc.com and presses Enter
+     ↓
 [DNS RESOLVER]
- —  —  |
- —  —  | — 2. Resolves abc.com → 35.154.33.64
- —  —  ↓
+     |
+     |  2. Resolves abc.com → 35.154.33.64
+     ↓
 [YOUR BROWSER again]
- —  —  |
- —  —  | — 3. Initiates TCP Connection to 35.154.33.64:443
- —  —  | —  —  (3-way handshake: SYN → SYN-ACK → ACK)
- —  —  |
- —  —  | — 4. TLS Handshake (for HTTPS security)
- —  —  | —  —  (Certificates exchanged, encryption keys set up)
- —  —  ↓
+     |
+     |  3. Initiates TCP Connection to 35.154.33.64:443
+     |     (3-way handshake: SYN → SYN-ACK → ACK)
+     |
+     |  4. TLS Handshake (for HTTPS security)
+     |     (Certificates exchanged, encryption keys set up)
+     ↓
 [SERVER at 35.154.33.64]
- —  —  |
- —  —  | — 5. Server receives request on port 443
- —  —  | —  —  Identifies the correct application (web server / reverse proxy)
- —  —  |
- —  —  | — 6. Application processes the request
- —  —  | —  —  (fetch data from DB, run business logic, etc.)
- —  —  ↓
+     |
+     |  5. Server receives request on port 443
+     |     Identifies the correct application (web server / reverse proxy)
+     |
+     |  6. Application processes the request
+     |     (fetch data from DB, run business logic, etc.)
+     ↓
 [YOUR BROWSER again]
- —  —  |
- —  —  | — 7. Server sends back HTTP Response (HTML/JSON/etc.)
- —  —  |
- —  —  | — 8. Browser renders the page / processes the data
- —  —  ↓
+     |
+     |  7. Server sends back HTTP Response (HTML/JSON/etc.)
+     |
+     |  8. Browser renders the page / processes the data
+     ↓
 [YOU SEE THE WEBPAGE]
 ```
 
@@ -334,13 +334,13 @@ A **Virtual Machine** is software that simulates a physical computer. The cloud 
 ```
 Physical Server (e.g., 128 CPU cores, 512GB RAM)
 ┌──────────────────────────────────────────┐
-│ —  —  —  —  —  —  — HYPERVISOR —  —  —  —  —  —  —  —  — │
+│              HYPERVISOR                  │
 ├──────────┬──────────┬──────────┬─────────┤
-│ VM #1 —  — │ VM #2 —  — │ VM #3 —  — │ VM #4 —  │
-│ 2 CPUs —  │ 4 CPUs —  │ 8 CPUs —  │ 2 CPUs — │
-│ 4GB RAM — │ 16GB RAM │ 32GB RAM │ 8GB RAM │
-│ Ubuntu —  │ Windows — │ Amazon —  │ Debian — │
-│ —  —  —  —  — │ —  —  —  —  — │ Linux —  — │ —  —  —  —  │
+│ VM #1    │ VM #2    │ VM #3    │ VM #4   │
+│ 2 CPUs   │ 4 CPUs   │ 8 CPUs   │ 2 CPUs  │
+│ 4GB RAM  │ 16GB RAM │ 32GB RAM │ 8GB RAM │
+│ Ubuntu   │ Windows  │ Amazon   │ Debian  │
+│          │          │ Linux    │         │
 └──────────┴──────────┴──────────┴─────────┘
 ```
 
@@ -403,9 +403,9 @@ Think of it as: *"How fast does ONE thing get done?"*
 Latency is made up of multiple parts:
 
 1. **Network transmission latency** — Physical time for packets to travel. Limited by speed of light.
- —  - Same city: ~1–5ms
- —  - Cross-country (Mumbai to Delhi): ~20–40ms
- —  - Intercontinental (Mumbai to New York): ~100–200ms
+   - Same city: ~1–5ms
+   - Cross-country (Mumbai to Delhi): ~20–40ms
+   - Intercontinental (Mumbai to New York): ~100–200ms
 2. **Propagation delay** — How far the signal travels. Cannot beat speed-of-light limit. Geographic proximity matters.
 3. **Queuing delay** — If server is busy, request waits in queue. Under heavy load, adds significant latency.
 4. **Processing/computation time** — Server runs code, executes queries. Depends on CPU and algorithm efficiency.
@@ -524,7 +524,7 @@ If you have more concurrent users and the same throughput, **latency increases**
 #### The tradeoff
 
 - Sometimes improving throughput **increases** latency.
- — - **Example:** Batching DB writes (100 at once) → higher throughput, but each write waits for batch → higher latency.
+  - **Example:** Batching DB writes (100 at once) → higher throughput, but each write waits for batch → higher latency.
 - **Example:** Caching improves **both** (rare win!) → lower latency **and** higher throughput.
 
 #### Saturation point
@@ -533,24 +533,24 @@ As load increases, latency stays low until the system approaches its throughput 
 
 ```mermaid
 flowchart TD
- —  — Load["Requests per second increase"] --> Cap{"Below system\ncapacity?"}
- —  — Cap -->|Yes| Stable["Latency stays low"]
- —  — Cap -->|No| Sat["Saturation point"]
- —  — Sat --> Spike["Latency rises sharply"]
- —  — Stable --> Goal["Goal: scale throughput\nbefore saturation"]
+    Load["Requests per second increase"] --> Cap{"Below system\ncapacity?"}
+    Cap -->|"Yes"| Stable["Latency stays low"]
+    Cap -->|"No"| Sat["Saturation point"]
+    Sat --> Spike["Latency rises sharply"]
+    Stable --> Goal["Goal: scale throughput\nbefore saturation"]
 ```
 
 ```
 Latency
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  — *
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  * *
-│ —  —  —  —  —  —  —  —  —  —  —  — * *
-│ —  —  —  —  —  —  — * * * * *
+│                              *
+│                           * *
+│                        * *
+│              * * * * *
 │* * * * * * *
 └──────────────────────────────── Requests/sec
- —  —  ↑ —  —  —  —  —  —  —  —  —  — ↑
-Low load zone —  —  —  — Saturation point
-(latency stable) —  —  (latency explodes)
+     ↑                    ↑
+Low load zone        Saturation point
+(latency stable)     (latency explodes)
 ```
 
 **Ideal goal:** Optimize **both**:
@@ -615,29 +615,29 @@ Amazon found that every **100ms** of latency costs them **1%** in sales.
 
 ```mermaid
 flowchart TD
- —  — A["Build app on laptop"] --> B["Deploy to cloud VM\n(EC2, Droplet, etc.)"]
- —  — B --> C["Domain name → DNS → Public IP"]
- —  — C --> D["Port routes to correct app"]
- —  — D --> E["Request processing = Latency"]
- —  — E --> F["Many concurrent users = Throughput"]
- —  — F --> G{"Traffic grows?"}
- —  — G -->|Yes| H["Apply system design:\nscale, cache, CDN, replicas"]
- —  — G -->|No| OK["Simple 3-tier may suffice"]
+    A["Build app on laptop"] --> B["Deploy to cloud VM\n(EC2, Droplet, etc.)"]
+    B --> C["Domain name → DNS → Public IP"]
+    C --> D["Port routes to correct app"]
+    D --> E["Request processing = Latency"]
+    E --> F["Many concurrent users = Throughput"]
+    F --> G{"Traffic grows?"}
+    G -->|"Yes"| H["Apply system design:\nscale, cache, CDN, replicas"]
+    G -->|"No"| OK["Simple 3-tier may suffice"]
 ```
 
 ```
 You build an app (code on laptop)
- —  —  — ↓
+      ↓
 You DEPLOY it to a CLOUD SERVER (AWS EC2, etc.)
- —  —  — ↓
+      ↓
 Users access it via DOMAIN NAME → DNS resolves to SERVER IP
- —  —  — ↓
+      ↓
 Request goes to correct app via PORT NUMBER
- —  —  — ↓
+      ↓
 Server processes request — this takes LATENCY time
- —  —  — ↓
+      ↓
 System must handle many users simultaneously — this is THROUGHPUT
- —  —  — ↓
+      ↓
 As users grow, simple architecture breaks → Need SYSTEM DESIGN principles
 ```
 

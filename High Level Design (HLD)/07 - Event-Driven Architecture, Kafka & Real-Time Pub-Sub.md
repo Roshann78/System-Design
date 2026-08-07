@@ -1,4 +1,4 @@
-# System Design — Detailed Personal Notes (Chapter 7)
+# System Design — Detailed Personal Notes (Chapter 7: Event-Driven Architecture, Kafka & Real-Time Pub-Sub)
 
 **Topics:** Event-Driven Architecture (EDA), Kafka Internals (Brokers, Topics, Partitions, Consumer Groups, Offsets), Redis Pub/Sub, WebSockets, Pull vs Push
 
@@ -29,14 +29,14 @@ The design — append-only logs, partitions, consumer groups, offset-based consu
 
 ```mermaid
 flowchart LR
- —  — P["Producers"]
- —  — K["Kafka Cluster<br/>Topics + Partitions"]
- —  — CG1["Consumer Group A"]
- —  — CG2["Consumer Group B"]
+    P["Producers"]
+    K["Kafka Cluster<br/>Topics + Partitions"]
+    CG1["Consumer Group A"]
+    CG2["Consumer Group B"]
 
- —  — P --> K
- —  — K --> CG1
- —  — K --> CG2
+    P --> K
+    K --> CG1
+    K --> CG2
 ```
 
 ---
@@ -49,12 +49,12 @@ A Kafka **broker** is a server that stores messages and serves them to consumers
 KAFKA CLUSTER (3 brokers):
 
 ┌───────────────────────────────────────────────────┐
-│ —  —  —  —  —  —  —  —  —  Kafka Cluster —  —  —  —  —  —  —  —  —  │
-│ — ┌─────────────┐ — ┌─────────────┐ — ┌─────────────┐ │
-│ — │ — Broker 1 —  │ — │ — Broker 2 —  │ — │ — Broker 3 —  │ │
-│ — │ (Leader for │ — │ (Leader for │ — │ (Leader for│ │
-│ — │ — some parts)│ — │ — some parts)│ — │ some parts) │ │
-│ — └─────────────┘ — └─────────────┘ — └─────────────┘ │
+│                   Kafka Cluster                   │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
+│  │  Broker 1   │  │  Broker 2   │  │  Broker 3   │ │
+│  │ (Leader for │  │ (Leader for │  │ (Leader for│ │
+│  │  some parts)│  │  some parts)│  │ some parts) │ │
+│  └─────────────┘  └─────────────┘  └─────────────┘ │
 └───────────────────────────────────────────────────┘
 
 WHY MULTIPLE BROKERS?
@@ -98,12 +98,12 @@ Ride-sharing app topics:
 
 Example message in "driver-location-updates":
 {
- — "driver_id": "drv_456",
- — "latitude": 28.6139,
- — "longitude": 77.2090,
- — "timestamp": 1710000000,
- — "speed_kmh": 42,
- — "heading": 270
+  "driver_id": "drv_456",
+  "latitude": 28.6139,
+  "longitude": 77.2090,
+  "timestamp": 1710000000,
+  "speed_kmh": 42,
+  "heading": 270
 }
 ```
 
@@ -113,8 +113,8 @@ Example message in "driver-location-updates":
 
 ```
 SCENARIO:
- — 500,000 active drivers
- — Each sends GPS update every 2 seconds
+  500,000 active drivers
+  Each sends GPS update every 2 seconds
 
 **WRITES PER SECOND:**
 - 500,000 / 2 = 250,000 writes/sec
@@ -127,10 +127,10 @@ SCENARIO:
 Each PG write: disk I/O, index update, WAL, replication
 
 KAFKA:
- — Designed for sequential append-only writes
- — No index updates per message
- — Millions of writes/sec on a 3-broker cluster
- — 250,000/sec: comfortable
+  Designed for sequential append-only writes
+  No index updates per message
+  Millions of writes/sec on a 3-broker cluster
+  250,000/sec: comfortable
 ```
 
 **Batching strategy:**
@@ -139,8 +139,8 @@ KAFKA:
 Producer: every driver update → append to Kafka immediately
 
 Consumer (PostgreSQL path): batch every 10 minutes
- — 10 min × 250,000/sec × 60 = 150 million points
- — But you only need LATEST location per driver
+  10 min × 250,000/sec × 60 = 150 million points
+  But you only need LATEST location per driver
 
 **Consumer logic:**
 1. Read 10 minutes of Kafka messages
@@ -149,11 +149,11 @@ Consumer (PostgreSQL path): batch every 10 minutes
 4. ~833 writes/sec to PG — completely fine
 
 **REFINED real-time map approach:**
-- Hot path: — Kafka → Consumer → Redis (sub-ms, live map)
+- Hot path:  Kafka → Consumer → Redis (sub-ms, live map)
 - Cold path: Kafka → Consumer batch → PostgreSQL (history, analytics)
 
- — Map reads Redis. Analytics reads PostgreSQL.
- — Same Kafka stream. Two consumer groups. One write.
+  Map reads Redis. Analytics reads PostgreSQL.
+  Same Kafka stream. Two consumer groups. One write.
 ```
 
 ---
@@ -170,41 +170,41 @@ A partition is a physically separate, **ordered, immutable** sequence of records
 Topic: "driver-location-updates" with 4 partitions:
 
 PARTITION 0 (Broker 1):
- — Offset 0: {driver: "drv_001", lat: 28.61, lng: 77.20, time: 1000}
- — Offset 1: {driver: "drv_002", lat: 19.07, lng: 72.87, time: 1001}
- — Offset 2: {driver: "drv_001", lat: 28.62, lng: 77.21, time: 1002}
- — ...
+  Offset 0: {driver: "drv_001", lat: 28.61, lng: 77.20, time: 1000}
+  Offset 1: {driver: "drv_002", lat: 19.07, lng: 72.87, time: 1001}
+  Offset 2: {driver: "drv_001", lat: 28.62, lng: 77.21, time: 1002}
+  ...
 
 PARTITION 1 (Broker 2):
- — Offset 0: {driver: "drv_003", ...}
- — ...
+  Offset 0: {driver: "drv_003", ...}
+  ...
 
 KEY PROPERTIES:
- — - Ordering GUARANTEED within a partition
- — - NO ordering guarantee across partitions
- — - Each partition on one broker (replicated to others)
- — - One partition read by at most ONE consumer per consumer group
+  - Ordering GUARANTEED within a partition
+  - NO ordering guarantee across partitions
+  - Each partition on one broker (replicated to others)
+  - One partition read by at most ONE consumer per consumer group
 ```
 
 ### How Producers Choose a Partition
 
 STRATEGY 1: Round Robin (no message key)
- — Message 1 → P0, Message 2 → P1, Message 3 → P2, Message 4 → P3, ...
- — Use when: even distribution, ordering doesn't matter
- — Problem: same driver's updates can land in different partitions → out of order
+  Message 1 → P0, Message 2 → P1, Message 3 → P2, Message 4 → P3, ...
+  Use when: even distribution, ordering doesn't matter
+  Problem: same driver's updates can land in different partitions → out of order
 
 STRATEGY 2: Key-Based Partitioning (recommended for entity ordering)
- — partition = HASH(message_key) % num_partitions
+  partition = HASH(message_key) % num_partitions
 
 **Key = driver_id:**
 - HASH("drv_001") % 4 = 0 → ALL drv_001 updates → Partition 0
 - HASH("drv_002") % 4 = 1 → ALL drv_002 updates → Partition 1
 
- — Use when: "all updates for driver X must stay in order"
+  Use when: "all updates for driver X must stay in order"
 
 STRATEGY 3: Custom Partitioner
- — Your code picks partition by business logic
- — Example: partition by geography (North/South/East/West India)
+  Your code picks partition by business logic
+  Example: partition by geography (North/South/East/West India)
 
 ---
 
@@ -226,9 +226,9 @@ Horizontal scaling: 3 consumers ≈ 3× throughput.
 
 WHY can't two consumers in the SAME group read the same partition?
 
- — Same message would be processed twice.
- — "Send welcome email to rahul@gmail.com"
- — Consumer-1 sends it. Consumer-2 sends it again. Duplicate.
+  Same message would be processed twice.
+  "Send welcome email to rahul@gmail.com"
+  Consumer-1 sends it. Consumer-2 sends it again. Duplicate.
 
 Kafka assigns each partition to at most one consumer per group.
 
@@ -236,31 +236,31 @@ Kafka assigns each partition to at most one consumer per group.
 
 4 partitions, 5 consumers in same group:
 
- — Consumer-1 → P0
- — Consumer-2 → P1
- — Consumer-3 → P2
- — Consumer-4 → P3
- — Consumer-5 → IDLE (no partition)
+  Consumer-1 → P0
+  Consumer-2 → P1
+  Consumer-3 → P2
+  Consumer-4 → P3
+  Consumer-5 → IDLE (no partition)
 
 RULE: Active consumers ≤ partitions in a group.
 
 LESSON: Need N parallel workers → create at least N partitions upfront.
- —  —  — (Adding partitions later changes HASH % N — affects key ordering)
+      (Adding partitions later changes HASH % N — affects key ordering)
 
 ### Kafka Rebalancing
 
 Rebalancing reassigns partitions when group membership changes.
 
 TRIGGER 1: New consumer joins
- — All consumers pause briefly ("stop the world") during reassignment
- — Kafka 2.4+ cooperative rebalancing: unaffected consumers keep consuming
+  All consumers pause briefly ("stop the world") during reassignment
+  Kafka 2.4+ cooperative rebalancing: unaffected consumers keep consuming
 
 TRIGGER 2: Consumer crashes or leaves
- — Partitions redistributed to remaining consumers
- — Resume from last committed offset — no message loss
+  Partitions redistributed to remaining consumers
+  Resume from last committed offset — no message loss
 
 TRIGGER 3: Session timeout (no heartbeat in session.timeout.ms, default 10s)
- — Kafka assumes consumer dead → rebalance
+  Kafka assumes consumer dead → rebalance
 
 ### Purpose 2: Fan-Out Across Different Consumer Groups
 
@@ -270,18 +270,18 @@ Different groups have **independent offset pointers**. Messages are not deleted 
 TOPIC: "video-process" — message {video_id: 789, s3_url: "...", duration: "10min"}
 
 GROUP 1: "video-transcoder-group" (4 consumers)
- — Reads all partitions, transcodes to 360p–4K, uploads to S3
- — Offset on P0 might be 1000
+  Reads all partitions, transcodes to 360p–4K, uploads to S3
+  Offset on P0 might be 1000
 
 GROUP 2: "caption-generator-group" (2 consumers)
- — Completely separate offsets
- — Runs speech-to-text, generates .srt
- — Offset on P0 might be 500 (slower — that's fine)
+  Completely separate offsets
+  Runs speech-to-text, generates .srt
+  Offset on P0 might be 500 (slower — that's fine)
 
 GROUP 3: "thumbnail-generator-group" (new)
- — Starts from offset 0 or "latest" depending on config
- — Reads ALL historical messages if from 0
- — Transcoder group unaffected
+  Starts from offset 0 or "latest" depending on config
+  Reads ALL historical messages if from 0
+  Transcoder group unaffected
 
 One write. Many consumer groups. Write once, read by many.
 ```
@@ -291,7 +291,7 @@ One write. Many consumer groups. Write once, read by many.
 Each group commits a **bookmark** per partition — stored in Kafka's internal topic `__consumer_offsets`.
 
 **GROUP "caption-generator-group":**
-- P0: committed offset = 47 — (processed 0–46)
+- P0: committed offset = 47  (processed 0–46)
 - P1: committed offset = 51
 - P2: committed offset = 43
 - P3: committed offset = 49
@@ -307,9 +307,9 @@ Each group commits a **bookmark** per partition — stored in Kafka's internal t
 - Risk: message fetched but not processed → offset advances → message "lost"
 
 MANUAL COMMIT (recommended):
- — transcodeVideo(message);
- — uploadToS3(result);
- — consumer.commitSync(); — // only after success
+  transcodeVideo(message);
+  uploadToS3(result);
+  consumer.commitSync();  // only after success
 
 ---
 
@@ -319,29 +319,29 @@ MANUAL COMMIT (recommended):
 
 ```mermaid
 flowchart TB
- —  — subgraph pull["Pull — Kafka / SQS"]
- —  —  —  — C1["Consumer polls broker"]
- —  —  —  — B1["Broker stores messages"]
- —  —  —  — C1 -->|"poll"| B1
- —  —  —  — B1 --> C1
- —  — end
+    subgraph pull["Pull — Kafka / SQS"]
+    C1["Consumer polls broker"]
+    B1["Broker stores messages"]
+    C1 -->|"poll"| B1
+    B1 --> C1
+end
 
- —  — subgraph push["Push — Redis Pub/Sub"]
- —  —  —  — B2["Broker"]
- —  —  —  — C2["Subscriber"]
- —  —  —  — B2 -->|"push immediately"| C2
- —  — end
+    subgraph push["Push — Redis Pub/Sub"]
+    B2["Broker"]
+    C2["Subscriber"]
+    B2 -->|"push immediately"| C2
+end
 ```
 
 KAFKA / MESSAGE QUEUE (Pull):
- — while True:
- —  — messages = consumer.poll(timeout=1000ms)
- —  — for msg in messages: process(msg)
- —  — consumer.commitSync()
+  while True:
+    messages = consumer.poll(timeout=1000ms)
+    for msg in messages: process(msg)
+    consumer.commitSync()
 
- — Consumer pulls at its own pace
- — Slow consumer → messages pile up in broker
- — Messages retained until TTL or ack
+  Consumer pulls at its own pace
+  Slow consumer → messages pile up in broker
+  Messages retained until TTL or ack
 
 **REDIS PUB/SUB (Push):**
 - Broker pushes to subscribers the moment message arrives
@@ -349,7 +349,7 @@ KAFKA / MESSAGE QUEUE (Pull):
 
 **Trade-off:**
 - Pub/Sub: ultra-low latency, no persistence
-- Kafka: —  reliable delivery, retained log
+- Kafka:   reliable delivery, retained log
 
 ---
 
@@ -357,17 +357,17 @@ KAFKA / MESSAGE QUEUE (Pull):
 
 ```
 PUBLISHER:
- — PUBLISH chat:room:42 '{"from": "rahul", "text": "Hello!", "time": 1710000000}'
- — Returns: number of subscribers who received it NOW
- — Zero subscribers → returns 0. Message gone forever.
+  PUBLISH chat:room:42 '{"from": "rahul", "text": "Hello!", "time": 1710000000}'
+  Returns: number of subscribers who received it NOW
+  Zero subscribers → returns 0. Message gone forever.
 
 **SUBSCRIBER:**
 - SUBSCRIBE chat:room:42
 - Connection enters subscribe mode — waits for pushes
 
 PATTERN SUBSCRIBE:
- — PSUBSCRIBE chat:room:*
- — Receives all chat:room:1, chat:room:2, ...
+  PSUBSCRIBE chat:room:*
+  Receives all chat:room:1, chat:room:2, ...
 ```
 
 ---
@@ -390,8 +390,8 @@ PATTERN SUBSCRIBE:
 ### The Horizontal Scaling Problem
 
 **Room #42:**
-- Rahul — → WebSocket on Server-1
-- Ankit — → WebSocket on Server-1
+- Rahul  → WebSocket on Server-1
+- Ankit  → WebSocket on Server-1
 - Shivam → WebSocket on Server-2
 
 Rahul sends "Hey Shivam!" to Server-1
@@ -403,18 +403,18 @@ Message never reaches Shivam. Chat broken.
 
 ```mermaid
 sequenceDiagram
- —  — participant R as Rahul (Server-1)
- —  — participant S1 as Server-1
- —  — participant Redis as Redis Pub/Sub
- —  — participant S2 as Server-2
- —  — participant Sh as Shivam (Server-2)
+    participant R as Rahul (Server-1)
+    participant S1 as Server-1
+    participant Redis as Redis Pub/Sub
+    participant S2 as Server-2
+    participant Sh as Shivam (Server-2)
 
- —  — R->>S1: "Hey Shivam!" (WebSocket)
- —  — S1->>Redis: PUBLISH chat:room:42
- —  — Redis->>S1: push message
- —  — Redis->>S2: push message
- —  — S1->>R: echo to Rahul + Ankit
- —  — S2->>Sh: deliver to Shivam
+    R->>S1: "Hey Shivam!" (WebSocket)
+    S1->>Redis: PUBLISH chat:room:42
+    Redis->>S1: push message
+    Redis->>S2: push message
+    S1->>R: echo to Rahul + Ankit
+    S2->>Sh: deliver to Shivam
 ```
 
 Both Server-1 and Server-2 SUBSCRIBE to "chat:room:42"
@@ -442,45 +442,45 @@ const redisSubscriber = new Redis();
 const roomConnections = new Map(); // channel → Set of WebSockets
 
 wss.on('connection', (ws) => {
- —  — ws.on('message', async (rawMessage) => {
- —  —  —  — const message = JSON.parse(rawMessage);
+    ws.on('message', async (rawMessage) => {
+        const message = JSON.parse(rawMessage);
 
- —  —  —  — if (message.type === 'join_room') {
- —  —  —  —  —  — const roomChannel = `chat:room:${message.roomId}`;
- —  —  —  —  —  — if (!roomConnections.has(roomChannel)) {
- —  —  —  —  —  —  —  — roomConnections.set(roomChannel, new Set());
- —  —  —  —  —  —  —  — redisSubscriber.subscribe(roomChannel);
- —  —  —  —  —  — }
- —  —  —  —  —  — roomConnections.get(roomChannel).add(ws);
- —  —  —  —  —  — ws.currentRoom = roomChannel;
- —  —  —  — }
+        if (message.type === 'join_room') {
+            const roomChannel = `chat:room:${message.roomId}`;
+            if (!roomConnections.has(roomChannel)) {
+                roomConnections.set(roomChannel, new Set());
+                redisSubscriber.subscribe(roomChannel);
+            }
+            roomConnections.get(roomChannel).add(ws);
+            ws.currentRoom = roomChannel;
+        }
 
- —  —  —  — if (message.type === 'chat_message') {
- —  —  —  —  —  — const payload = JSON.stringify({
- —  —  —  —  —  —  —  — from: message.userId,
- —  —  —  —  —  —  —  — text: message.text,
- —  —  —  —  —  —  —  — time: Date.now(),
- —  —  —  —  —  —  —  — room: message.roomId
- —  —  —  —  —  — });
- —  —  —  —  —  — await redisPublisher.publish(`chat:room:${message.roomId}`, payload);
- —  —  —  —  —  — await database.messages.insert({ /* ... */ });
- —  —  —  — }
- —  — });
+        if (message.type === 'chat_message') {
+            const payload = JSON.stringify({
+                from: message.userId,
+                text: message.text,
+                time: Date.now(),
+                room: message.roomId
+            });
+            await redisPublisher.publish(`chat:room:${message.roomId}`, payload);
+            await database.messages.insert({ /* ... */ });
+        }
+    });
 
- —  — ws.on('close', () => {
- —  —  —  — if (ws.currentRoom && roomConnections.has(ws.currentRoom)) {
- —  —  —  —  —  — roomConnections.get(ws.currentRoom).delete(ws);
- —  —  —  — }
- —  — });
+    ws.on('close', () => {
+        if (ws.currentRoom && roomConnections.has(ws.currentRoom)) {
+            roomConnections.get(ws.currentRoom).delete(ws);
+        }
+    });
 });
 
 redisSubscriber.on('message', (channel, message) => {
- —  — const connections = roomConnections.get(channel) || new Set();
- —  — connections.forEach((clientWs) => {
- —  —  —  — if (clientWs.readyState === WebSocket.OPEN) {
- —  —  —  —  —  — clientWs.send(message);
- —  —  —  — }
- —  — });
+    const connections = roomConnections.get(channel) || new Set();
+    connections.forEach((clientWs) => {
+        if (clientWs.readyState === WebSocket.OPEN) {
+            clientWs.send(message);
+        }
+    });
 });
 ```
 
@@ -506,21 +506,21 @@ redisSubscriber.on('message', (channel, message) => {
 ```
 Q: "What if consumer is offline when message arrives?"
 
- — "Fine to miss it — real-time or nothing"
- —  — → Redis Pub/Sub
- —  — Example: live sports tick updates
+  "Fine to miss it — real-time or nothing"
+    → Redis Pub/Sub
+    Example: live sports tick updates
 
- — "Must eventually process — losing it is unacceptable"
- —  — → Kafka or message queue
- —  — Example: payment confirmation email
+  "Must eventually process — losing it is unacceptable"
+    → Kafka or message queue
+    Example: payment confirmation email
 
 Q: "Need to reprocess old messages?"
 
- — "Yes — new service or bug fix replay"
- —  — → Kafka (start from offset 0, replay retention window)
+  "Yes — new service or bug fix replay"
+    → Kafka (start from offset 0, replay retention window)
 
- — "No — only care about now"
- —  — → Pub/Sub or non-replayable queue
+  "No — only care about now"
+    → Pub/Sub or non-replayable queue
 ```
 
 ---
@@ -529,40 +529,40 @@ Q: "Need to reprocess old messages?"
 
 ```mermaid
 flowchart TB
- —  — LB["Load Balancer"]
- —  — WS1["WebSocket Server 1"]
- —  — WS2["WebSocket Server 3"]
- —  — Redis["Redis Pub/Sub"]
- —  — Kafka["Kafka: chat-messages"]
- —  — Cass[("Cassandra history")]
- —  — ES["Elasticsearch search"]
+    LB["Load Balancer"]
+    WS1["WebSocket Server 1"]
+    WS2["WebSocket Server 3"]
+    Redis["Redis Pub/Sub"]
+    Kafka["Kafka: chat-messages"]
+    Cass[("Cassandra history")]
+    ES["Elasticsearch search"]
 
- —  — LB --> WS1 & WS2
- —  — WS1 & WS2 <--> Redis
- —  — WS1 & WS2 --> Kafka
- —  — Kafka --> Cass
- —  — Kafka --> ES
+    LB --> WS1 & WS2
+    WS1 & WS2 <--> Redis
+    WS1 & WS2 --> Kafka
+    Kafka --> Cass
+    Kafka --> ES
 ```
 
 ```
 INFRASTRUCTURE:
- — - Load Balancer (WebSocket connections)
- — - 5 WebSocket servers
- — - Redis Pub/Sub per room channel
- — - Kafka topic "chat-messages"
- — - PostgreSQL / Cassandra for history
- — - Elasticsearch for search
+  - Load Balancer (WebSocket connections)
+  - 5 WebSocket servers
+  - Redis Pub/Sub per room channel
+  - Kafka topic "chat-messages"
+  - PostgreSQL / Cassandra for history
+  - Elasticsearch for search
 
 Rahul (Delhi) → Load Balancer → Server-1 → joins room 42
 Shivam (Mumbai) → Load Balancer → Server-3 → joins room 42
 
 Rahul sends: "Kya haal hai bhai?"
 
- — Step 1: WebSocket → Server-1
+  Step 1: WebSocket → Server-1
 
 **Step 2: Server-1 simultaneously:**
-1. a) PUBLISH Redis "chat:room:42" —  —  (real-time)
-2. b) PRODUCE Kafka "chat-messages" —  — (durable)
+1. a) PUBLISH Redis "chat:room:42"     (real-time)
+2. b) PRODUCE Kafka "chat-messages"    (durable)
 
 **Step 3a — Redis path (~5ms):**
 1. Redis → all servers subscribed to room 42
@@ -582,7 +582,7 @@ Rahul sends: "Kya haal hai bhai?"
 WHY BOTH?
 
 Redis Pub/Sub: speed — deliver to everyone connected RIGHT NOW
-Kafka: —  —  —  —  reliability — persist, fan-out, replay, notifications
+Kafka:         reliability — persist, fan-out, replay, notifications
 
 Redis handles speed. Kafka handles durability.
 Different tools. Different strengths. Together.

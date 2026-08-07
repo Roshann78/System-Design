@@ -18,32 +18,32 @@ Every time a user requests data from your application, this is what happens with
 
 ```
 User's browser
- —  —  │
- —  —  │ — GET /blogs — (HTTP request travels over the internet)
- —  —  ▼
+     │
+     │  GET /blogs  (HTTP request travels over the internet)
+     ▼
 Application Server
- —  —  │
- —  —  │ — Runs business logic:
- —  —  │ — - Parse the request
- —  —  │ — - Validate authentication token
- —  —  │ — - Build the SQL/MongoDB query
- —  —  │
- —  —  │ — SELECT * FROM blogs ORDER BY created_at DESC LIMIT 20;
- —  —  ▼
+     │
+     │  Runs business logic:
+     │  - Parse the request
+     │  - Validate authentication token
+     │  - Build the SQL/MongoDB query
+     │
+     │  SELECT * FROM blogs ORDER BY created_at DESC LIMIT 20;
+     ▼
 Database Server (on disk)
- —  —  │
- —  —  │ — - Read index from disk to find matching rows — (~50ms)
- —  —  │ — - Read actual row data from disk —  —  —  —  —  —  — (~200ms)
- —  —  │ — - Send data back over internal network —  —  —  — (~10ms)
- —  —  ▼
+     │
+     │  - Read index from disk to find matching rows  (~50ms)
+     │  - Read actual row data from disk              (~200ms)
+     │  - Send data back over internal network        (~10ms)
+     ▼
 Application Server (receives raw DB data)
- —  —  │
- —  —  │ — - Deserialize the data
- —  —  │ — - Apply business logic / formatting
- —  —  │ — - Serialize to JSON —  —  —  —  —  —  —  —  —  —  —  —  —  (~100ms)
- —  —  ▼
+     │
+     │  - Deserialize the data
+     │  - Apply business logic / formatting
+     │  - Serialize to JSON                           (~100ms)
+     ▼
 User's browser
- —  —  
+     
 Total round trip: ~360ms just for ONE request.
 ```
 
@@ -80,17 +80,17 @@ A cache hit means: "The data the user requested is already in the cache. Serve i
 CACHE HIT — Step by step:
 
 Step 1: Client sends request to Server
- —  —  —  — GET /blogs
- —  —  —  — Client ──────────────────────▶ Server
+        GET /blogs
+        Client ──────────────────────▶ Server
 
 Step 2: Server asks Redis: "Do you have blogData?"
- —  —  —  — Server ──────────────────────▶ Redis
- —  —  —  — 
+        Server ──────────────────────▶ Redis
+        
 Step 3: Redis responds: "Yes! Here it is." (20ms)
- —  —  —  — Server ◀────────────────────── Redis
- —  —  —  — 
+        Server ◀────────────────────── Redis
+        
 Step 4: Server sends cached data directly to Client
- —  —  —  — Client ◀────────────────────── Server
+        Client ◀────────────────────── Server
 
 TOTAL TIME: ~20-60ms
 DATABASE: Never touched. Didn't even know a request happened.
@@ -104,27 +104,27 @@ A cache miss means: "The data isn't in the cache. We need to go to the database,
 CACHE MISS — Step by step:
 
 Step 1: Client sends request to Server
- —  —  —  — Client ──────────────────────▶ Server
+        Client ──────────────────────▶ Server
 
 Step 2: Server asks Redis: "Do you have blogData?"
- —  —  —  — Server ──────────────────────▶ Redis
- —  —  —  — 
+        Server ──────────────────────▶ Redis
+        
 Step 3: Redis responds: "Nope, nothing here." (5ms)
- —  —  —  — Server ◀────────────────────── Redis
- —  —  —  — ("Not found in cache" message from Redis)
+        Server ◀────────────────────── Redis
+        ("Not found in cache" message from Redis)
 
 Step 4: Server queries the actual Database
- —  —  —  — Server ──────────────────────▶ Database
+        Server ──────────────────────▶ Database
 
 Step 5: Database returns the data (300-500ms)
- —  —  —  — Server ◀────────────────────── Database
+        Server ◀────────────────────── Database
 
 Step 6: Server stores data in Redis for future requests
- —  —  —  — Server ──────────────────────▶ Redis
- —  —  —  — (SET blogData <data> EX 86400) — ← stored with 24hr TTL
+        Server ──────────────────────▶ Redis
+        (SET blogData <data> EX 86400)  ← stored with 24hr TTL
 
 Step 7: Server returns data to Client
- —  —  —  — Client ◀────────────────────── Server
+        Client ◀────────────────────── Server
 
 TOTAL TIME: ~500ms (same as without cache — but only THIS request pays this cost)
 NEXT REQUEST: Will be a cache HIT — 20ms
@@ -149,15 +149,15 @@ Let's go through all the real strategies with their trade-offs.
 The simplest strategy. You store data in the cache with an expiry time. After that time passes, Redis automatically deletes it. The next request will be a cache miss, fetch fresh data from DB, and repopulate the cache.
 
 ```
-SET blogData <json_data> EX 86400 —  ← EX = expire, 86400 = 24 hours in seconds
+SET blogData <json_data> EX 86400   ← EX = expire, 86400 = 24 hours in seconds
 
 Timeline:
-t=0: —  —  — Cache populated. TTL = 86400 seconds.
-t=1: —  —  — User requests /blogs → Cache HIT. Returns cached data. 20ms.
-t=3600: —  50,000 users have been served from cache.
-t=86400: — Redis automatically DELETES blogData. Cache is empty.
-t=86401: — Next user requests /blogs → Cache MISS. DB queried. Data refreshed.
-t=86402: — All subsequent users → Cache HIT again. 20ms.
+t=0:      Cache populated. TTL = 86400 seconds.
+t=1:      User requests /blogs → Cache HIT. Returns cached data. 20ms.
+t=3600:   50,000 users have been served from cache.
+t=86400:  Redis automatically DELETES blogData. Cache is empty.
+t=86401:  Next user requests /blogs → Cache MISS. DB queried. Data refreshed.
+t=86402:  All subsequent users → Cache HIT again. 20ms.
 
 And the cycle repeats every 24 hours.
 ```
@@ -169,16 +169,16 @@ And the cycle repeats every 24 hours.
 **Choosing the right TTL is a genuine design decision:**
 
 Very short TTL (seconds to minutes):
- — Good for: Live sports scores, stock prices, real-time dashboards
- — Trade-off: Cache provides less benefit (expires too often)
- — 
+  Good for: Live sports scores, stock prices, real-time dashboards
+  Trade-off: Cache provides less benefit (expires too often)
+  
 Medium TTL (minutes to hours):
- — Good for: News feeds, product listings, user profiles
- — Trade-off: Slight staleness is usually fine for these
- — 
+  Good for: News feeds, product listings, user profiles
+  Trade-off: Slight staleness is usually fine for these
+  
 Long TTL (hours to days):
- — Good for: Static content, configuration, rarely-changing master data
- — Trade-off: Stale data risk increases; need active invalidation for updates
+  Good for: Static content, configuration, rarely-changing master data
+  Trade-off: Stale data risk increases; need active invalidation for updates
 
 **No TTL (infinite):**
 - Good for: Truly static data (country list, currency codes)
@@ -191,22 +191,22 @@ Instead of waiting for TTL to expire, you actively delete or update the cache th
 **SCENARIO:** New blog post published.
 
 **WITHOUT ACTIVE INVALIDATION:**
- — - New blog saved to database
- — - Cache still has old blog list ← STALE
- — - Users see old list until TTL expires (could be 23 hours!)
- — - "Where's my new blog? I just published it!" — author is confused
+  - New blog saved to database
+  - Cache still has old blog list ← STALE
+  - Users see old list until TTL expires (could be 23 hours!)
+  - "Where's my new blog? I just published it!" — author is confused
 
 **WITH ACTIVE INVALIDATION:**
- — - New blog saved to database
- — - Server immediately: DEL blogData (deletes from Redis)
- — - Next user to request /blogs → Cache MISS → fetches fresh data with new blog
- — - Cache repopulated with new data
- — - All subsequent users see the new blog immediately
+  - New blog saved to database
+  - Server immediately: DEL blogData (deletes from Redis)
+  - Next user to request /blogs → Cache MISS → fetches fresh data with new blog
+  - Cache repopulated with new data
+  - All subsequent users see the new blog immediately
 
 Code flow:
 // When publishing a new blog post:
-await database.insert(newBlog); —  —  —  —  // Save to DB
-await redisClient.del('blogData'); —  —  — // Invalidate cache
+await database.insert(newBlog);         // Save to DB
+await redisClient.del('blogData');      // Invalidate cache
 // Done. Next request will re-populate the cache automatically.
 
 **Pattern: Cache-Aside (most common)**
@@ -235,8 +235,8 @@ The Codeforces Example from the notes:
 
 User submits a competitive programming solution.
 Server does TWO writes simultaneously:
- — Write 1: UPDATE leaderboard in PostgreSQL database
- — Write 2: SET leaderboard:live <new_ranking_data> in Redis
+  Write 1: UPDATE leaderboard in PostgreSQL database
+  Write 2: SET leaderboard:live <new_ranking_data> in Redis
 
 **When 100,000 users refresh the leaderboard:**
 → All served from Redis
@@ -246,13 +246,13 @@ Server does TWO writes simultaneously:
 This is write-through caching.
 
 ADVANTAGE: Cache is always perfectly in sync with database.
- —  —  —  —  —  No staleness ever.
+           No staleness ever.
 
 DISADVANTAGE: Every single write operation hits BOTH the database 
- —  —  —  —  —  —  — AND Redis. Write latency is higher.
- —  —  —  —  —  —  — Also, if you write data that nobody ever reads,
- —  —  —  —  —  —  — you're wasting Redis memory caching it for no reason.
- —  —  —  —  —  —  — (Write-through caches data whether it's popular or not)
+              AND Redis. Write latency is higher.
+              Also, if you write data that nobody ever reads,
+              you're wasting Redis memory caching it for no reason.
+              (Write-through caches data whether it's popular or not)
 ```
 
 **Pattern: Write-Back (Write-Behind) Cache**
@@ -264,22 +264,22 @@ User action: Update profile photo.
 
 Write-back flow:
 1. Server writes to Redis immediately. 
- —  Responds to user: "Updated!" (very fast — just Redis write)
+   Responds to user: "Updated!" (very fast — just Redis write)
 2. In the background, a separate job periodically:
- —  Reads all pending writes from Redis
- —  Writes them to the actual database
+   Reads all pending writes from Redis
+   Writes them to the actual database
 
 ADVANTAGE: Extremely fast writes. Database isn't in the critical path.
 
 MASSIVE RISK: If Redis crashes BEFORE the background job 
- —  —  —  —  —  —  — flushes to the database:
- —  —  —  —  —  —  — ALL pending writes are LOST.
- —  —  —  —  —  —  — User's profile update? Gone.
- —  —  —  —  —  —  — 
+              flushes to the database:
+              ALL pending writes are LOST.
+              User's profile update? Gone.
+              
 Use only when: You can tolerate data loss for this particular data,
- —  —  —  —  —  —  —  AND write performance is critical.
- —  —  —  —  —  —  —  Example: View counts, click counts — losing 
- —  —  —  —  —  —  —  a few views is acceptable vs. perfect write performance.
+               AND write performance is critical.
+               Example: View counts, click counts — losing 
+               a few views is acceptable vs. perfect write performance.
 ```
 
 ---
@@ -294,32 +294,32 @@ When you visit a website, your browser automatically caches certain resources lo
 
 First visit to www.flipkart.com:
 Browser downloads:
- — - flipkart-logo.png —  —  (150 KB) —  → Cache-Control: max-age=31536000 (1 year)
- — - main.bundle.js —  —  —  — (800 KB) —  → Cache-Control: max-age=31536000 (1 year)
- — - styles.css —  —  —  —  —  — (200 KB) —  → Cache-Control: max-age=31536000 (1 year)
- — - homepage HTML —  —  —  —  (50 KB) —  — → Cache-Control: no-cache (always fresh)
- — 
+  - flipkart-logo.png     (150 KB)   → Cache-Control: max-age=31536000 (1 year)
+  - main.bundle.js        (800 KB)   → Cache-Control: max-age=31536000 (1 year)
+  - styles.css            (200 KB)   → Cache-Control: max-age=31536000 (1 year)
+  - homepage HTML         (50 KB)    → Cache-Control: no-cache (always fresh)
+  
 Total downloaded: ~1200 KB. Page loads in 3 seconds.
 
 Second visit (next day):
 Browser checks cache:
- — - flipkart-logo.png — → In cache, not expired (1 year TTL). Load locally. 0ms.
- — - main.bundle.js —  —  → In cache, not expired. Load locally. 0ms.
- — - styles.css —  —  —  —  → In cache, not expired. Load locally. 0ms.
- — - homepage HTML —  —  — → no-cache means always check server for fresh version.
- — 
+  - flipkart-logo.png  → In cache, not expired (1 year TTL). Load locally. 0ms.
+  - main.bundle.js     → In cache, not expired. Load locally. 0ms.
+  - styles.css         → In cache, not expired. Load locally. 0ms.
+  - homepage HTML      → no-cache means always check server for fresh version.
+  
 Total downloaded: ~50 KB (just the HTML). Page loads in 0.3 seconds.
 10x faster on the second visit.
 
 The server controls browser caching behavior through HTTP response headers:
 
-Cache-Control: max-age=31536000 —  — ← Cache for 1 year (static assets with content hash in filename)
-Cache-Control: no-cache —  —  —  —  —  — ← Always validate with server before using cached version
-Cache-Control: no-store —  —  —  —  —  — ← Never cache (sensitive data like banking pages)
-Cache-Control: private —  —  —  —  —  —  ← Cache only in browser, not in intermediate proxies
-Cache-Control: public —  —  —  —  —  —  — ← Can be cached by browser AND CDNs
+Cache-Control: max-age=31536000    ← Cache for 1 year (static assets with content hash in filename)
+Cache-Control: no-cache            ← Always validate with server before using cached version
+Cache-Control: no-store            ← Never cache (sensitive data like banking pages)
+Cache-Control: private             ← Cache only in browser, not in intermediate proxies
+Cache-Control: public              ← Can be cached by browser AND CDNs
 
-- ETag: "abc123" —  —  —  —  —  —  —  —  —  —  ← A fingerprint of the content.
+- ETag: "abc123"                     ← A fingerprint of the content.
 - Browser sends: "If-None-Match: abc123"
 - Server: "Content hasn't changed → 304 Not Modified"
 - Browser: Uses cached version. No download needed.
@@ -327,17 +327,17 @@ Cache-Control: public —  —  —  —  —  —  — ← Can be cached by bro
 **Why static assets use content hashes in their filenames:**
 
 When you deploy new code, Webpack/Vite generates filenames like:
- — main.a3f8b2c.js —  (the hash changes every time code changes)
+  main.a3f8b2c.js   (the hash changes every time code changes)
 
 Browser has cached: main.a3f8b2c.js with 1-year TTL.
-You deploy new code: main.e9d1f5a.js — (different hash = different filename)
+You deploy new code: main.e9d1f5a.js  (different hash = different filename)
 
 Browser never had main.e9d1f5a.js in cache → downloads fresh version.
 Old main.a3f8b2c.js stays in cache but is never referenced again.
 
 This gives you:
- — - Infinite cache TTL (safe because filename changes on every deploy)
- — - Instant cache busting on new deployments (new filename = cache miss)
+  - Infinite cache TTL (safe because filename changes on every deploy)
+  - Instant cache busting on new deployments (new filename = cache miss)
 This technique is called "cache busting."
 
 ### 2. Server-Side Cache (Redis, Memcached)
@@ -408,19 +408,19 @@ This is caching within the application code itself, often in-process (in the sam
 const cache = new Map();
 
 async function getExpensiveComputationResult(input) {
- —  — // Check if result is already cached in memory
- —  — if (cache.has(input)) {
- —  —  —  — console.log('Returning from in-process cache');
- —  —  —  — return cache.get(input);
- —  — }
- —  — 
- —  — // Not cached — do the expensive work
- —  — const result = await someExpensiveCalculation(input); — // takes 2 seconds
- —  — 
- —  — // Cache the result in memory
- —  — cache.set(input, result);
- —  — 
- —  — return result;
+    // Check if result is already cached in memory
+    if (cache.has(input)) {
+        console.log('Returning from in-process cache');
+        return cache.get(input);
+    }
+    
+    // Not cached — do the expensive work
+    const result = await someExpensiveCalculation(input);  // takes 2 seconds
+    
+    // Cache the result in memory
+    cache.set(input, result);
+    
+    return result;
 }
 ```
 
@@ -452,10 +452,10 @@ Redis stands for **RE**mote **DI**ctionary **S**erver. The word "dictionary" is 
 Storage medium comparison:
 
 HDD (Hard Disk Drive):
- — Random access: ~1 ms (mechanical arm must physically move)
+  Random access: ~1 ms (mechanical arm must physically move)
 
 SSD (Solid State Drive):
- — Random access: ~0.1ms
+  Random access: ~0.1ms
 
 **RAM (Random Access Memory):**
 - Latency: ~60 nanoseconds (0.00006ms)
@@ -599,27 +599,27 @@ const Redis = require('ioredis');
 const redisClient = new Redis();
 
 async function checkCache(req, res, next) {
- —  — const cachedData = await redisClient.get('blogData');
- —  — 
- —  — if (cachedData) {
- —  —  —  — console.log('Data retrieved from cache');
- —  —  —  — res.json(JSON.parse(cachedData));
- —  — } else {
- —  —  —  — next();
- —  — }
+    const cachedData = await redisClient.get('blogData');
+    
+    if (cachedData) {
+        console.log('Data retrieved from cache');
+        res.json(JSON.parse(cachedData));
+    } else {
+        next();
+    }
 }
 
 app.get('/blog', checkCache, async (req, res) => {
- —  — try {
- —  —  —  — const response = await axios.get('https://api.example.com/blog');
- —  —  —  — const blogData = response.data;
- —  —  —  — 
- —  —  —  — await redisClient.set('blogData', JSON.stringify(blogData), 'EX', 86400);
- —  —  —  — res.json(blogData);
- —  —  —  — 
- —  — } catch (error) {
- —  —  —  — res.status(500).json({ error: 'Internal server error' });
- —  — }
+    try {
+        const response = await axios.get('https://api.example.com/blog');
+        const blogData = response.data;
+        
+        await redisClient.set('blogData', JSON.stringify(blogData), 'EX', 86400);
+        res.json(blogData);
+        
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 ```
 
@@ -627,14 +627,14 @@ Add invalidation on write:
 
 ```javascript
 app.post('/blog', async (req, res) => {
- —  — try {
- —  —  —  — const newBlog = req.body;
- —  —  —  — await database.blogs.insert(newBlog);
- —  —  —  — await redisClient.del('blogData');
- —  —  —  — res.json({ success: true, blog: newBlog });
- —  — } catch (error) {
- —  —  —  — res.status(500).json({ error: 'Internal server error' });
- —  — }
+    try {
+        const newBlog = req.body;
+        await database.blogs.insert(newBlog);
+        await redisClient.del('blogData');
+        res.json({ success: true, blog: newBlog });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 ```
 
@@ -642,14 +642,14 @@ Write-through leaderboard example:
 
 ```javascript
 async function submitSolution(userId, problemId, solution) {
- —  — const newScore = await judgeAndScore(solution);
- —  — 
- —  — await database.query(
- —  —  —  — 'UPDATE scores SET score = ? WHERE user_id = ? AND problem_id = ?',
- —  —  —  — [newScore, userId, problemId]
- —  — );
- —  — 
- —  — await redisClient.zadd('leaderboard:live', newScore, `user:${userId}`);
+    const newScore = await judgeAndScore(solution);
+    
+    await database.query(
+        'UPDATE scores SET score = ? WHERE user_id = ? AND problem_id = ?',
+        [newScore, userId, problemId]
+    );
+    
+    await redisClient.zadd('leaderboard:live', newScore, `user:${userId}`);
 }
 ```
 
@@ -661,8 +661,8 @@ Cache hit rate = (cache hits) / (total requests) × 100%
 
 Example:
 Total requests: 100,000
-Cache hits: —  —  — 95,000
-Cache misses: —  —  5,000
+Cache hits:      95,000
+Cache misses:     5,000
 Hit rate: 95%
 
 Interpretation:
@@ -714,15 +714,15 @@ Mitigations:
 ### Redis Persistence
 
 RDB snapshots:
- — save 900 1
- — save 300 10
- — save 60 10000
+  save 900 1
+  save 300 10
+  save 60 10000
 
 AOF:
- — Append every write command, replay on restart.
+  Append every write command, replay on restart.
 
 Common production setup:
- — Use both RDB + AOF.
+  Use both RDB + AOF.
 
 ### Redis Cluster
 

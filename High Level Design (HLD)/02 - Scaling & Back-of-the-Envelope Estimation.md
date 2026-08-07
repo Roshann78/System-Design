@@ -1,4 +1,4 @@
-# System Design — Detailed Personal Notes (Chapter 2)
+﻿# System Design — Detailed Personal Notes (Chapter 2)
 
 **Topics:** Scaling (Vertical & Horizontal), Load Balancing, Auto Scaling, Back-of-the-Envelope Estimation
 
@@ -46,19 +46,19 @@ This is not a coding bug. This is a **capacity problem**. You need more capacity
 
 ```mermaid
 flowchart TD
- —  — R["1000 simultaneous requests arrive"]
- —  — C{"Server has enough<br/>CPU, RAM, DB connections?"}
- —  — OK["Requests processed normally<br/>Response: ~200ms"]
- —  — Q["Requests queued<br/>CPU hits 100%"]
- —  — F["Timeouts, errors, dropped requests<br/>Users see failures"]
+    R["1000 simultaneous requests arrive"]
+    C{"Server has enough<br/>CPU, RAM, DB connections?"}
+    OK["Requests processed normally<br/>Response: ~200ms"]
+    Q["Requests queued<br/>CPU hits 100%"]
+    F["Timeouts, errors, dropped requests<br/>Users see failures"]
 
- —  — R --> C
- —  — C -->|Yes| OK
- —  — C -->|No| Q
- —  — Q --> F
+    R --> C
+    C -->|"Yes"| OK
+    C -->|"No"| Q
+    Q --> F
 
- —  — style F fill:#fee,stroke:#c00
- —  — style OK fill:#efe,stroke:#060
+    style F fill:#fee,stroke:#c00
+    style OK fill:#efe,stroke:#060
 ```
 
 > **Key takeaway:** Scaling is about adding capacity — not fixing application logic. You scale when hardware limits are the bottleneck.
@@ -79,28 +79,28 @@ In server terms:
 ```
 BEFORE VERTICAL SCALING:
 ┌────────────────────────────────────────────────┐
-│ —  —  —  —  —  —  — EC2 Instance (t2.micro) —  —  —  —  —  │
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ — CPU: —  —  1 vCPU (1 virtual core) —  —  —  —  —  —  │
-│ — RAM: —  —  1 GB —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │
-│ — Storage: 20 GB SSD —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ — Network: Up to 1 Gbps —  —  —  —  —  —  —  —  —  —  —  —  │
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ — Can handle: ~100 concurrent users —  —  —  —  —  —  │
-│ — Status: Choking at 500 users —  —  —  —  —  —  —  —  — │
+│              EC2 Instance (t2.micro)           │
+│                                                │
+│  CPU:     1 vCPU (1 virtual core)             │
+│  RAM:     1 GB                                 │
+│  Storage: 20 GB SSD                            │
+│  Network: Up to 1 Gbps                         │
+│                                                │
+│  Can handle: ~100 concurrent users             │
+│  Status: Choking at 500 users                  │
 └────────────────────────────────────────────────┘
 
 AFTER VERTICAL SCALING:
 ┌────────────────────────────────────────────────┐
-│ —  —  —  —  —  —  — EC2 Instance (m5.4xlarge) —  —  —  —  │
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ — CPU: —  —  16 vCPUs (16 virtual cores) —  —  —  —  │
-│ — RAM: —  —  64 GB —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ — Storage: 500 GB SSD —  —  —  —  —  —  —  —  —  —  —  —  —  │
-│ — Network: Up to 25 Gbps —  —  —  —  —  —  —  —  —  —  —  — │
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ — Can handle: ~10,000 concurrent users —  —  —  —  — │
-│ — Status: Comfortable —  —  —  —  —  —  —  —  —  —  —  —  —  │
+│              EC2 Instance (m5.4xlarge)         │
+│                                                │
+│  CPU:     16 vCPUs (16 virtual cores)         │
+│  RAM:     64 GB                                │
+│  Storage: 500 GB SSD                           │
+│  Network: Up to 25 Gbps                        │
+│                                                │
+│  Can handle: ~10,000 concurrent users          │
+│  Status: Comfortable                           │
 └────────────────────────────────────────────────┘
 ```
 
@@ -147,12 +147,12 @@ Here is the hard truth that makes vertical scaling insufficient by itself:
 
 AWS EC2 Instance Sizes (simplified progression):
 
-t2.micro —  — → 1 vCPU, —  1 GB RAM —  —  ← starter
-t2.medium —  → 2 vCPU, —  4 GB RAM
-m5.xlarge —  → 4 vCPU, —  16 GB RAM
-m5.4xlarge — → 16 vCPU, — 64 GB RAM
-m5.16xlarge → 64 vCPU, — 256 GB RAM
-u-24tb1 —  —  → 448 vCPU, 24,576 GB RAM ← AWS's largest as of recent years
+t2.micro    → 1 vCPU,   1 GB RAM     ← starter
+t2.medium   → 2 vCPU,   4 GB RAM
+m5.xlarge   → 4 vCPU,   16 GB RAM
+m5.4xlarge  → 16 vCPU,  64 GB RAM
+m5.16xlarge → 64 vCPU,  256 GB RAM
+u-24tb1     → 448 vCPU, 24,576 GB RAM ← AWS's largest as of recent years
 
 THEN WHAT?
 
@@ -172,21 +172,21 @@ This is when horizontal scaling becomes not just an option but a necessity.
 
 ```mermaid
 flowchart LR
- —  — subgraph vertical["Vertical Scaling"]
- —  —  —  — V1["t2.micro<br/>1 vCPU, 1 GB"]
- —  —  —  — V2["m5.4xlarge<br/>16 vCPU, 64 GB"]
- —  —  —  — V1 -->|"Upgrade same box"| V2
- —  — end
+    subgraph vertical["Vertical Scaling"]
+    V1["t2.micro<br/>1 vCPU, 1 GB"]
+    V2["m5.4xlarge<br/>16 vCPU, 64 GB"]
+    V1 -->|"Upgrade same box"| V2
+end
 
- —  — subgraph horizontal["Horizontal Scaling"]
- —  —  —  — LB["Load Balancer"]
- —  —  —  — S1["Server 1"]
- —  —  —  — S2["Server 2"]
- —  —  —  — S3["Server 3"]
- —  —  —  — LB --> S1
- —  —  —  — LB --> S2
- —  —  —  — LB --> S3
- —  — end
+    subgraph horizontal["Horizontal Scaling"]
+    LB["Load Balancer"]
+    S1["Server 1"]
+    S2["Server 2"]
+    S3["Server 3"]
+    LB --> S1
+    LB --> S2
+    LB --> S3
+end
 ```
 
 ---
@@ -203,40 +203,40 @@ Let's go back to the dhaba analogy. Instead of making one kitchen bigger, you op
 
 ```
 WITHOUT HORIZONTAL SCALING:
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  ┌─────────────────────────┐
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │ —  —  —  — Server 1 —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │ — (desperately trying —  — │
-Users 1 through 1000 ───────────────▶│ —  to serve everyone) —  — │
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │ — CPU: 99% —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │ — RAM: 98% —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │ — Response: 8 seconds —  — │
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │ — Status: CRASHING —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  └─────────────────────────┘
+                                     ┌─────────────────────────┐
+                                     │        Server 1         │
+                                     │  (desperately trying    │
+Users 1 through 1000 ───────────────▶│   to serve everyone)    │
+                                     │  CPU: 99%               │
+                                     │  RAM: 98%               │
+                                     │  Response: 8 seconds    │
+                                     │  Status: CRASHING       │
+                                     └─────────────────────────┘
 
 WITH HORIZONTAL SCALING:
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  ┌─────────────────────────┐
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │ —  —  —  — Server 1 —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  — ┌─────────▶│ — CPU: 33% —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  — │ —  —  —  —  — │ — RAM: 35% —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  — │ —  —  —  —  — │ — Response: 200ms —  —  —  — │
- —  —  —  —  —  —  —  —  —  —  —  —  — │ —  —  —  —  — │ — Serving: Users 1-333 —  │
-Users 1 through —  —  —  —  —  │ —  —  —  —  — └─────────────────────────┘
-1000 all send —  — ────▶ — [LB]
-requests to —  —  —  —  —  —  — │ —  —  —  —  — ┌─────────────────────────┐
-the Load —  —  —  —  —  —  —  —  │ —  —  —  —  — │ —  —  —  — Server 2 —  —  —  —  │
-Balancer —  —  —  —  —  —  —  —  ├─────────▶│ — CPU: 33% —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  │ —  —  —  —  — │ — RAM: 35% —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  │ —  —  —  —  — │ — Response: 200ms —  —  —  — │
- —  —  —  —  —  —  —  —  —  —  —  —  │ —  —  —  —  — │ — Serving: Users 334-666 │
- —  —  —  —  —  —  —  —  —  —  —  —  │ —  —  —  —  — └─────────────────────────┘
- —  —  —  —  —  —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  │ —  —  —  —  — ┌─────────────────────────┐
- —  —  —  —  —  —  —  —  —  —  —  —  │ —  —  —  —  — │ —  —  —  — Server 3 —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  └─────────▶│ — CPU: 33% —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │ — RAM: 35% —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │ — Response: 200ms —  —  —  — │
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │ — Serving: Users 667-1000│
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — └─────────────────────────┘
+                                     ┌─────────────────────────┐
+                                     │        Server 1         │
+                          ┌─────────▶│  CPU: 33%               │
+                          │          │  RAM: 35%               │
+                          │          │  Response: 200ms        │
+                          │          │  Serving: Users 1-333   │
+Users 1 through           │          └─────────────────────────┘
+1000 all send    ────▶  [LB]
+requests to              │          ┌─────────────────────────┐
+the Load                 │          │        Server 2         │
+Balancer                 ├─────────▶│  CPU: 33%               │
+                         │          │  RAM: 35%               │
+                         │          │  Response: 200ms        │
+                         │          │  Serving: Users 334-666 │
+                         │          └─────────────────────────┘
+                         │
+                         │          ┌─────────────────────────┐
+                         │          │        Server 3         │
+                         └─────────▶│  CPU: 33%               │
+                                    │  RAM: 35%               │
+                                    │  Response: 200ms        │
+                                    │  Serving: Users 667-1000│
+                                    └─────────────────────────┘
 ```
 
 Each server is only handling one-third of the load. Each one is comfortable. Response times are fast. If traffic doubles, you just add a 4th server and the load gets divided further.
@@ -263,7 +263,7 @@ This is obviously ridiculous. Users don't know about your infrastructure. Users 
 A load balancer is a dedicated piece of infrastructure (it can be a physical device, a virtual machine, or a software service like AWS ELB) that sits in front of all your servers. It has exactly ONE public IP address or DNS name.
 
 User types in browser: www.flipkart.com
-DNS resolves this to: 15.207.100.200 —  ← This is the Load Balancer's IP
+DNS resolves this to: 15.207.100.200   ← This is the Load Balancer's IP
 
 User's request goes to: 15.207.100.200
 Load balancer thinks: "Which of my backend servers should I send this to?"
@@ -280,19 +280,19 @@ The load balancer acts as a **reverse proxy** — it is the single point of cont
 
 ```mermaid
 sequenceDiagram
- —  — participant U as User Browser
- —  — participant DNS as DNS
- —  — participant LB as Load Balancer
- —  — participant S2 as Server 2 (private IP)
+    participant U as User Browser
+    participant DNS as DNS
+    participant LB as Load Balancer
+    participant S2 as Server 2 (private IP)
 
- —  — U->>DNS: Resolve www.flipkart.com
- —  — DNS-->>U: 15.207.100.200 (LB IP)
- —  — U->>LB: HTTP Request
- —  — Note over LB: Pick least-busy server
- —  — LB->>S2: Forward request
- —  — S2-->>LB: HTTP Response
- —  — LB-->>U: Response
- —  — Note over U: User never sees backend servers
+    U->>DNS: Resolve www.flipkart.com
+    DNS-->>U: 15.207.100.200 (LB IP)
+    U->>LB: HTTP Request
+    Note over LB: Pick least-busy server
+    LB->>S2: Forward request
+    S2-->>LB: HTTP Response
+    LB-->>U: Response
+    Note over U: User never sees backend servers
 ```
 
 **How Does the Load Balancer Decide Which Server to Use?**
@@ -300,11 +300,11 @@ sequenceDiagram
 There are multiple algorithms:
 
 Algorithm 1: Round Robin
-Request 1 — → — Server 1
-Request 2 — → — Server 2
-Request 3 — → — Server 3
-Request 4 — → — Server 1 — (cycle repeats)
-Request 5 — → — Server 2
+Request 1  →  Server 1
+Request 2  →  Server 2
+Request 3  →  Server 3
+Request 4  →  Server 1  (cycle repeats)
+Request 5  →  Server 2
 ...
 
 Simple but dumb. Doesn't account for the fact that
@@ -317,7 +317,7 @@ Load balancer constantly monitors how many
 active connections each server has:
 
 - Server 1: 45 active connections
-- Server 2: 12 active connections —  ← least busy
+- Server 2: 12 active connections   ← least busy
 - Server 3: 38 active connections
 
 Next incoming request → Server 2 (least busy)
@@ -335,9 +335,9 @@ Useful when you NEED session stickiness.
 Algorithm 4: Weighted Round Robin
 If your servers have different capacities:
 
-- Server 1: 8 cores — → weight 4 — (gets 4 out of every 7 requests)
-- Server 2: 4 cores — → weight 2 — (gets 2 out of every 7 requests)
-- Server 3: 2 cores — → weight 1 — (gets 1 out of every 7 requests)
+- Server 1: 8 cores  → weight 4  (gets 4 out of every 7 requests)
+- Server 2: 4 cores  → weight 2  (gets 2 out of every 7 requests)
+- Server 3: 2 cores  → weight 1  (gets 1 out of every 7 requests)
 
 **The Load Balancer Also Does Health Checks:**
 
@@ -364,22 +364,22 @@ This is why horizontal scaling gives you high availability. No single server fai
 
 ```mermaid
 flowchart TD
- —  — HC["Health check every 5s"]
- —  — S1["Server 1 — Healthy"]
- —  — S2["Server 2 — Healthy"]
- —  — S3["Server 3 — No response"]
- —  — LB["Load Balancer"]
- —  — U["Incoming traffic"]
+    HC["Health check every 5s"]
+    S1["Server 1 — Healthy"]
+    S2["Server 2 — Healthy"]
+    S3["Server 3 — No response"]
+    LB["Load Balancer"]
+    U["Incoming traffic"]
 
- —  — HC --> S1
- —  — HC --> S2
- —  — HC --> S3
- —  — U --> LB
- —  — LB --> S1
- —  — LB --> S2
- —  — S3 -.->|"Removed from pool"| X["No traffic until recovered"]
+    HC --> S1
+    HC --> S2
+    HC --> S3
+    U --> LB
+    LB --> S1
+    LB --> S2
+    S3 -.->|"Removed from pool"| X["No traffic until recovered"]
 
- —  — style S3 fill:#fee,stroke:#c00
+    style S3 fill:#fee,stroke:#c00
 ```
 
 ---
@@ -394,16 +394,16 @@ You run an online exam portal. Students take exams. Your traffic pattern looks l
 
 Traffic Pattern Throughout the Day:
 
-12 AM — ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ — (100 users —  - night, nobody active)
-3 AM —  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ — (50 users —  — - dead silent)
-6 AM —  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ — (200 users —  - early risers)
-9 AM —  ████████████████████████████████ — (10,000 users - morning exam window opens!)
-10 AM — ████████████████████████████████ — (15,000 users - peak)
-11 AM — ████████████████████████████████ — (12,000 users - still high)
-12 PM — ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ — (500 users —  - lunch break)
-2 PM —  ████████████████████████████████ — (8,000 users — - afternoon exams)
-5 PM —  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ — (300 users —  - winding down)
-11 PM — ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ — (100 users —  - almost nobody)
+12 AM  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  (100 users   - night, nobody active)
+3 AM   ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  (50 users    - dead silent)
+6 AM   ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  (200 users   - early risers)
+9 AM   ████████████████████████████████  (10,000 users - morning exam window opens!)
+10 AM  ████████████████████████████████  (15,000 users - peak)
+11 AM  ████████████████████████████████  (12,000 users - still high)
+12 PM  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  (500 users   - lunch break)
+2 PM   ████████████████████████████████  (8,000 users  - afternoon exams)
+5 PM   ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  (300 users   - winding down)
+11 PM  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  (100 users   - almost nobody)
 
 Suppose 1 EC2 instance can handle 1,000 users. Then:
 - At peak (10 AM): you need 15 instances
@@ -437,9 +437,9 @@ You define rules (called **scaling policies**) and the system automatically adds
 
 AUTO SCALING CONFIGURATION:
 
-- Minimum instances: 2 —  ← never go below 2 (for redundancy)
-- Maximum instances: 20 — ← never go above 20 (cost cap)
-- Desired instances: 2 —  ← start with 2
+- Minimum instances: 2   ← never go below 2 (for redundancy)
+- Maximum instances: 20  ← never go above 20 (cost cap)
+- Desired instances: 2   ← start with 2
 
 **Scale-OUT trigger:**
 - "If AVERAGE CPU across all instances > 70%
@@ -447,48 +447,48 @@ AUTO SCALING CONFIGURATION:
 - ADD 2 new instances"
 
 Scale-IN trigger:
- — "If AVERAGE CPU across all instances < 30%
- — for 10 consecutive minutes,
- — REMOVE 1 instance"
- — (we scale in slower than scale out — being conservative
- — about removing capacity is safer than removing too fast)
+  "If AVERAGE CPU across all instances < 30%
+  for 10 consecutive minutes,
+  REMOVE 1 instance"
+  (we scale in slower than scale out — being conservative
+  about removing capacity is safer than removing too fast)
 
 Cooldown period: 
- — "After a scale-out event, wait 5 minutes 
- — before evaluating again"
- — (prevents rapid thrashing — spinning up and down repeatedly)
+  "After a scale-out event, wait 5 minutes 
+  before evaluating again"
+  (prevents rapid thrashing — spinning up and down repeatedly)
 
 Now let's trace through what happens in real life:
 
 ```
 8:00 AM:
- — Running instances: 2
- — Average CPU: 15%
- — Status: Normal, quiet morning
+  Running instances: 2
+  Average CPU: 15%
+  Status: Normal, quiet morning
 
 9:00 AM: Exam window opens. Students flood in.
- — Running instances: 2
- — Average CPU: 40%
- — Status: Elevated but okay
+  Running instances: 2
+  Average CPU: 40%
+  Status: Elevated but okay
 
 9:15 AM: More students arrive.
- — Running instances: 2
- — Average CPU: 72% — ← exceeded 70% threshold!
- — Auto Scaler: "Threshold exceeded! Launch 2 new instances."
+  Running instances: 2
+  Average CPU: 72%  ← exceeded 70% threshold!
+  Auto Scaler: "Threshold exceeded! Launch 2 new instances."
 
 **9:16 AM:**
-- Running instances: 4 — (2 new ones launching — takes ~2 minutes)
+- Running instances: 4  (2 new ones launching — takes ~2 minutes)
 - Average CPU: 72% on old instances (new ones not ready yet)
 
 9:18 AM: New instances are ready and attached to load balancer.
- — Running instances: 4
- — Average CPU: 36% — ← spread across 4 machines now
- — Auto Scaler: "CPU dropped below 70%. Monitoring."
+  Running instances: 4
+  Average CPU: 36%  ← spread across 4 machines now
+  Auto Scaler: "CPU dropped below 70%. Monitoring."
 
 9:30 AM: Even more students.
- — Running instances: 4
- — Average CPU: 75% — ← threshold exceeded again!
- — Auto Scaler: "Launch 2 more instances."
+  Running instances: 4
+  Average CPU: 75%  ← threshold exceeded again!
+  Auto Scaler: "Launch 2 more instances."
 
 **9:32 AM:**
 - Running instances: 6
@@ -498,22 +498,22 @@ Now let's trace through what happens in real life:
 [Peak holds from 9 AM to 11 AM with 6-8 instances]
 
 12:00 PM: Lunch break. Students log off.
- — Running instances: 8
- — Average CPU: 12% — ← below 30% threshold!
- — Auto Scaler: "Low CPU for 10 minutes. Removing 1 instance."
- — (we scale in slowly — 1 at a time, not all at once)
+  Running instances: 8
+  Average CPU: 12%  ← below 30% threshold!
+  Auto Scaler: "Low CPU for 10 minutes. Removing 1 instance."
+  (we scale in slowly — 1 at a time, not all at once)
 
 **12:10 PM:**
 - Running instances: 7
-- Average CPU: 14% — ← still low
+- Average CPU: 14%  ← still low
 - Auto Scaler: "Remove 1 more."
 
 [...continues gradually scaling in over the next 40 minutes...]
 
 1:00 PM:
- — Running instances: 2 — ← back to minimum
- — Average CPU: 18%
- — Status: Quiet. Saving money.
+  Running instances: 2  ← back to minimum
+  Average CPU: 18%
+  Status: Quiet. Saving money.
 ```
 
 You're paying only for exactly what you need, exactly when you need it.
@@ -522,24 +522,24 @@ You're paying only for exactly what you need, exactly when you need it.
 
 CPU is the most common, but you can trigger auto scaling on many metrics:
 
-CPU Utilization: —  —  —  Most common. Good for compute-heavy applications.
+CPU Utilization:       Most common. Good for compute-heavy applications.
 
-Memory Usage: —  —  —  —  — "If RAM usage > 80%, add instances."
- —  —  —  —  —  —  —  —  —  —  (Useful for memory-heavy apps)
+Memory Usage:          "If RAM usage > 80%, add instances."
+                     (Useful for memory-heavy apps)
 
-Request Count: —  —  —  —  "If incoming requests > 1000/sec, add instances."
- —  —  —  —  —  —  —  —  —  —  (Useful when requests arrive faster than CPU reflects)
+Request Count:         "If incoming requests > 1000/sec, add instances."
+                     (Useful when requests arrive faster than CPU reflects)
 
-Network I/O: —  —  —  —  —  "If inbound network > 500 Mbps, add instances."
- —  —  —  —  —  —  —  —  —  —  (Useful for data-heavy streaming applications)
+Network I/O:           "If inbound network > 500 Mbps, add instances."
+                     (Useful for data-heavy streaming applications)
 
-**Queue Depth:** —  —  —  —  —  "If SQS queue has > 1000 unprocessed messages, 
- —  —  —  —  —  —  —  —  —  —  — add worker instances."
- —  —  —  —  —  —  —  —  —  —  (Useful for background job processing)
+**Queue Depth:**           "If SQS queue has > 1000 unprocessed messages, 
+                      add worker instances."
+                     (Useful for background job processing)
 
-Custom Metrics: —  —  —  — You can publish ANY metric to CloudWatch and 
- —  —  —  —  —  —  —  —  —  —  scale based on it. Business logic, database 
- —  —  —  —  —  —  —  —  —  —  connection pool usage — anything.
+Custom Metrics:        You can publish ANY metric to CloudWatch and 
+                     scale based on it. Business logic, database 
+                     connection pool usage — anything.
 
 ### How Do You Find the Right Threshold?
 
@@ -549,11 +549,11 @@ You use tools like Apache JMeter, k6, or AWS Load Testing to simulate realistic 
 
 Load Test Results for your server:
 
-- 100 virtual users — → CPU: 12%, Response: 45ms, — Errors: 0% —  → Comfortable
-- 500 virtual users — → CPU: 35%, Response: 78ms, — Errors: 0% —  → Fine
-- 1000 virtual users → CPU: 68%, Response: 150ms, Errors: 0% —  → Acceptable
+- 100 virtual users  → CPU: 12%, Response: 45ms,  Errors: 0%   → Comfortable
+- 500 virtual users  → CPU: 35%, Response: 78ms,  Errors: 0%   → Fine
+- 1000 virtual users → CPU: 68%, Response: 150ms, Errors: 0%   → Acceptable
 - 1500 virtual users → CPU: 82%, Response: 800ms, Errors: 1.2% → Degrading
-- 2000 virtual users → CPU: 95%, Response: 4000ms,Errors: 15% — → BREAKING
+- 2000 virtual users → CPU: 95%, Response: 4000ms,Errors: 15%  → BREAKING
 
 Conclusion: Your server starts degrading meaningfully around CPU 70-75%.
 Set your auto scaling trigger at 70% CPU.
@@ -562,24 +562,24 @@ This scientific approach gives you a real number, not a guess.
 
 ```mermaid
 flowchart TD
- —  — M["Monitor metrics<br/>(CPU, requests, queue depth…)"]
- —  — T{"Threshold exceeded<br/>for N minutes?"}
- —  — SO["Scale OUT<br/>Add instances"]
- —  — SI["Scale IN<br/>Remove instances"]
- —  — CD["Cooldown period<br/>(prevent thrashing)"]
- —  — MIN["Respect min/max bounds"]
+    M["Monitor metrics<br/>(CPU, requests, queue depth…)"]
+    T{"Threshold exceeded<br/>for N minutes?"}
+    SO["Scale OUT<br/>Add instances"]
+    SI["Scale IN<br/>Remove instances"]
+    CD["Cooldown period<br/>(prevent thrashing)"]
+    MIN["Respect min/max bounds"]
 
- —  — M --> T
- —  — T -->|CPU > 70% for 3 min| SO
- —  — T -->|CPU < 30% for 10 min| SI
- —  — SO --> CD
- —  — SI --> CD
- —  — CD --> M
- —  — SO --> MIN
- —  — SI --> MIN
+    M --> T
+    T -->|"CPU > 70% for 3 min"| SO
+    T -->|"CPU < 30% for 10 min"| SI
+    SO --> CD
+    SI --> CD
+    CD --> M
+    SO --> MIN
+    SI --> MIN
 
- —  — style SO fill:#efe,stroke:#060
- —  — style SI fill:#fef,stroke:#660
+    style SO fill:#efe,stroke:#060
+    style SI fill:#fef,stroke:#660
 ```
 
 > **Rule of thumb:** Scale **out** fast (traffic spikes hurt users immediately). Scale **in** slow (removing capacity too early causes another spike).
@@ -603,18 +603,18 @@ In interviews, doing this estimation shows the interviewer that you think in ter
 
 ```mermaid
 flowchart LR
- —  — A["State assumptions<br/>(DAU, actions/user)"]
- —  — L["Load<br/>QPS reads & writes"]
- —  — S["Storage<br/>bytes × retention"]
- —  — B["Bandwidth<br/>QPS × payload size"]
- —  — R["Resources<br/>CPU cores, servers"]
+    A["State assumptions<br/>(DAU, actions/user)"]
+    L["Load<br/>QPS reads & writes"]
+    S["Storage<br/>bytes × retention"]
+    B["Bandwidth<br/>QPS × payload size"]
+    R["Resources<br/>CPU cores, servers"]
 
- —  — A --> L
- —  — A --> S
- —  — L --> B
- —  — L --> R
+    A --> L
+    A --> S
+    L --> B
+    L --> R
 
- —  — style A fill:#eef,stroke:#336
+    style A fill:#eef,stroke:#336
 ```
 
 **Interview workflow:** Assumptions → Load (QPS) → Storage → Bandwidth → Servers. Always state numbers out loud before calculating.
@@ -623,13 +623,13 @@ flowchart LR
 
 ```
 ┌──────────────┬────────────────────┬─────────────┬──────────┬───────────┐
-│ Power of 2 —  │ Actual Value —  —  —  │ Approx. —  —  │ Name —  —  │ Short —  —  │
+│ Power of 2   │ Actual Value       │ Approx.     │ Name     │ Short     │
 ├──────────────┼────────────────────┼─────────────┼──────────┼───────────┤
-│ 2^10 = 1,024 │ 1,024 —  —  —  —  —  —  — │ 1 Thousand — │ Kilobyte │ 1 KB —  —  — │
-│ 2^20 —  —  —  —  │ 1,048,576 —  —  —  —  — │ 1 Million —  │ Megabyte │ 1 MB —  —  — │
-│ 2^30 —  —  —  —  │ 1,073,741,824 —  —  — │ 1 Billion —  │ Gigabyte │ 1 GB —  —  — │
-│ 2^40 —  —  —  —  │ 1,099,511,627,776 — │ 1 Trillion — │ Terabyte │ 1 TB —  —  — │
-│ 2^50 —  —  —  —  │ huge number —  —  —  — │ 1 Quadrilli.│ Petabyte │ 1 PB —  —  — │
+│ 2^10 = 1,024 │ 1,024              │ 1 Thousand  │ Kilobyte │ 1 KB      │
+│ 2^20         │ 1,048,576          │ 1 Million   │ Megabyte │ 1 MB      │
+│ 2^30         │ 1,073,741,824      │ 1 Billion   │ Gigabyte │ 1 GB      │
+│ 2^40         │ 1,099,511,627,776  │ 1 Trillion  │ Terabyte │ 1 TB      │
+│ 2^50         │ huge number        │ 1 Quadrilli.│ Petabyte │ 1 PB      │
 └──────────────┴────────────────────┴─────────────┴──────────┴───────────┘
 ```
 
@@ -641,27 +641,27 @@ So 2^10 ≈ 10^3, 2^20 ≈ 10^6, 2^30 ≈ 10^9 — and these correspond to KB, M
 
 ## Also Memorize: Time Units
 
-1 minute —  — = — 60 seconds
-1 hour —  —  — = — 3,600 seconds
-1 day —  —  —  = — 86,400 seconds —  ≈ 100,000 seconds (for easy math)
-1 month —  —  = — ~30 days —  —  —  —  = ~2,500,000 seconds
-1 year —  —  — = — ~365 days —  —  —  — = ~31,000,000 seconds ≈ 30 million seconds
+1 minute    =  60 seconds
+1 hour      =  3,600 seconds
+1 day       =  86,400 seconds   ≈ 100,000 seconds (for easy math)
+1 month     =  ~30 days         = ~2,500,000 seconds
+1 year      =  ~365 days        = ~31,000,000 seconds ≈ 30 million seconds
 
 The approximation of 1 day ≈ 100,000 seconds is very commonly used in interviews. It slightly overestimates (86,400 vs 100,000) but makes math much easier.
 
 ## Also Memorize: Common Data Sizes
 
-1 ASCII character —  —  —  — = — 1 byte
-1 Unicode character —  —  — = — 2 bytes — (covers most languages including Hindi)
-1 integer (32-bit) —  —  —  = — 4 bytes
-1 long integer (64-bit) — = — 8 bytes
-1 UUID —  —  —  —  —  —  —  —  —  = — 16 bytes
-1 timestamp —  —  —  —  —  —  — = — 8 bytes
-1 small profile photo —  — = — ~200 KB
-1 normal photo —  —  —  —  —  = — ~2 MB
-1 HD photo —  —  —  —  —  —  —  = — ~5-10 MB
-1 minute of audio (MP3) — = — ~1 MB
-1 minute of HD video —  —  = — ~100 MB
+1 ASCII character        =  1 byte
+1 Unicode character      =  2 bytes  (covers most languages including Hindi)
+1 integer (32-bit)       =  4 bytes
+1 long integer (64-bit)  =  8 bytes
+1 UUID                   =  16 bytes
+1 timestamp              =  8 bytes
+1 small profile photo    =  ~200 KB
+1 normal photo           =  ~2 MB
+1 HD photo               =  ~5-10 MB
+1 minute of audio (MP3)  =  ~1 MB
+1 minute of HD video     =  ~100 MB
 
 ---
 
@@ -696,7 +696,7 @@ Total tweets per day:
 
 Now convert to per second (Tweets Per Second / TPS):
 = 1,000,000,000 ÷ 86,400 seconds
-= 1,000,000,000 ÷ 100,000 — (using our approximation)
+= 1,000,000,000 ÷ 100,000  (using our approximation)
 = 10,000 tweets per second
 
 This is your WRITE QPS (Queries Per Second) = ~10,000/sec
@@ -718,7 +718,7 @@ Convert to per second:
 This is your READ QPS = ~1,000,000/sec
 
 **The Read/Write Ratio:**
-Read QPS — : Write QPS
+Read QPS  : Write QPS
 1,000,000 : 10,000
 = 100 : 1
 
@@ -771,9 +771,9 @@ Total photo storage per day:
 
 ```
 Total = text storage + photo storage
- —  —  — = 0.5 TB —  —  —  + 200 TB
- —  —  — = 200.5 TB
- —  —  — ≈ 200 TB per day
+      = 0.5 TB       + 200 TB
+      = 200.5 TB
+      ≈ 200 TB per day
 
 Note: We dropped the 0.5 TB because 0.5 TB is only 0.25% of 200 TB.
 At this scale, it doesn't matter. This is correct approximation practice.
@@ -781,9 +781,9 @@ At this scale, it doesn't matter. This is correct approximation practice.
 
 **Storage for 5 years:**
 
-Daily storage needed —  ≈ 200 TB/day
-Annual storage needed — = 200 TB × 365 days ≈ 73,000 TB = 73 PB/year
-5-year storage needed — = 73 × 5 = 365 PB ≈ ~400 PB (rounding up for safety)
+Daily storage needed   ≈ 200 TB/day
+Annual storage needed  = 200 TB × 365 days ≈ 73,000 TB = 73 PB/year
+5-year storage needed  = 73 × 5 = 365 PB ≈ ~400 PB (rounding up for safety)
 
 Twitter would need approximately 400 Petabytes of storage
 just for tweets and photos over 5 years.
@@ -797,7 +797,7 @@ Outbound bandwidth (serving reads):
 = Reads per second × average size of one tweet (with photo probability)
 
 Average tweet size:
-= (0.9 × 500 bytes) + (0.1 × 2,000,500 bytes) —  ← 90% text, 10% with photo
+= (0.9 × 500 bytes) + (0.1 × 2,000,500 bytes)   ← 90% text, 10% with photo
 = 450 bytes + 200,050 bytes
 = ~200,500 bytes
 ≈ ~200 KB average tweet
@@ -844,19 +844,19 @@ sitting behind a load balancer,
 to handle Twitter's write traffic of 10,000 requests/second.
 
 Buffer: In practice, you'd provision 30-35% extra capacity
- —  —  — because CPU usage shouldn't max out — you want headroom
- —  —  — for spikes and to avoid triggering auto-scaling constantly.
- —  —  — 
+      because CPU usage shouldn't max out — you want headroom
+      for spikes and to avoid triggering auto-scaling constantly.
+      
 So realistic answer: ~35 servers.
 
 ```mermaid
 flowchart LR
- —  — W["Write QPS: 10,000/sec"]
- —  — CPU["100 CPU cores needed"]
- —  — SRV["25 servers × 4 cores"]
- —  — BUF["+30% buffer → ~35 servers"]
+    W["Write QPS: 10,000/sec"]
+    CPU["100 CPU cores needed"]
+    SRV["25 servers × 4 cores"]
+    BUF["+30% buffer → ~35 servers"]
 
- —  — W --> CPU --> SRV --> BUF
+    W --> CPU --> SRV --> BUF
 ```
 
 ---

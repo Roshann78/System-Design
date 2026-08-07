@@ -44,22 +44,22 @@ If all your data is on one server in Mumbai and that data center catches fire (i
 Distributed Database Setup for an Indian company:
 
 ┌──────────────────────────────────────────────────────────┐
-│ —  —  —  —  —  —  —  —  —  — India —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ —  ┌────────────────┐ —  ┌────────────────┐ —  ┌──────────┐│
-│ —  │ — Mumbai Node —  │ —  │Hyderabad Node — │ —  │ Bihar —  — ││
-│ —  │ ┌────────────┐ │ —  │ ┌────────────┐ │ —  │ — Node —  ││
-│ —  │ │{name:Shivam│ │ —  │ │{name:Shivam│ │ —  │{name: —  ││
-│ —  │ │ age: 21} —  │ │ —  │ │ age: 21} —  │ │ —  │ Shivam — ││
-│ —  │ │{name:Rahul │ │ —  │ │{name:Rahul │ │ —  │ age:21} ││
-│ —  │ │ age: 25} —  │ │ —  │ │ age: 25} —  │ │ —  │... —  —  — ││
-│ —  │ └────────────┘ │ —  │ └────────────┘ │ —  └─────────┘│
-│ —  └───────┬────────┘ —  └───────┬────────┘ —  └───────┬────┘
-│ —  —  —  —  —  │ —  —  —  —  —  —  —  —  —  │ —  —  —  —  —  —  —  —  —  │ —  —  │
-│ —  —  —  —  —  └───────────────────┼───────────────────┘ —  —  │
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │ —  —  —  —  —  —  —  —  —  —  —  —  │
-│ —  —  —  —  —  —  —  —  —  — Replication network —  —  —  —  —  —  —  —  —  │
-│ —  —  —  —  —  (changes in one node propagate to others) —  —  — │
+│                    India                                  │
+│                                                          │
+│   ┌────────────────┐   ┌────────────────┐   ┌──────────┐│
+│   │  Mumbai Node   │   │Hyderabad Node  │   │ Bihar    ││
+│   │ ┌────────────┐ │   │ ┌────────────┐ │   │  Node   ││
+│   │ │{name:Shivam│ │   │ │{name:Shivam│ │   │{name:   ││
+│   │ │ age: 21}   │ │   │ │ age: 21}   │ │   │ Shivam  ││
+│   │ │{name:Rahul │ │   │ │{name:Rahul │ │   │ age:21} ││
+│   │ │ age: 25}   │ │   │ │ age: 25}   │ │   │...      ││
+│   │ └────────────┘ │   │ └────────────┘ │   └─────────┘│
+│   └───────┬────────┘   └───────┬────────┘   └───────┬────┘
+│           │                   │                   │     │
+│           └───────────────────┼───────────────────┘     │
+│                               │                         │
+│                    Replication network                   │
+│           (changes in one node propagate to others)      │
 └──────────────────────────────────────────────────────────┘
 ```
 
@@ -69,11 +69,11 @@ But now a critical problem emerges: **What happens when these nodes get out of s
 
 ```mermaid
 flowchart TB
- —  — subgraph reasons["Why build distributed systems?"]
- —  —  —  — R1["Scale beyond one machine"]
- —  —  —  — R2["Lower latency via geo-replicas"]
- —  —  —  — R3["Fault tolerance — survive DC failure"]
- —  — end
+    subgraph reasons["Why build distributed systems?"]
+    R1["Scale beyond one machine"]
+    R2["Lower latency via geo-replicas"]
+    R3["Fault tolerance — survive DC failure"]
+end
 ```
 
 ---
@@ -92,23 +92,23 @@ SCENARIO: Demonstrating Consistency
 State: All 3 nodes have { Shivam: age = 21 }
 
 Step 1: User A sends a write to Mumbai Node:
- —  —  —  — UPDATE user SET age = 22 WHERE name = 'Shivam'
- —  —  —  — 
+        UPDATE user SET age = 22 WHERE name = 'Shivam'
+        
 Step 2: Mumbai Node updates its copy: Shivam age = 22
 
 Step 3: Before Mumbai propagates to Hyderabad and Bihar,
- —  —  —  — User B sends a read to Hyderabad Node:
- —  —  —  — SELECT age FROM user WHERE name = 'Shivam'
+        User B sends a read to Hyderabad Node:
+        SELECT age FROM user WHERE name = 'Shivam'
 
 INCONSISTENT SYSTEM response: Hyderabad returns age = 21
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  (stale data — Mumbai hasn't synced yet)
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  
-CONSISTENT SYSTEM response: —  Hyderabad returns age = 22
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  (This is only possible if...)
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  Option A: Hyderabad waited for Mumbai
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  to sync before responding
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  Option B: All writes are blocked until 
- —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  all nodes confirm the update
+                               (stale data — Mumbai hasn't synced yet)
+                               
+CONSISTENT SYSTEM response:   Hyderabad returns age = 22
+                               (This is only possible if...)
+                               Option A: Hyderabad waited for Mumbai
+                                         to sync before responding
+                               Option B: All writes are blocked until 
+                                         all nodes confirm the update
 ```
 
 Achieving consistency means: before any node responds to a read, it must be guaranteed that it has received all recent writes. This requires coordination between nodes — communication must happen before responding.
@@ -123,22 +123,22 @@ Note: The response might not contain the most current data. But you always get a
 SCENARIO: Demonstrating Availability
 
 State: Mumbai Node has { Shivam: age = 22 }
- —  —  —  Hyderabad Node still has { Shivam: age = 21 }
- —  —  —  (replication is in progress, hasn't completed yet)
+       Hyderabad Node still has { Shivam: age = 21 }
+       (replication is in progress, hasn't completed yet)
 
 User B sends a read to Hyderabad Node:
 SELECT age FROM user WHERE name = 'Shivam'
 
 AVAILABLE but INCONSISTENT response:
- —  Hyderabad: "I'll respond immediately with what I have: age = 21"
- —  User gets age = 21 (stale, but a response was given)
- —  
+   Hyderabad: "I'll respond immediately with what I have: age = 21"
+   User gets age = 21 (stale, but a response was given)
+   
 NOT AVAILABLE response:
- —  Hyderabad: "I know I might have stale data. I'm waiting 
- —  —  —  —  —  —  —  for Mumbai to sync with me before I respond.
- —  —  —  —  —  —  —  User must wait... and wait... and wait..."
- —  If sync takes 2 seconds → user waited 2 seconds
- —  If sync fails → user gets a timeout error
+   Hyderabad: "I know I might have stale data. I'm waiting 
+               for Mumbai to sync with me before I respond.
+               User must wait... and wait... and wait..."
+   If sync takes 2 seconds → user waited 2 seconds
+   If sync fails → user gets a timeout error
 ```
 
 Availability is essentially: "I will always answer you, even if my answer might be slightly outdated."
@@ -150,11 +150,11 @@ A network partition is when the network connection between some nodes breaks. Th
 ```
 NORMAL STATE:
 Mumbai ←─────────────▶ Hyderabad ←─────────────▶ Bihar
- —  —  —  —  network OK —  —  —  —  —  —  —  —  — network OK
+         network OK                  network OK
 
 PARTITION STATE (cable cut between Hyderabad and Bihar):
-Mumbai ←─────────────▶ Hyderabad —  — ✂✂✂ —  — Bihar
- —  —  —  —  network OK —  —  —  —  —  —  — PARTITION!
+Mumbai ←─────────────▶ Hyderabad    ✂✂✂    Bihar
+         network OK              PARTITION!
 
 Hyderabad and Bihar can still talk to Mumbai,
 but Hyderabad and Bihar CANNOT talk to each other.
@@ -187,16 +187,16 @@ Setup:
 - Network partition occurs: Mumbai is isolated from Hyderabad and Bihar
 
 State after partition:
-M (Mumbai) —  — ✂✂✂ —  — H (Hyderabad) ←───────▶ B (Bihar)
- — isolated —  —  —  —  —  — (H and B can still talk to each other)
+M (Mumbai)    ✂✂✂    H (Hyderabad) ←───────▶ B (Bihar)
+  isolated            (H and B can still talk to each other)
 
 Now TWO events happen simultaneously:
 
-Event 1: User A (in Mumbai) — writes to Mumbai Node:
- —  —  —  —  UPDATE age = 22
+Event 1: User A (in Mumbai)  writes to Mumbai Node:
+         UPDATE age = 22
 
 Event 2: User B (in Delhi) reads from Hyderabad Node:
- —  —  —  —  SELECT age
+         SELECT age
 ```
 
 **Case 1: You prioritize Consistency (CP)**
@@ -208,20 +208,20 @@ Mumbai Node CANNOT REACH Hyderabad and Bihar (partition!).
 What does a consistent system do?
 It REFUSES to confirm the write until all nodes agree.
 Response to User A: "ERROR: Cannot complete write. 
- —  —  —  —  —  —  —  —  —  Network partition in progress.
- —  —  —  —  —  —  —  —  —  Please try again later."
+                   Network partition in progress.
+                   Please try again later."
 
 Meanwhile, Hyderabad receives User B's read.
 What does a consistent system do?
 It knows a partition exists. It knows it might have missed
 some writes. To maintain consistency, it REFUSES to respond.
 Response to User B: "ERROR: System unavailable. 
- —  —  —  —  —  —  —  —  —  Partition in progress.
- —  —  —  —  —  —  —  —  —  Please try again later."
+                   Partition in progress.
+                   Please try again later."
 
 RESULT: Both users got errors. Nobody got stale data.
- —  —  — Data is consistent (nobody saw wrong data).
- —  —  — But the system was unavailable (CP achieved, A sacrificed).
+      Data is consistent (nobody saw wrong data).
+      But the system was unavailable (CP achieved, A sacrificed).
 
 **Case 2: You prioritize Availability (AP)**
 
@@ -231,8 +231,8 @@ Mumbai Node says: "Fine, I'll write locally. I'll sync later."
 Mumbai confirms to User A: "Write successful! age = 22."
 
 - Mumbai still has: age = 22
-- Hyderabad still has: age = 21 — (doesn't know about the write)
-- Bihar still has: age = 21 —  —  — (doesn't know about the write)
+- Hyderabad still has: age = 21  (doesn't know about the write)
+- Bihar still has: age = 21      (doesn't know about the write)
 
 Hyderabad receives User B's read.
 Hyderabad says: "I'll respond with what I have."
@@ -241,8 +241,8 @@ Response to User B: "age = 21"
 But the actual correct value is now 22.
 
 RESULT: Both users got responses (system was available).
- —  —  — But User B got stale data (age = 21 instead of 22).
- —  —  — Consistency was sacrificed (AP achieved, C sacrificed).
+      But User B got stale data (age = 21 instead of 22).
+      Consistency was sacrificed (AP achieved, C sacrificed).
 
 **Why Can't We Have All Three?**
 
@@ -266,17 +266,17 @@ You cannot do both simultaneously. QED.
 
 ```mermaid
 flowchart TD
- —  — P["Network PARTITION occurs"]
- —  — P --> CHOICE{"Must choose one"}
+    P["Network PARTITION occurs"]
+    P --> CHOICE{"Must choose one"}
 
- —  — CHOICE --> CP["CP — Consistency + Partition tolerance"]
- —  — CHOICE --> AP["AP — Availability + Partition tolerance"]
+    CHOICE --> CP["CP — Consistency + Partition tolerance"]
+    CHOICE --> AP["AP — Availability + Partition tolerance"]
 
- —  — CP --> CPB["Refuse writes/reads until nodes sync<br/>Users get errors — no stale data"]
- —  — AP --> APB["Accept reads/writes on isolated nodes<br/>Users get responses — may be stale"]
+    CP --> CPB["Refuse writes/reads until nodes sync<br/>Users get errors — no stale data"]
+    AP --> APB["Accept reads/writes on isolated nodes<br/>Users get responses — may be stale"]
 
- —  — style CP fill:#eef,stroke:#336
- —  — style AP fill:#efe,stroke:#060
+    style CP fill:#eef,stroke:#336
+    style AP fill:#efe,stroke:#060
 ```
 
 > **Remember:** In production distributed systems, **P is non-negotiable**. Partitions happen. The real choice is **CP vs AP**.
@@ -313,19 +313,19 @@ When you choose AP, you accept that nodes might temporarily have different value
 
 ```mermaid
 sequenceDiagram
- —  — participant M as Mumbai
- —  — participant H as Hyderabad
- —  — participant B as Bihar
+    participant M as Mumbai
+    participant H as Hyderabad
+    participant B as Bihar
 
- —  — Note over M,B: t=0 — All nodes: age = 21
- —  — Note over M,B: t=1 — PARTITION
- —  — M->>M: Write age = 22
- —  — H->>H: Read returns 21 (stale)
- —  — B->>B: Read returns 21 (stale)
- —  — Note over M,B: t=4 — Partition heals
- —  — M->>H: Sync age = 22
- —  — M->>B: Sync age = 22
- —  — Note over M,B: t=7 — All nodes: age = 22 (consistent)
+    Note over M,B: t=0 - All nodes: age = 21
+    Note over M,B: t=1 - PARTITION
+    M->>M: Write age = 22
+    H->>H: Read returns 21 (stale)
+    B->>B: Read returns 21 (stale)
+    Note over M,B: t=4 - Partition heals
+    M->>H: Sync age = 22
+    M->>B: Sync age = 22
+    Note over M,B: t=7 - All nodes: age = 22 (consistent)
 ```
 
 Timeline of an AP system during and after a partition:
@@ -333,16 +333,16 @@ Timeline of an AP system during and after a partition:
 - **t=0** — All nodes: Shivam age = 21
 - **t=1** — PARTITION occurs
 - **t=2** — Write hits Mumbai: age = 22
- —  — Mumbai: age = 22
- —  — Hyderabad: age = 21 —  ← stale
- —  — Bihar: age = 21 —  —  —  ← stale
+    Mumbai: age = 22
+    Hyderabad: age = 21   ← stale
+    Bihar: age = 21       ← stale
 - **t=3** — Reads from Hyderabad return age = 21 (stale but available)
 - **t=4** — PARTITION HEALS. Network restored.
 - **t=5** — Mumbai tells Hyderabad: "I have age = 22, update yourself"
- —  — Hyderabad updates to age = 22
+    Hyderabad updates to age = 22
 - **t=6** — Mumbai tells Bihar: "I have age = 22, update yourself"
- —  — Bihar updates to age = 22
-- **t=7** — All nodes: Shivam age = 22 — ← eventually consistent!
+    Bihar updates to age = 22
+- **t=7** — All nodes: Shivam age = 22  ← eventually consistent!
 
 Between t=2 and t=6, different nodes had different values.
 After t=7, they're consistent again.
@@ -358,30 +358,30 @@ Your application starts simple. One app server, one database server.
 
 ```
 User's Browser
- —  —  — │
- —  —  — │ — HTTP request: "Show me user profile"
- —  —  — ▼
+      │
+      │  HTTP request: "Show me user profile"
+      ▼
 ┌─────────────────────┐
-│ —  App Server —  —  —  — │
-│ —  (your Node.js / —  │
-│ —  — Django / Spring — │
-│ —  — code runs here) — │
+│   App Server        │
+│   (your Node.js /   │
+│    Django / Spring  │
+│    code runs here)  │
 └──────────┬──────────┘
- —  —  —  —  —  │ — SQL Query: SELECT * FROM users WHERE id = 123
- —  —  —  —  —  ▼
+           │  SQL Query: SELECT * FROM users WHERE id = 123
+           ▼
 ┌─────────────────────┐
-│ —  Database Server —  │
-│ —  —  —  —  —  —  —  —  —  —  │
-│ —  ┌───────────────┐ │
-│ —  │ —  Users Table │ │
-│ —  │ ID | Name —  —  │ │
-│ —  │ — 1 | Shivam —  │ │
-│ —  │ — 2 | Rahul —  — │ │
-│ —  │ — 3 | Ankit —  — │ │
-│ —  │ — 4 | Aman —  —  │ │
-│ —  │ — 5 | Ayush —  — │ │
-│ —  │ — 6 | Pulkit —  │ │
-│ —  └───────────────┘ │
+│   Database Server   │
+│                     │
+│   ┌───────────────┐ │
+│   │   Users Table │ │
+│   │ ID | Name     │ │
+│   │  1 | Shivam   │ │
+│   │  2 | Rahul    │ │
+│   │  3 | Ankit    │ │
+│   │  4 | Aman     │ │
+│   │  5 | Ayush    │ │
+│   │  6 | Pulkit   │ │
+│   └───────────────┘ │
 └─────────────────────┘
 ```
 
@@ -391,18 +391,18 @@ But as you grow to millions of users and billions of rows, each of these compone
 
 ```mermaid
 flowchart TD
- —  — START["Single DB — works for thousands of users"]
- —  — I["Step 1: INDEXING<br/>O(N) → O(log N)"]
- —  — P["Step 2: PARTITIONING<br/>Smaller tables, same server"]
- —  — V["Step 3: VERTICAL SCALING<br/>Bigger hardware"]
- —  — MS["Step 4: MASTER-SLAVE<br/>Read replicas"]
- —  — MM["Step 5: MULTI-MASTER<br/>Regional write masters"]
- —  — SH["Step 6: SHARDING<br/>Split across machines"]
+    START["Single DB — works for thousands of users"]
+    I["Step 1: INDEXING<br/>O(N) → O(log N)"]
+    P["Step 2: PARTITIONING<br/>Smaller tables, same server"]
+    V["Step 3: VERTICAL SCALING<br/>Bigger hardware"]
+    MS["Step 4: MASTER-SLAVE<br/>Read replicas"]
+    MM["Step 5: MULTI-MASTER<br/>Regional write masters"]
+    SH["Step 6: SHARDING<br/>Split across machines"]
 
- —  — START --> I --> P --> V --> MS --> MM --> SH
+    START --> I --> P --> V --> MS --> MM --> SH
 
- —  — style I fill:#efe,stroke:#060
- —  — style SH fill:#fee,stroke:#c00
+    style I fill:#efe,stroke:#060
+    style SH fill:#fee,stroke:#c00
 ```
 
 > **Golden rule:** Never skip steps. Index before you shard. Instagram ran on one PostgreSQL DB for ~13M users before adding replicas.
@@ -444,15 +444,15 @@ A B-Tree is like a sorted, hierarchical directory. Here's a simplified version:
 ```
 B-Tree Index on the 'id' column (simplified):
 
- —  —  —  —  —  —  —  —  —  —  —  —  — [25]
- —  —  —  —  —  —  —  —  —  —  —  —  / —  — \
- —  —  —  —  —  —  —  —  —  — [12] —  —  —  — [37]
- —  —  —  —  —  —  —  —  —  / —  — \ —  —  — / —  — \
- —  —  —  —  —  —  —  — [6] —  — [18] [30] —  — [44]
- —  —  —  —  —  —  —  / \ —  — / \ —  / \ —  — / \
- —  —  —  —  —  —  [3] [9][15][21][27][33][40][48]
- —  —  —  —  —  —  ↑
- —  —  —  —  — Leaf nodes point to the actual row location on disk
+                          [25]
+                         /    \
+                    [12]        [37]
+                   /    \      /    \
+                [6]    [18] [30]    [44]
+               / \    / \   / \    / \
+             [3] [9][15][21][27][33][40][48]
+             ↑
+          Leaf nodes point to the actual row location on disk
 
 Finding id = 27:
 Start at root [25]
@@ -471,24 +471,24 @@ This is the difference between **O(N) and O(log N)**:
 Table with 50 million rows:
 
 Without index: Up to 50,000,000 comparisons
-With index: —  — Up to log₂(50,000,000) ≈ 26 comparisons
+With index:    Up to log₂(50,000,000) ≈ 26 comparisons
 
 26 vs 50,000,000 — that's a 2 million times speedup.
 A 2ms query becomes ~0.000001ms effectively.
 
 ```mermaid
 flowchart TD
- —  — Q["SELECT * FROM users WHERE id = 7432891"]
- —  — SCAN["Full table scan<br/>Up to 50M row checks<br/>O(N)"]
- —  — IDX["B-Tree index lookup<br/>~26 comparisons<br/>O(log N)"]
- —  — ROW["Fetch row from disk"]
+    Q["SELECT * FROM users WHERE id = 7432891"]
+    SCAN["Full table scan<br/>Up to 50M row checks<br/>O(N)"]
+    IDX["B-Tree index lookup<br/>~26 comparisons<br/>O(log N)"]
+    ROW["Fetch row from disk"]
 
- —  — Q --> SCAN
- —  — Q --> IDX
- —  — IDX --> ROW
+    Q --> SCAN
+    Q --> IDX
+    IDX --> ROW
 
- —  — style SCAN fill:#fee,stroke:#c00
- —  — style IDX fill:#efe,stroke:#060
+    style SCAN fill:#fee,stroke:#c00
+    style IDX fill:#efe,stroke:#060
 ```
 
 ### Creating Indexes — What Happens Behind the Scenes
@@ -502,7 +502,7 @@ CREATE INDEX idx_user_id ON users(id);
 -- 2. Sorts the id column values
 -- 3. Builds a B-Tree data structure with these sorted values
 -- 4. Each leaf node in the B-Tree contains the id value 
--- —  — AND a pointer (disk page + row number) to the actual row
+--    AND a pointer (disk page + row number) to the actual row
 -- 5. Saves this B-Tree to disk as a separate index file
 -- 6. From now on, every INSERT/UPDATE/DELETE keeps this B-Tree updated
 ```
@@ -528,10 +528,10 @@ CREATE INDEX idx_name_city ON users(last_name, city);
 
 -- This composite index speeds up queries like:
 -- SELECT * FROM users WHERE last_name = 'Kumar' AND city = 'Delhi';
--- SELECT * FROM users WHERE last_name = 'Kumar'; — (partial match, still works)
+-- SELECT * FROM users WHERE last_name = 'Kumar';  (partial match, still works)
 
 -- But does NOT help with:
--- SELECT * FROM users WHERE city = 'Delhi'; — (must use leftmost column first)
+-- SELECT * FROM users WHERE city = 'Delhi';  (must use leftmost column first)
 ```
 
 ---
@@ -578,29 +578,29 @@ Partitioning breaks one giant table into multiple smaller tables, all still sitt
 ```
 BEFORE PARTITIONING:
 ┌─────────────────────────────────────┐
-│ —  —  —  —  —  users table —  —  —  —  —  —  —  │
-│ —  —  —  — (10 billion rows) —  —  —  —  —  — │
-│ —  — Huge index, slow maintenance —  —  │
+│           users table               │
+│        (10 billion rows)            │
+│    Huge index, slow maintenance     │
 └─────────────────────────────────────┘
 
 AFTER PARTITIONING BY ID RANGE:
 ┌──────────────────────┐
-│ —  — user_table_1 —  —  — │
-│ — IDs: 1 to 3 billion │
-│ —  (3 billion rows) —  │
-│ —  Smaller index —  —  — │
+│    user_table_1      │
+│  IDs: 1 to 3 billion │
+│   (3 billion rows)   │
+│   Smaller index      │
 └──────────────────────┘
 ┌──────────────────────┐
-│ —  — user_table_2 —  —  — │
-│ — IDs: 3B to 6 billion│
-│ —  (3 billion rows) —  │
-│ —  Smaller index —  —  — │
+│    user_table_2      │
+│  IDs: 3B to 6 billion│
+│   (3 billion rows)   │
+│   Smaller index      │
 └──────────────────────┘
 ┌──────────────────────┐
-│ —  — user_table_3 —  —  — │
-│ — IDs: 6B to 10 billion│
-│ —  (4 billion rows) —  │
-│ —  Smaller index —  —  — │
+│    user_table_3      │
+│  IDs: 6B to 10 billion│
+│   (4 billion rows)   │
+│   Smaller index      │
 └──────────────────────┘
 
 All 3 partitions sit on the same server.
@@ -634,9 +634,9 @@ You can drop an entire month's partition (old logs, old orders)
 in milliseconds — much faster than DELETE which processes row by row.
 
 LIST PARTITIONING (by specific values):
-users_india: —  country = 'IN'
-users_usa: —  —  country = 'US'
-users_others: — country NOT IN ('IN', 'US')
+users_india:   country = 'IN'
+users_usa:     country = 'US'
+users_others:  country NOT IN ('IN', 'US')
 
 HASH PARTITIONING (by hash of a column):
 HASH(id) % 4 = 0 → partition_0
@@ -673,36 +673,36 @@ Since reads and writes have different needs, why should they compete for the sam
 
 ```mermaid
 flowchart TB
- —  — APP["Application"]
+    APP["Application"]
 
- —  — subgraph writePath["Write Path"]
- —  —  —  — W["INSERT / UPDATE / DELETE"]
- —  —  —  — M[("Master DB")]
- —  —  —  — BL["Binary Log"]
- —  —  —  — W --> M
- —  —  —  — M --> BL
- —  — end
+    subgraph writePath["Write Path"]
+    W["INSERT / UPDATE / DELETE"]
+    M[("Master DB")]
+    BL["Binary Log"]
+    W --> M
+    M --> BL
+end
 
- —  — subgraph replicas["Replication"]
- —  —  —  — S1[("Slave 1")]
- —  —  —  — S2[("Slave 2")]
- —  —  —  — S3[("Slave 3")]
- —  —  —  — BL --> S1
- —  —  —  — BL --> S2
- —  —  —  — BL --> S3
- —  — end
+    subgraph replicas["Replication"]
+    S1[("Slave 1")]
+    S2[("Slave 2")]
+    S3[("Slave 3")]
+    BL --> S1
+    BL --> S2
+    BL --> S3
+end
 
- —  — subgraph readPath["Read Path"]
- —  —  —  — R["SELECT queries"]
- —  —  —  — DBLB["Read Load Balancer"]
- —  —  —  — R --> DBLB
- —  —  —  — DBLB --> S1
- —  —  —  — DBLB --> S2
- —  —  —  — DBLB --> S3
- —  — end
+    subgraph readPath["Read Path"]
+    R["SELECT queries"]
+    DBLB["Read Load Balancer"]
+    R --> DBLB
+    DBLB --> S1
+    DBLB --> S2
+    DBLB --> S3
+end
 
- —  — APP --> writePath
- —  — APP --> readPath
+    APP --> writePath
+    APP --> readPath
 ```
 
 ### How Master-Slave Works — Full Detail
@@ -711,34 +711,34 @@ flowchart TB
 WRITE PATH:
 
 Application Layer
- —  —  —  │
- —  —  —  │ — INSERT INTO tweets VALUES (...) —  ← write query
- —  —  —  │ — UPDATE users SET name = 'Rahul' —  ← write query
- —  —  —  │ — DELETE FROM sessions WHERE ... —  — ← write query
- —  —  —  ▼
+       │
+       │  INSERT INTO tweets VALUES (...)   ← write query
+       │  UPDATE users SET name = 'Rahul'   ← write query
+       │  DELETE FROM sessions WHERE ...    ← write query
+       ▼
 ┌──────────────────────────────────────────────────────────┐
-│ —  —  —  —  —  —  —  —  —  —  — MASTER DB —  —  —  —  —  —  —  —  —  —  —  —  —  │
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ — - ALL INSERT, UPDATE, DELETE operations land here —  —  —  │
-│ — - Writes to its own storage first —  —  —  —  —  —  —  —  —  —  —  │
-│ — - Then writes to a "binary log" (replication log) —  —  —  │
-│ —  — - The binary log records EVERY change in order —  —  —  — │
-│ — - Master is the single source of truth for all writes —  │
-│ — - Every piece of data in all slaves originally —  —  —  —  — │
-│ —  — came from the master —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
+│                      MASTER DB                           │
+│                                                          │
+│  - ALL INSERT, UPDATE, DELETE operations land here       │
+│  - Writes to its own storage first                       │
+│  - Then writes to a "binary log" (replication log)       │
+│    - The binary log records EVERY change in order        │
+│  - Master is the single source of truth for all writes   │
+│  - Every piece of data in all slaves originally          │
+│    came from the master                                  │
 └──────────────┬───────────────────────────────────────────┘
- —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  │ — Binary Log streams to all slaves
- —  —  —  —  —  —  —  │ — (async or sync, depending on config)
- —  —  —  —  —  —  —  │
- —  — ┌──────────┼──────────┐
- —  — ▼ —  —  —  —  — ▼ —  —  —  —  — ▼
-┌────────┐ — ┌────────┐ — ┌────────┐
-│Slave 1 │ — │Slave 2 │ — │Slave 3 │
-│(replica│ — │(replica│ — │(replica│
-│ of —  —  │ — │ of —  —  │ — │ of —  —  │
-│ master)│ — │ master)│ — │ master)│
-└────────┘ — └────────┘ — └────────┘
+               │
+               │  Binary Log streams to all slaves
+               │  (async or sync, depending on config)
+               │
+    ┌──────────┼──────────┐
+    ▼          ▼          ▼
+┌────────┐  ┌────────┐  ┌────────┐
+│Slave 1 │  │Slave 2 │  │Slave 3 │
+│(replica│  │(replica│  │(replica│
+│ of     │  │ of     │  │ of     │
+│ master)│  │ master)│  │ master)│
+└────────┘  └────────┘  └────────┘
 
 Each slave:
 - Receives the binary log stream from master
@@ -749,26 +749,26 @@ Each slave:
 READ PATH:
 
 Application Layer
- —  —  —  │
- —  —  —  │ — SELECT * FROM users WHERE id = 123 — ← read query
- —  —  —  │ — SELECT count(*) FROM tweets —  —  —  —  — ← read query
- —  —  —  ▼
+       │
+       │  SELECT * FROM users WHERE id = 123  ← read query
+       │  SELECT count(*) FROM tweets          ← read query
+       ▼
 ┌──────────────────────────────────────────────────────────┐
-│ —  —  —  —  —  —  — Load Balancer (for DB reads) —  —  —  —  —  —  —  — │
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ — Algorithms: —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │
-│ — - Round Robin: distribute reads evenly among slaves —  —  │
-│ — - Least Connections: send to slave with fewest queries — │
-│ — - Health-based: skip slaves that are lagging behind —  —  │
+│              Load Balancer (for DB reads)                │
+│                                                          │
+│  Algorithms:                                             │
+│  - Round Robin: distribute reads evenly among slaves     │
+│  - Least Connections: send to slave with fewest queries  │
+│  - Health-based: skip slaves that are lagging behind     │
 └──────────────┬────────────────────────────────────────────┘
- —  —  —  —  —  —  —  │
- —  —  —  —  —  —  —  │ — Routes to least busy slave
- —  —  —  —  —  —  —  ▼
-┌────────┐ — ┌────────┐ — ┌────────┐
-│Slave 1 │ — │Slave 2 │ — │Slave 3 │
-│handles │ — │handles │ — │handles │
-│reads —  │ — │reads —  │ — │reads —  │
-└────────┘ — └────────┘ — └────────┘
+               │
+               │  Routes to least busy slave
+               ▼
+┌────────┐  ┌────────┐  ┌────────┐
+│Slave 1 │  │Slave 2 │  │Slave 3 │
+│handles │  │handles │  │handles │
+│reads   │  │reads   │  │reads   │
+└────────┘  └────────┘  └────────┘
 ```
 
 ### Synchronous vs Asynchronous Replication — Critical Difference
@@ -787,8 +787,8 @@ Timeline:
 - **t=6** — Slave 2 applies the change
 
 Problem: Between t=2 and t=5, if User B reads from Slave 1,
- —  —  —  they get the OLD data (age = 21), not the new data (age = 22).
- —  —  —  This is called "replication lag" — typically milliseconds to seconds.
+       they get the OLD data (age = 21), not the new data (age = 22).
+       This is called "replication lag" — typically milliseconds to seconds.
 
 Advantage: Write is fast (master doesn't wait for slaves)
 Disadvantage: Brief inconsistency (AP trade-off in CAP terms)
@@ -809,11 +809,11 @@ when the write is confirmed.
 
 Advantage: Strong consistency
 Disadvantage: Write latency is now (Master write time + 
- —  —  —  —  —  — slowest slave's replication time + network RTT)
- —  —  —  —  —  — If a slave is slow or the network is slow, 
- —  —  —  —  —  — every write in your system is slow.
- —  —  —  —  —  — If a slave goes down, writes block until it recovers
- —  —  —  —  —  — (or you configure it to proceed without that slave).
+            slowest slave's replication time + network RTT)
+            If a slave is slow or the network is slow, 
+            every write in your system is slow.
+            If a slave goes down, writes block until it recovers
+            (or you configure it to proceed without that slave).
 
 Most production systems use **semi-synchronous** — at least one slave must confirm before the master responds, but not all slaves. This balances durability and performance.
 
@@ -827,55 +827,55 @@ Most production systems use **semi-synchronous** — at least one slave must con
 
 Scenario where lag is a REAL problem:
 1. User posts a tweet: "Just got promoted! 🎉"
- — - Write goes to Master
- — - Master confirms "tweet saved"
- — - Page reloads
- — 
+  - Write goes to Master
+  - Master confirms "tweet saved"
+  - Page reloads
+  
 2. User immediately visits their own profile to see the tweet
- — - Read goes to Slave 1
- — - Slave 1 hasn't received the replication yet (20ms lag)
- — - Slave 1 returns: "No tweets found"
- — 
+  - Read goes to Slave 1
+  - Slave 1 hasn't received the replication yet (20ms lag)
+  - Slave 1 returns: "No tweets found"
+  
 3. User is confused: "Why didn't my tweet save?!"
- — They reload again 2 seconds later → now it's there
- — (replication caught up)
+  They reload again 2 seconds later → now it's there
+  (replication caught up)
 
 This "read your own write" problem is a classic 
 replication lag issue.
 
 SOLUTIONS:
 1. "Read your own writes" guarantee:
- — After a user WRITES something, route their next reads
- — to the MASTER for the next few seconds.
- — "I just wrote as user_123, so for the next 5 seconds,
- — reads from user_123 go to master."
- — 
+  After a user WRITES something, route their next reads
+  to the MASTER for the next few seconds.
+  "I just wrote as user_123, so for the next 5 seconds,
+  reads from user_123 go to master."
+  
 2. Session consistency:
- — After any write, store a "read-from-master-until" timestamp.
- — Any read within that window goes to master.
- — 
+  After any write, store a "read-from-master-until" timestamp.
+  Any read within that window goes to master.
+  
 3. Stale reads are acceptable:
- — For non-critical reads (like counts, recommendations),
- — just accept the slight staleness. Nobody cares if the 
- — "1,247 likes" is actually 1,249 for a few milliseconds.
+  For non-critical reads (like counts, recommendations),
+  just accept the slight staleness. Nobody cares if the 
+  "1,247 likes" is actually 1,249 for a few milliseconds.
 
 ### What Happens When Master Fails — Failover
 
 ```
 Normal operation:
 Application ──▶ Master (receiving writes)
- —  —  —  —  —  —  —  —  — │
- —  —  —  —  —  —  —  —  — ├──▶ Slave 1 (receiving reads)
- —  —  —  —  —  —  —  —  — ├──▶ Slave 2 (receiving reads)
- —  —  —  —  —  —  —  —  — └──▶ Slave 3 (receiving reads)
+                  │
+                  ├──▶ Slave 1 (receiving reads)
+                  ├──▶ Slave 2 (receiving reads)
+                  └──▶ Slave 3 (receiving reads)
 
 Master crashes!
 Monitoring system detects: "Master not responding for 30 seconds"
 
 Automatic failover process:
 1. Determine which slave is most up-to-date 
- —  (which has applied the most recent binary log entries)
- —  → Slave 1 is most up-to-date
+   (which has applied the most recent binary log entries)
+   → Slave 1 is most up-to-date
 
 **2. Promote Slave 1 to be the new Master:**
 - Slave 1 starts accepting writes
@@ -897,16 +897,16 @@ Brief downtime for writes during failover
 
 ```mermaid
 flowchart TD
- —  — M_DOWN["Master crashes"]
- —  — DET["Monitoring detects failure<br/>(~30s)"]
- —  — PICK["Elect most up-to-date slave"]
- —  — PROM["Promote slave → new Master"]
- —  — REDIR["Other slaves replicate from new Master"]
- —  — APP["Update app connection string"]
+    M_DOWN["Master crashes"]
+    DET["Monitoring detects failure<br/>(~30s)"]
+    PICK["Elect most up-to-date slave"]
+    PROM["Promote slave → new Master"]
+    REDIR["Other slaves replicate from new Master"]
+    APP["Update app connection string"]
 
- —  — M_DOWN --> DET --> PICK --> PROM --> REDIR --> APP
+    M_DOWN --> DET --> PICK --> PROM --> REDIR --> APP
 
- —  — style M_DOWN fill:#fee,stroke:#c00
+    style M_DOWN fill:#fee,stroke:#c00
 ```
 
 > **Failover notes:** Reads continue via slaves. Writes pause briefly until promotion completes (~30–60s with good tooling).
@@ -925,14 +925,14 @@ You've reached the point where your single master server is the bottleneck. Mayb
 ```
 PROBLEM WITH SINGLE MASTER IN GLOBAL DEPLOYMENT:
 
-User in India —  —  —  —  —  —  —  —  —  —  —  —  —  —  — Master DB (in USA)
- —  —  │ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │
- —  —  │ — "Place this order" —  —  —  —  —  —  —  —  —  —  —  │
- —  —  └──── request travels 200ms each way ──────▶│
- —  —  │ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  │ — processes write
- —  —  ◀───────────────────────────────────────────┘
- —  —  │ — receives response
- —  —  (Total: 400ms+ just for network, before any processing!)
+User in India                              Master DB (in USA)
+     │                                           │
+     │  "Place this order"                       │
+     └──── request travels 200ms each way ──────▶│
+     │                                           │  processes write
+     ◀───────────────────────────────────────────┘
+     │  receives response
+     (Total: 400ms+ just for network, before any processing!)
 
 This is unacceptable for a real-time application.
 ```
@@ -942,17 +942,17 @@ Multi-Master puts a master in each geographic region:
 ```
 MULTI-MASTER SETUP:
 
-Users in North India —  —  —  —  —  —  —  —  —  —  —  —  Users in South India
- —  —  —  │ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
- —  —  —  ▼ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — ▼
-┌──────────────────────┐ —  —  —  —  —  —  —  —  ┌──────────────────────┐
-│ — Master DB (North) —  │◄───── SYNC ────▶│ — Master DB (South) —  │
-│ — Location: Delhi —  —  │ —  —  —  —  —  —  —  —  │ — Location: Bangalore │
-│ —  —  —  —  —  —  —  —  —  —  — │ —  —  —  —  —  —  —  —  │ —  —  —  —  —  —  —  —  —  —  — │
-│ Slaves: —  —  —  —  —  —  — │ —  —  —  —  —  —  —  —  │ Slaves: —  —  —  —  —  —  — │
-│ — ├─ Slave A (Delhi) — │ —  —  —  —  —  —  —  —  │ — ├─ Slave C (Hyd.) —  │
-│ — └─ Slave B (Lucknow)│ —  —  —  —  —  —  —  —  │ — └─ Slave D (Chennai)│
-└──────────────────────┘ —  —  —  —  —  —  —  —  └──────────────────────┘
+Users in North India                         Users in South India
+       │                                              │
+       ▼                                              ▼
+┌──────────────────────┐                 ┌──────────────────────┐
+│  Master DB (North)   │◄───── SYNC ────▶│  Master DB (South)   │
+│  Location: Delhi     │                 │  Location: Bangalore │
+│                      │                 │                      │
+│ Slaves:              │                 │ Slaves:              │
+│  ├─ Slave A (Delhi)  │                 │  ├─ Slave C (Hyd.)   │
+│  └─ Slave B (Lucknow)│                 │  └─ Slave D (Chennai)│
+└──────────────────────┘                 └──────────────────────┘
 
 North India users write to North Master → ~5ms latency
 South India users write to South Master → ~5ms latency
@@ -961,26 +961,26 @@ Both masters periodically sync (replicate to each other)
 
 ```mermaid
 flowchart LR
- —  — subgraph north["North India"]
- —  —  —  — NM[("Master North<br/>Delhi")]
- —  —  —  — NS1[("Slave A")]
- —  —  —  — NS2[("Slave B")]
- —  —  —  — NM --> NS1
- —  —  —  — NM --> NS2
- —  — end
+    subgraph north["North India"]
+    NM[("Master North<br/>Delhi")]
+    NS1[("Slave A")]
+    NS2[("Slave B")]
+    NM --> NS1
+    NM --> NS2
+end
 
- —  — subgraph south["South India"]
- —  —  —  — SM[("Master South<br/>Bangalore")]
- —  —  —  — SS1[("Slave C")]
- —  —  —  — SS2[("Slave D")]
- —  —  —  — SM --> SS1
- —  —  —  — SM --> SS2
- —  — end
+    subgraph south["South India"]
+    SM[("Master South<br/>Bangalore")]
+    SS1[("Slave C")]
+    SS2[("Slave D")]
+    SM --> SS1
+    SM --> SS2
+end
 
- —  — NM <-->|"Bidirectional sync"| SM
+    NM <-->|"Bidirectional sync"| SM
 
- —  — UN["North users<br/>~5ms writes"] --> NM
- —  — US["South users<br/>~5ms writes"] --> SM
+    UN["North users<br/>~5ms writes"] --> NM
+    US["South users<br/>~5ms writes"] --> SM
 ```
 
 ### The Hardest Problem: Conflict Resolution
@@ -990,22 +990,22 @@ This is where multi-master becomes genuinely complex. Let me walk through every 
 **Scenario 1: Two users update the same row simultaneously from different regions.**
 
 ```
-t=0: — Both masters have: user_456 = { name: "Rahul", balance: 10,000 }
+t=0:  Both masters have: user_456 = { name: "Rahul", balance: 10,000 }
 
-t=1: — User A (North India) updates: name = "Rahul Kumar"
- —  —  — North Master: user_456.name = "Rahul Kumar"
- —  —  — North Master will sync to South Master... (in progress)
+t=1:  User A (North India) updates: name = "Rahul Kumar"
+      North Master: user_456.name = "Rahul Kumar"
+      North Master will sync to South Master... (in progress)
 
-t=1: — User B (South India) updates simultaneously: name = "Rahul Sharma"
- —  —  — South Master: user_456.name = "Rahul Sharma"
- —  —  — South Master will sync to North Master... (in progress)
+t=1:  User B (South India) updates simultaneously: name = "Rahul Sharma"
+      South Master: user_456.name = "Rahul Sharma"
+      South Master will sync to North Master... (in progress)
 
-t=2: — Sync happens:
- —  —  — North Master receives South's update: "Set name to Rahul Sharma"
- —  —  — South Master receives North's update: "Set name to Rahul Kumar"
- —  —  — 
+t=2:  Sync happens:
+      North Master receives South's update: "Set name to Rahul Sharma"
+      South Master receives North's update: "Set name to Rahul Kumar"
+      
 CONFLICT: Both masters updated the same row at the same time.
- —  —  —  —  — What should the final value be?
+          What should the final value be?
 ```
 
 **Strategy 1: Last Write Wins (LWW)**
@@ -1014,15 +1014,15 @@ Assign a timestamp to every write.
 Whichever write has the LATER timestamp wins.
 
 North's write: timestamp = 14:23:01.456
-South's write: timestamp = 14:23:01.461 —  ← later
+South's write: timestamp = 14:23:01.461   ← later
 
 Final value everywhere: "Rahul Sharma"
 
 Problem: What if the clocks on the two servers are slightly out of sync?
- —  —  —  (Clock drift is a real issue in distributed systems.)
- —  —  —  If North's clock is 100ms ahead of South's clock, 
- —  —  —  the "later" timestamp might be wrong.
- —  —  —  Also, genuine user intent is lost — User A's change is silently discarded.
+       (Clock drift is a real issue in distributed systems.)
+       If North's clock is 100ms ahead of South's clock, 
+       the "later" timestamp might be wrong.
+       Also, genuine user intent is lost — User A's change is silently discarded.
 
 **Strategy 2: Conflict Avoidance (Partitioned Writes)**
 
@@ -1101,15 +1101,15 @@ That's sharding.
 
 ```mermaid
 flowchart TB
- —  — APP["Application<br/>(shard router)"]
+    APP["Application<br/>(shard router)"]
 
- —  — APP -->|"tweet_id 1–167B"| SH1[("Shard 1 — Mumbai<br/>~80 TB")]
- —  — APP -->|"tweet_id 167B–333B"| SH2[("Shard 2 — Delhi<br/>~80 TB")]
- —  — APP -->|"tweet_id 333B–500B"| SH3[("Shard 3 — Hyderabad<br/>~90 TB")]
+    APP -->|"tweet_id 1–167B"| SH1[("Shard 1 — Mumbai<br/>~80 TB")]
+    APP -->|"tweet_id 167B–333B"| SH2[("Shard 2 — Delhi<br/>~80 TB")]
+    APP -->|"tweet_id 333B–500B"| SH3[("Shard 3 — Hyderabad<br/>~90 TB")]
 
- —  — SH1 --> SR1["Own read replicas"]
- —  — SH2 --> SR2["Own read replicas"]
- —  — SH3 --> SR3["Own read replicas"]
+    SH1 --> SR1["Own read replicas"]
+    SH2 --> SR2["Own read replicas"]
+    SH3 --> SR3["Own read replicas"]
 ```
 
 ### How Sharding Works — Full Detail
@@ -1123,26 +1123,26 @@ All 500 billion tweets split into 3 groups:
 
 Shard 1 (DB Server in Mumbai):
 ┌──────────────────────────────┐
-│ — Tweets with IDs 1 to 167B —  │
-│ — (~167 billion tweets) —  —  —  │
-│ — Storage: ~80 TB —  —  —  —  —  —  │
-│ — Its own slaves for reads —  — │
+│  Tweets with IDs 1 to 167B   │
+│  (~167 billion tweets)       │
+│  Storage: ~80 TB             │
+│  Its own slaves for reads    │
 └──────────────────────────────┘
 
 Shard 2 (DB Server in Delhi):
 ┌──────────────────────────────┐
-│ — Tweets with IDs 167B to 333B│
-│ — (~167 billion tweets) —  —  —  │
-│ — Storage: ~80 TB —  —  —  —  —  —  │
-│ — Its own slaves for reads —  — │
+│  Tweets with IDs 167B to 333B│
+│  (~167 billion tweets)       │
+│  Storage: ~80 TB             │
+│  Its own slaves for reads    │
 └──────────────────────────────┘
 
 Shard 3 (DB Server in Hyderabad):
 ┌──────────────────────────────┐
-│ — Tweets with IDs 333B to 500B│
-│ — (~167 billion tweets) —  —  —  │
-│ — Storage: ~90 TB —  —  —  —  —  —  │
-│ — Its own slaves for reads —  — │
+│  Tweets with IDs 333B to 500B│
+│  (~167 billion tweets)       │
+│  Storage: ~90 TB             │
+│  Its own slaves for reads    │
 └──────────────────────────────┘
 ```
 
@@ -1155,21 +1155,21 @@ This is the fundamental difference from partitioning. With partitioning (same se
 APPLICATION-LEVEL SHARD ROUTER:
 
 function getShardForTweetId(tweet_id):
- — if tweet_id <= 167_000_000_000:
- —  —  — return connect to "shard1.db.internal:5432"
- — elif tweet_id <= 333_000_000_000:
- —  —  — return connect to "shard2.db.internal:5432"
- — else:
- —  —  — return connect to "shard3.db.internal:5432"
+  if tweet_id <= 167_000_000_000:
+      return connect to "shard1.db.internal:5432"
+  elif tweet_id <= 333_000_000_000:
+      return connect to "shard2.db.internal:5432"
+  else:
+      return connect to "shard3.db.internal:5432"
 
 function writeTweet(tweet):
- — shard_id = HASH(tweet.user_id) % 3 — # or range-based
- — connection = getShardConnection(shard_id)
- — connection.execute("INSERT INTO tweets VALUES (...)")
+  shard_id = HASH(tweet.user_id) % 3  # or range-based
+  connection = getShardConnection(shard_id)
+  connection.execute("INSERT INTO tweets VALUES (...)")
 
 function getTweetById(tweet_id):
- — connection = getShardForTweetId(tweet_id)
- — return connection.execute("SELECT * FROM tweets WHERE id = ?", tweet_id)
+  connection = getShardForTweetId(tweet_id)
+  return connection.execute("SELECT * FROM tweets WHERE id = ?", tweet_id)
 
 This routing logic is now YOUR responsibility. Every read, every write must be routed to the correct shard. If you get it wrong, you write to shard 2 but read from shard 1 — data not found.
 
@@ -1178,12 +1178,12 @@ This routing logic is now YOUR responsibility. Every read, every write must be r
 **1. Range-Based Sharding**
 
 SETUP:
-Shard 1: user_id 1 —  —  —  —  — to 10,000,000 —  —  (10 million users)
-Shard 2: user_id 10,000,001 to 20,000,000 —  —  (10 million users)
-Shard 3: user_id 20,000,001 to 30,000,000 —  —  (10 million users)
+Shard 1: user_id 1          to 10,000,000     (10 million users)
+Shard 2: user_id 10,000,001 to 20,000,000     (10 million users)
+Shard 3: user_id 20,000,001 to 30,000,000     (10 million users)
 
 **QUERY ROUTING (trivial):**
-user_id = 7,500,000 — → Shard 1 (1 to 10M)
+user_id = 7,500,000  → Shard 1 (1 to 10M)
 user_id = 15,000,000 → Shard 2 (10M to 20M)
 user_id = 25,000,000 → Shard 3 (20M to 30M)
 
@@ -1209,11 +1209,11 @@ SETUP:
 Number of shards: 4
 Sharding formula: shard_number = HASH(user_id) % 4
 
-user_id = 1234 — → HASH(1234) = 678,901,234 → 678,901,234 % 4 = 2 → Shard 2
-user_id = 5678 — → HASH(5678) = 234,567,890 → 234,567,890 % 4 = 2 → Shard 2
-user_id = 9012 — → HASH(9012) = 345,678,901 → 345,678,901 % 4 = 1 → Shard 1
-user_id = 3456 — → HASH(3456) = 789,012,345 → 789,012,345 % 4 = 1 → Shard 1
-user_id = 7890 — → HASH(7890) = 456,789,012 → 456,789,012 % 4 = 0 → Shard 0
+user_id = 1234  → HASH(1234) = 678,901,234 → 678,901,234 % 4 = 2 → Shard 2
+user_id = 5678  → HASH(5678) = 234,567,890 → 234,567,890 % 4 = 2 → Shard 2
+user_id = 9012  → HASH(9012) = 345,678,901 → 345,678,901 % 4 = 1 → Shard 1
+user_id = 3456  → HASH(3456) = 789,012,345 → 789,012,345 % 4 = 1 → Shard 1
+user_id = 7890  → HASH(7890) = 456,789,012 → 456,789,012 % 4 = 0 → Shard 0
 
 Distribution is statistically uniform.
 No hot shards when your hash function is good (MD5, SHA-1, MurmurHash).
@@ -1223,7 +1223,7 @@ Your system grows. 4 shards are now too few. You add a 5th shard.
 Formula changes: HASH(user_id) % 5
 
 user_id = 1234 previously → Shard 2
-user_id = 1234 now —  —  —  — → HASH(1234) % 5 = 4 → Shard 4 ← DIFFERENT!
+user_id = 1234 now        → HASH(1234) % 5 = 4 → Shard 4 ← DIFFERENT!
 
 EVERY SINGLE record needs to be moved to potentially a different shard.
 If you have 1 billion records, you need to move most of them.
@@ -1249,7 +1249,7 @@ Shard 4: Rest of world
 BENEFITS:
 - Data locality: Indian users' data is in India (low latency for reads)
 - Compliance: GDPR requires European user data to stay in Europe
- —  —  —  —  —  — Achieved automatically with this sharding strategy
+            Achieved automatically with this sharding strategy
 - Regional isolation: An outage in US Shard doesn't affect Indian users
 
 ROUTING:
@@ -1279,15 +1279,15 @@ A dedicated "directory service" (often called a "routing table" or "shard map")
 maintains a lookup table:
 
 ┌────────────────────────────────────────────────────────────┐
-│ —  —  —  —  —  —  —  —  —  — Shard Directory —  —  —  —  —  —  —  —  —  —  —  —  │
-│ —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  —  — │
-│ — Key Range —  —  —  —  —  —  — → Shard Location —  —  —  —  —  —  —  —  — │
-│ — ───────────────────────────────────────────── —  —  —  —  —  —  │
-│ — user_id 1-1,000,000 —  — → shard1.db.internal —  —  —  —  —  —  —  │
-│ — user_id 1,000,001-2M —  → shard2.db.internal —  —  —  —  —  —  —  │
-│ — user_id 2,000,001-3M —  → shard1.db.internal — ← reassigned!│
-│ — user_id 3,000,001-4M —  → shard3.db.internal —  —  —  —  —  —  —  │
-│ — VIP users (list) —  —  —  → shard_premium.db.internal —  —  —  — │
+│                    Shard Directory                         │
+│                                                            │
+│  Key Range              → Shard Location                  │
+│  ─────────────────────────────────────────────             │
+│  user_id 1-1,000,000    → shard1.db.internal               │
+│  user_id 1,000,001-2M   → shard2.db.internal               │
+│  user_id 2,000,001-3M   → shard1.db.internal  ← reassigned!│
+│  user_id 3,000,001-4M   → shard3.db.internal               │
+│  VIP users (list)       → shard_premium.db.internal        │
 └────────────────────────────────────────────────────────────┘
 
 QUERY ROUTING:
@@ -1311,7 +1311,7 @@ If the directory goes down: nothing works.
 
 SOLUTIONS:
 - Cache the directory mapping in application memory 
- — (refresh periodically, e.g., every 10 minutes)
+  (refresh periodically, e.g., every 10 minutes)
 - Replicate the directory across multiple servers for availability
 - Use a high-performance key-value store (Redis) for the directory
 ```
@@ -1321,9 +1321,9 @@ SOLUTIONS:
 ```
 SIMPLE QUERY ON AN UNSHARDED DATABASE:
 SELECT 
- —  — u.name,
- —  — t.content,
- —  — t.created_at
+    u.name,
+    t.content,
+    t.created_at
 FROM tweets t
 JOIN users u ON t.user_id = u.id
 WHERE t.created_at > '2024-01-01'
@@ -1341,14 +1341,14 @@ SAME QUERY WITH SHARDING
 → Returns 1 million tweet records with user_ids
 
 Step 2: Application queries User Shard:
- —  —  —  — "Get all users whose IDs appear in those 1 million tweets"
- —  —  —  — SELECT * FROM users WHERE id IN (1,234, 5,678, 9,012, ...)
- —  —  —  — This IN clause has potentially millions of IDs.
- —  —  —  — This is a massive query.
+        "Get all users whose IDs appear in those 1 million tweets"
+        SELECT * FROM users WHERE id IN (1,234, 5,678, 9,012, ...)
+        This IN clause has potentially millions of IDs.
+        This is a massive query.
 
 Step 3: Application code manually joins the results:
- —  —  —  — for each tweet in tweets:
- —  —  —  —  —  — tweet.user_name = users_dict[tweet.user_id].name
+        for each tweet in tweets:
+            tweet.user_name = users_dict[tweet.user_id].name
 
 Step 4: Sort the combined results by created_at.
 
@@ -1372,15 +1372,15 @@ The common query pattern stays within one shard.
 
 ```mermaid
 flowchart TD
- —  — Q["Cross-shard JOIN needed?"]
- —  — BAD["Nightmare:<br/>Fetch millions of rows<br/>Manual join in app<br/>Seconds of latency"]
- —  — GOOD["Design sharding key so<br/>common queries hit ONE shard"]
+    Q["Cross-shard JOIN needed?"]
+    BAD["Nightmare:<br/>Fetch millions of rows<br/>Manual join in app<br/>Seconds of latency"]
+    GOOD["Design sharding key so<br/>common queries hit ONE shard"]
 
- —  — Q -->|Yes| BAD
- —  — Q -->|No — shard by user_id| GOOD
+    Q -->|"Yes"| BAD
+    Q -->|"No — shard by user_id"| GOOD
 
- —  — style BAD fill:#fee,stroke:#c00
- —  — style GOOD fill:#efe,stroke:#060
+    style BAD fill:#fee,stroke:#c00
+    style GOOD fill:#efe,stroke:#060
 ```
 
 ---
@@ -1390,62 +1390,62 @@ flowchart TD
 START: You have a single database.
 
 STEP 1: Slow queries on large tables?
- —  —  — ↓ YES
- —  —  — → Add INDEXES on columns used in WHERE clauses.
- —  —  —  — Cost: near zero. Benefit: huge (O(N) → O(log N)).
- —  —  —  — Always do this first, no matter what.
- —  —  —  — Trade-off: Writes become slightly slower.
- —  —  —  — 
- —  —  — ↓ STILL SLOW (index file itself is large)
- —  —  — 
+      ↓ YES
+      → Add INDEXES on columns used in WHERE clauses.
+        Cost: near zero. Benefit: huge (O(N) → O(log N)).
+        Always do this first, no matter what.
+        Trade-off: Writes become slightly slower.
+        
+      ↓ STILL SLOW (index file itself is large)
+      
 STEP 2: Table has hundreds of millions of rows?
- —  —  — ↓ YES — 
- —  —  — → Add PARTITIONING on the table.
- —  —  —  — Split by range or hash. Same server.
- —  —  —  — PostgreSQL routes queries automatically.
- —  —  —  — Cost: moderate (restructure the table).
- —  —  —  — Benefit: smaller indexes, faster maintenance.
- —  —  —  — 
- —  —  — ↓ STILL SLOW (server itself is the bottleneck)
- —  —  — 
+      ↓ YES  
+      → Add PARTITIONING on the table.
+        Split by range or hash. Same server.
+        PostgreSQL routes queries automatically.
+        Cost: moderate (restructure the table).
+        Benefit: smaller indexes, faster maintenance.
+        
+      ↓ STILL SLOW (server itself is the bottleneck)
+      
 STEP 3: Is the server hardware the limit?
- —  —  — ↓ YES
- —  —  — → VERTICAL SCALING first. 
- —  —  —  — Double the RAM and CPU. Easy. No code changes.
- —  —  —  — Do this before any architectural changes.
- —  —  —  — 
- —  —  — ↓ HIT THE VERTICAL CEILING (or cost is too high)
- —  —  — 
+      ↓ YES
+      → VERTICAL SCALING first. 
+        Double the RAM and CPU. Easy. No code changes.
+        Do this before any architectural changes.
+        
+      ↓ HIT THE VERTICAL CEILING (or cost is too high)
+      
 STEP 4: Is traffic READ-HEAVY? (reads >> writes)
- —  —  — ↓ YES
- —  —  — → MASTER-SLAVE (Read Replicas).
- —  —  —  — All writes → Master.
- —  —  —  — All reads → distributed across N slaves.
- —  —  —  — Each slave can handle the same read QPS as master.
- —  —  —  — With 5 slaves: 5× read throughput.
- —  —  —  — Cost: replication lag (usually milliseconds).
- —  —  —  — 
- —  —  — ↓ STILL NOT ENOUGH (slaves can't keep up or writes are the bottleneck)
- —  —  — 
+      ↓ YES
+      → MASTER-SLAVE (Read Replicas).
+        All writes → Master.
+        All reads → distributed across N slaves.
+        Each slave can handle the same read QPS as master.
+        With 5 slaves: 5× read throughput.
+        Cost: replication lag (usually milliseconds).
+        
+      ↓ STILL NOT ENOUGH (slaves can't keep up or writes are the bottleneck)
+      
 STEP 5: Is write traffic globally distributed?
- —  —  — ↓ YES (users in multiple regions writing)
- —  —  — → MULTI-MASTER setup.
- —  —  —  — One master per region.
- —  —  —  — Writes are local (low latency).
- —  —  —  — Masters sync periodically.
- —  —  —  — Hard part: conflict resolution strategy.
- —  —  —  — 
- —  —  — ↓ Data volume is the problem (doesn't fit on one machine)
- —  —  — 
+      ↓ YES (users in multiple regions writing)
+      → MULTI-MASTER setup.
+        One master per region.
+        Writes are local (low latency).
+        Masters sync periodically.
+        Hard part: conflict resolution strategy.
+        
+      ↓ Data volume is the problem (doesn't fit on one machine)
+      
 STEP 6: Does the total data exceed one machine's storage/RAM?
- —  —  — ↓ YES
- —  —  — → SHARDING.
- —  —  —  — Split data across multiple machines.
- —  —  —  — Choose sharding key carefully.
- —  —  —  — You handle routing in application code.
- —  —  —  — Avoid cross-shard JOINs.
- —  —  —  — Consider consistent hashing for future shard additions.
- —  —  —  — Last resort — adds enormous complexity.
+      ↓ YES
+      → SHARDING.
+        Split data across multiple machines.
+        Choose sharding key carefully.
+        You handle routing in application code.
+        Avoid cross-shard JOINs.
+        Consider consistent hashing for future shard additions.
+        Last resort — adds enormous complexity.
 
 The most important lesson: **never skip steps**. Companies that jump straight to sharding when indexing would have solved their problem end up with a massively complex system that's hard to maintain, expensive to operate, and prone to bugs — all for no real benefit.
 
@@ -1453,43 +1453,43 @@ Instagram ran on a single PostgreSQL database for the first year with 13 million
 
 ```mermaid
 flowchart TD
- —  — START(["Single database"])
+    START(["Single database"])
 
- —  — S1{"Slow queries?"}
- —  — S1Y["Add INDEXES<br/>Cost: ~zero | Benefit: huge"]
- —  — S2{"Still slow?<br/>Huge table?"}
- —  — S2Y["PARTITIONING<br/>Same server, smaller chunks"]
- —  — S3{"Hardware limit?"}
- —  — S3Y["VERTICAL SCALING<br/>Bigger machine first"]
- —  — S4{"Read-heavy?<br/>reads >> writes"}
- —  — S4Y["MASTER-SLAVE<br/>Read replicas"]
- —  — S5{"Global writes?"}
- —  — S5Y["MULTI-MASTER<br/>Regional masters + conflict rules"]
- —  — S6{"Data > one machine?"}
- —  — S6Y["SHARDING<br/>Last resort — app-level routing"]
+    S1{"Slow queries?"}
+    S1Y["Add INDEXES<br/>Cost: ~zero | Benefit: huge"]
+    S2{"Still slow?<br/>Huge table?"}
+    S2Y["PARTITIONING<br/>Same server, smaller chunks"]
+    S3{"Hardware limit?"}
+    S3Y["VERTICAL SCALING<br/>Bigger machine first"]
+    S4{"Read-heavy?<br/>reads >> writes"}
+    S4Y["MASTER-SLAVE<br/>Read replicas"]
+    S5{"Global writes?"}
+    S5Y["MULTI-MASTER<br/>Regional masters + conflict rules"]
+    S6{"Data > one machine?"}
+    S6Y["SHARDING<br/>Last resort — app-level routing"]
 
- —  — START --> S1
- —  — S1 -->|Yes| S1Y
- —  — S1 -->|No| DONE(["Done"])
- —  — S1Y --> S2
- —  — S2 -->|Yes| S2Y
- —  — S2 -->|No| S3
- —  — S2Y --> S3
- —  — S3 -->|Yes| S3Y
- —  — S3 -->|No| S4
- —  — S3Y --> S4
- —  — S4 -->|Yes| S4Y
- —  — S4 -->|No| S5
- —  — S4Y --> S5
- —  — S5 -->|Yes| S5Y
- —  — S5 -->|No| S6
- —  — S5Y --> S6
- —  — S6 -->|Yes| S6Y
- —  — S6 -->|No| DONE
- —  — S6Y --> DONE
+    START --> S1
+    S1 -->|"Yes"| S1Y
+    S1 -->|"No"| DONE(["Done"])
+    S1Y --> S2
+    S2 -->|"Yes"| S2Y
+    S2 -->|"No"| S3
+    S2Y --> S3
+    S3 -->|"Yes"| S3Y
+    S3 -->|"No"| S4
+    S3Y --> S4
+    S4 -->|"Yes"| S4Y
+    S4 -->|"No"| S5
+    S4Y --> S5
+    S5 -->|"Yes"| S5Y
+    S5 -->|"No"| S6
+    S5Y --> S6
+    S6 -->|"Yes"| S6Y
+    S6 -->|"No"| DONE
+    S6Y --> DONE
 
- —  — style S1Y fill:#efe,stroke:#060
- —  — style S6Y fill:#fee,stroke:#c00
+    style S1Y fill:#efe,stroke:#060
+    style S6Y fill:#fee,stroke:#c00
 ```
 
 ---

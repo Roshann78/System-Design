@@ -29,19 +29,19 @@ A database like PostgreSQL stores data in a highly structured way. Every row is 
 Now consider a video file.
 
 **A typical MP4 video:**
-- Duration: —  —  10 minutes
-- Resolution: —  1080p
-- File size: —  — ~1.5 GB
-- Binary size: — ~12,884,901,888 bits
+- Duration:     10 minutes
+- Resolution:   1080p
+- File size:    ~1.5 GB
+- Binary size:  ~12,884,901,888 bits
 
 Trying to store this as a database column:
- — CREATE TABLE videos (
- —  — id —  —  —  —  INT PRIMARY KEY,
- —  — title —  —  — VARCHAR(255),
- —  — video_data BLOB —  — ← the MP4 lives here
- — );
- — 
- — INSERT INTO videos VALUES (1, 'My Video', <12 billion bits of data>);
+  CREATE TABLE videos (
+    id         INT PRIMARY KEY,
+    title      VARCHAR(255),
+    video_data BLOB    ← the MP4 lives here
+  );
+  
+  INSERT INTO videos VALUES (1, 'My Video', <12 billion bits of data>);
 
 Here's what happens to your database when you do this:
 
@@ -57,12 +57,12 @@ Here's what happens to your database when you do this:
 
 ```mermaid
 flowchart LR
- —  — APP["Application"]
- —  — DB[("PostgreSQL<br/>metadata only")]
- —  — S3[("S3 / Blob Storage<br/>actual files")]
+    APP["Application"]
+    DB[("PostgreSQL<br/>metadata only")]
+    S3[("S3 / Blob Storage<br/>actual files")]
 
- —  — APP -->|"id, title, s3_url"| DB
- —  — APP -->|"upload/download bytes"| S3
+    APP -->|"id, title, s3_url"| DB
+    APP -->|"upload/download bytes"| S3
 ```
 
 ---
@@ -92,13 +92,13 @@ S3 (Simple Storage Service) is Amazon's blob storage service.
 
 ```
 BUCKET: A named container (globally unique name)
- — - Lives in a specific AWS region (ap-south-1, us-east-1, etc.)
+  - Lives in a specific AWS region (ap-south-1, us-east-1, etc.)
 
 OBJECT: A file stored in a bucket
- — - KEY: —  — "videos/tutorials/redis-tutorial.mp4"
- — - VALUE: — the actual binary content
- — - METADATA: content-type, size, custom tags
- — - ETag: —  checksum for integrity
+  - KEY:    "videos/tutorials/redis-tutorial.mp4"
+  - VALUE:  the actual binary content
+  - METADATA: content-type, size, custom tags
+  - ETag:   checksum for integrity
 
 Structure:
 my-company-bucket/
@@ -119,7 +119,7 @@ When you upload to S3:
 3. Distributed across multiple drives, machines, and Availability Zones
 
 For ap-south-1 (Mumbai):
- — AZ-a, AZ-b, AZ-c — separate data centers
+  AZ-a, AZ-b, AZ-c — separate data centers
 
 Your file's chunks live across all three simultaneously.
 Losing data requires catastrophic simultaneous failure across all AZs.
@@ -143,16 +143,16 @@ Problems:
 
 ```mermaid
 sequenceDiagram
- —  — participant U as User
- —  — participant A as App Server
- —  — participant S as S3
+    participant U as User
+    participant A as App Server
+    participant S as S3
 
- —  — U->>A: Request upload permission
- —  — A->>A: Generate pre-signed PUT URL (expires 5 min)
- —  — A-->>U: Return signed URL
- —  — U->>S: Upload 2GB directly (PUT)
- —  — S-->>U: 200 OK
- —  — Note over A: App server never touched the file bytes
+    U->>A: Request upload permission
+    A->>A: Generate pre-signed PUT URL (expires 5 min)
+    A-->>U: Return signed URL
+    U->>S: Upload 2GB directly (PUT)
+    S-->>U: 200 OK
+    Note over A: App server never touched the file bytes
 ```
 
 ```
@@ -163,10 +163,10 @@ Step 4: S3 stores file, returns 200
 
 // NodeJS example:
 const presignedUrl = await s3.getSignedUrlPromise('putObject', {
- —  — Bucket: 'my-videos-bucket',
- —  — Key: `videos/${userId}/${Date.now()}-tutorial.mp4`,
- —  — ContentType: 'video/mp4',
- —  — Expires: 300
+    Bucket: 'my-videos-bucket',
+    Key: `videos/${userId}/${Date.now()}-tutorial.mp4`,
+    ContentType: 'video/mp4',
+    Expires: 300
 });
 ```
 
@@ -189,10 +189,10 @@ Same pattern works for **downloads** — pre-signed GET URL, user downloads dire
 | **S3 Glacier Deep Archive** | ~$0.00099 | 12–48 hours | Long-term cold storage |
 
 **Lifecycle example:**
-- Day 0-30: —  — S3 Standard
-- Day 31-90: —  S3 Standard-IA
-- Day 91-365: — S3 Glacier
-- Day 366+: —  — Glacier Deep Archive
+- Day 0-30:    S3 Standard
+- Day 31-90:   S3 Standard-IA
+- Day 91-365:  S3 Glacier
+- Day 366+:    Glacier Deep Archive
 
 Pay full price only for recent/popular content.
 Archive old content at minimum cost.
@@ -211,11 +211,11 @@ Signals in fiber move at roughly 200,000 km/s. Physics sets a floor on latency.
 - Real round trip: 180-250ms with routing overhead
 
 User in New York, origin in Mumbai — loading 15 assets:
- — ~3+ seconds from latency alone (before server processing)
+  ~3+ seconds from latency alone (before server processing)
 
 **With CDN edge in New York:**
- — Distance: ~20 km → ~2ms per asset
- — Total: ~30ms — roughly 100x improvement
+  Distance: ~20 km → ~2ms per asset
+  Total: ~30ms — roughly 100x improvement
 
 ## How CDN Routing Works — GeoDNS
 
@@ -223,9 +223,9 @@ User in New York, origin in Mumbai — loading 15 assets:
 DNS always returns same IP → Mumbai server for everyone
 
 **WITH CDN (GeoDNS):**
- — User in Mumbai — → DNS returns Mumbai PoP IP
- — User in New York → DNS returns New York PoP IP
- — User in Tokyo —  → DNS returns Tokyo PoP IP
+  User in Mumbai  → DNS returns Mumbai PoP IP
+  User in New York → DNS returns New York PoP IP
+  User in Tokyo   → DNS returns Tokyo PoP IP
 
 Same domain, different IPs based on user location.
 Each user hits the geographically closest edge server.
@@ -245,7 +245,7 @@ Each user hits the geographically closest edge server.
 1. User → same CDN edge
 2. Edge cache: HIT (TTL still valid)
 3. Edge → User directly (~15ms)
- — S3 never contacted
+  S3 never contacted
 
 ## TTL Strategy — Balancing Freshness vs Performance
 
@@ -255,7 +255,7 @@ Each user hits the geographically closest edge server.
 - New deploy = new filename = automatic cache bust
 
 **PRODUCT IMAGES:**
-- Cache-Control: public, max-age=86400 — (24 hours)
+- Cache-Control: public, max-age=86400  (24 hours)
 - Or ?v=2 query string for immediate bust
 
 **USER-GENERATED / SENSITIVE:**
@@ -263,9 +263,9 @@ Each user hits the geographically closest edge server.
 - Or no-store / pre-signed URLs
 
 DYNAMIC / PERSONALIZED:
- — Cache-Control: no-store or no-cache
- — no-cache = revalidate with origin before serving
- — no-store — = never cache at all
+  Cache-Control: no-store or no-cache
+  no-cache = revalidate with origin before serving
+  no-store  = never cache at all
 
 ## CDN Cache Invalidation
 
@@ -273,17 +273,17 @@ When you must clear cache before TTL expires:
 
 ```javascript
 await cloudfront.createInvalidation({
- —  — DistributionId: 'E2QWRUHEXAMPLE',
- —  — InvalidationBatch: {
- —  —  —  — Paths: {
- —  —  —  —  —  — Quantity: 2,
- —  —  —  —  —  — Items: [
- —  —  —  —  —  —  —  — '/images/products/iphone-15.jpg',
- —  —  —  —  —  —  —  — '/images/banners/*'
- —  —  —  —  —  — ]
- —  —  —  — },
- —  —  —  — CallerReference: Date.now().toString()
- —  — }
+    DistributionId: 'E2QWRUHEXAMPLE',
+    InvalidationBatch: {
+        Paths: {
+            Quantity: 2,
+            Items: [
+                '/images/products/iphone-15.jpg',
+                '/images/banners/*'
+            ]
+        },
+        CallerReference: Date.now().toString()
+    }
 });
 ```
 
@@ -293,13 +293,13 @@ Invalidations cost money after free tier — another reason content-hashed filen
 
 ```mermaid
 flowchart LR
- —  — U["User"]
- —  — CF["CloudFront CDN"]
- —  — S3[("S3 Origin<br/>private bucket")]
+    U["User"]
+    CF["CloudFront CDN"]
+    S3[("S3 Origin<br/>private bucket")]
 
- —  — U -->|"GET /video/cat.mp4"| CF
- —  — CF -->|"cache miss only"| S3
- —  — CF -->|"cache hit"| U
+    U -->|"GET /video/cat.mp4"| CF
+    CF -->|"cache miss only"| S3
+    CF -->|"cache hit"| U
 ```
 
 COMPLETE ARCHITECTURE:
@@ -323,15 +323,15 @@ COMPLETE ARCHITECTURE:
 SYNCHRONOUS REQUEST-RESPONSE:
 
 Client: "Please process my order"
- —  ▼
+   ▼
 Server:
- — - Validates order
- — - Checks inventory
- — - Creates order in DB
- — - Charges card
- — - Sends confirmation email — ← user waits for this too
- — - Updates inventory
- —  ▼
+  - Validates order
+  - Checks inventory
+  - Creates order in DB
+  - Charges card
+  - Sends confirmation email  ← user waits for this too
+  - Updates inventory
+   ▼
 Client: confirmation page (~2-3 seconds)
 ```
 
@@ -368,14 +368,14 @@ Email sending does **not** need to block the response. If email service is down,
 
 ```javascript
 app.post('/orders', async (req, res) => {
- —  — const order = await createOrder(req.body);
- —  — await chargePayment(order);
- —  — 
- —  — sendEmail(order.userEmail, 'Order Confirmed!').catch(err => {
- —  —  —  — console.error('Email failed:', err);
- —  — });
- —  — 
- —  — res.json({ success: true, orderId: order.id });
+    const order = await createOrder(req.body);
+    await chargePayment(order);
+    
+    sendEmail(order.userEmail, 'Order Confirmed!').catch(err => {
+        console.error('Email failed:', err);
+    });
+    
+    res.json({ success: true, orderId: order.id });
 });
 ```
 
@@ -390,14 +390,14 @@ A message broker fixes all four.
 
 ```mermaid
 flowchart LR
- —  — P["Producer<br/>(App Server)"]
- —  — B["Message Broker"]
- —  — C["Consumer<br/>(Worker)"]
+    P["Producer<br/>(App Server)"]
+    B["Message Broker"]
+    C["Consumer<br/>(Worker)"]
 
- —  — P -->|"persist task"| B
- —  — B -->|"deliver"| C
- —  — C -->|"ack → delete"| B
- —  — P -.->|"responds immediately"| U["User"]
+    P -->|"persist task"| B
+    B -->|"deliver"| C
+    C -->|"ack → delete"| B
+    P -.->|"responds immediately"| U["User"]
 ```
 
 Producer puts task in broker (written to disk).
@@ -461,9 +461,9 @@ Can't atomically write to 4 queues in one operation.
 Topic: "video-uploads"
 Offsets: [0, 1, 2, 3, 4]
 
-- Consumer Group A (Transcoder): —  —  offset 3
-- Consumer Group B (Captions): —  —  —  offset 1 — (slower)
-- Consumer Group C (Thumbnails): —  offset 4 — (faster)
+- Consumer Group A (Transcoder):     offset 3
+- Consumer Group B (Captions):       offset 1  (slower)
+- Consumer Group C (Thumbnails):   offset 4  (faster)
 
 Each group has its own offset pointer.
 All read the same messages independently.
@@ -496,10 +496,10 @@ Not primarily "in-memory" — Kafka writes to DISK sequentially.
 - SSD: even faster
 
 Zero-copy (sendfile):
- — Disk → network socket without copying through app memory
+  Disk → network socket without copying through app memory
 
 Result: millions of messages/sec per broker
- —  —  — LinkedIn: ~7 trillion messages/day
+      LinkedIn: ~7 trillion messages/day
 
 ---
 
@@ -527,19 +527,19 @@ Result: millions of messages/sec per broker
 ### Decision Framework
 
 **Q1:** Does caller need the result to continue?
- — YES → REST —  — NO → Broker
+  YES → REST    NO → Broker
 
 **Q2:** Is task quick (< 1-2 sec)?
- — YES → REST OK —  — NO → Broker
+  YES → REST OK    NO → Broker
 
 **Q3:** Can downstream be temporarily unavailable?
- — NO → REST —  — YES → Broker
+  NO → REST    YES → Broker
 
 **Q4:** One event triggers multiple services?
- — YES → Kafka/pub-sub
+  YES → Kafka/pub-sub
 
 **Q5:** Need ordered processing at scale?
- — YES → Kafka (per-partition ordering)
+  YES → Kafka (per-partition ordering)
 
 ---
 
@@ -563,27 +563,27 @@ Result: millions of messages/sec per broker
 
 ```mermaid
 flowchart TB
- —  — U["User"]
- —  — APP["App Server"]
- —  — S3R[("S3 raw")]
- —  — K["Kafka: video-uploads"]
- —  — T["Transcoder"]
- —  — C["Captions"]
- —  — TH["Thumbnails"]
- —  — S3P[("S3 processed")]
- —  — CDN["CDN"]
- —  — DB[("PostgreSQL metadata")]
+    U["User"]
+    APP["App Server"]
+    S3R[("S3 raw")]
+    K["Kafka: video-uploads"]
+    T["Transcoder"]
+    C["Captions"]
+    TH["Thumbnails"]
+    S3P[("S3 processed")]
+    CDN["CDN"]
+    DB[("PostgreSQL metadata")]
 
- —  — U --> APP
- —  — APP -->|"pre-signed URL"| U
- —  — U --> S3R
- —  — S3R --> APP
- —  — APP --> K
- —  — K --> T & C & TH
- —  — T --> S3P
- —  — U -->|"watch"| CDN
- —  — CDN --> S3P
- —  — APP --> DB
+    U --> APP
+    APP -->|"pre-signed URL"| U
+    U --> S3R
+    S3R --> APP
+    APP --> K
+    K --> T & C & TH
+    T --> S3P
+    U -->|"watch"| CDN
+    CDN --> S3P
+    APP --> DB
 ```
 
 UPLOAD:
