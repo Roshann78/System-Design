@@ -1,4 +1,4 @@
-﻿# System Design — Detailed Personal Notes (Chapter 2)
+# System Design — Detailed Personal Notes (Chapter 2)
 
 **Topics:** Scaling (Vertical & Horizontal), Load Balancing, Auto Scaling, Back-of-the-Envelope Estimation
 
@@ -442,21 +442,21 @@ AUTO SCALING CONFIGURATION:
 - Maximum instances: 20  ← never go above 20 (cost cap)
 - Desired instances: 2   ← start with 2
 
-##### Scale-OUT Trigger
+##### Scale-Out Trigger
 - "If AVERAGE CPU across all instances > 70%
 - for 3 consecutive minutes,
 - ADD 2 new instances"
 
-Scale-IN trigger:
-  "If AVERAGE CPU across all instances < 30%
-  for 10 consecutive minutes,
-  REMOVE 1 instance"
+##### Scale-In Trigger
+- "If AVERAGE CPU across all instances < 30%
+- for 10 consecutive minutes,
+- REMOVE 1 instance"
   (we scale in slower than scale out — being conservative
   about removing capacity is safer than removing too fast)
 
-Cooldown period: 
-  "After a scale-out event, wait 5 minutes 
-  before evaluating again"
+##### Cooldown Period
+- "After a scale-out event, wait 5 minutes 
+- before evaluating again"
   (prevents rapid thrashing — spinning up and down repeatedly)
 
 Now let's trace through what happens in real life:
@@ -534,7 +534,7 @@ Request Count:         "If incoming requests > 1000/sec, add instances."
 Network I/O:           "If inbound network > 500 Mbps, add instances."
                      (Useful for data-heavy streaming applications)
 
-**Queue Depth:**           "If SQS queue has > 1000 unprocessed messages, 
+Queue Depth:           "If SQS queue has > 1000 unprocessed messages, 
                       add worker instances."
                      (Useful for background job processing)
 
@@ -841,7 +841,7 @@ Each server has 4 CPU cores (assumption)
 
 Number of servers = 100 cores ÷ 4 cores/server = 25 servers
 
-CONCLUSION:
+Conclusion:
 You need 25 servers with 4 CPU cores each, 
 sitting behind a load balancer,
 to handle Twitter's write traffic of 10,000 requests/second.

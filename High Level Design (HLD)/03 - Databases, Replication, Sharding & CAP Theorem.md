@@ -279,7 +279,8 @@ flowchart TD
     style AP fill:#efe,stroke:#060
 ```
 
-> **Remember:** In production distributed systems, **P is non-negotiable**. Partitions happen. The real choice is **CP vs AP**.
+> [!IMPORTANT]
+> In production distributed systems, **P is non-negotiable**. Partitions happen. The real choice is **CP vs AP**.
 
 #### Why P Is Always Chosen
 
@@ -405,6 +406,7 @@ flowchart TD
     style SH fill:#fee,stroke:#c00
 ```
 
+> [!TIP]
 > **Golden rule:** Never skip steps. Index before you shard. Instagram ran on one PostgreSQL DB for ~13M users before adding replicas.
 
 ---
@@ -877,11 +879,11 @@ Automatic failover process:
    (which has applied the most recent binary log entries)
    → Slave 1 is most up-to-date
 
-**2. Promote Slave 1 to be the new Master:**
+2. **Promote Slave 1 to be the new Master:**
 - Slave 1 starts accepting writes
 - Slave 1 starts generating its own binary log
 
-**3. Redirect Slaves 2 and 3 to replicate from the new Master:**
+3. **Redirect Slaves 2 and 3 to replicate from the new Master:**
 - Slave 2: "I'll now receive binary log from Slave 1 (new master)"
 - Slave 3: "I'll now receive binary log from Slave 1 (new master)"
 
@@ -909,6 +911,7 @@ flowchart TD
     style M_DOWN fill:#fee,stroke:#c00
 ```
 
+> [!NOTE]
 > **Failover notes:** Reads continue via slaves. Writes pause briefly until promotion completes (~30–60s with good tooling).
 
 ---
@@ -1182,7 +1185,7 @@ Shard 1: user_id 1          to 10,000,000     (10 million users)
 Shard 2: user_id 10,000,001 to 20,000,000     (10 million users)
 Shard 3: user_id 20,000,001 to 30,000,000     (10 million users)
 
-**QUERY ROUTING (trivial):**
+**Query Routing (trivial):**
 user_id = 7,500,000  → Shard 1 (1 to 10M)
 user_id = 15,000,000 → Shard 2 (10M to 20M)
 user_id = 25,000,000 → Shard 3 (20M to 30M)
@@ -1336,7 +1339,7 @@ Database engine handles the JOIN in memory.
 SAME QUERY WITH SHARDING 
 (tweets on one shard by tweet_id, users on another shard by user_id):
 
-**Step 1: Application queries Tweet Shard:**
+Step 1: **Application queries Tweet Shard:**
 1. "Get all tweets created after 2024-01-01"
 → Returns 1 million tweet records with user_ids
 

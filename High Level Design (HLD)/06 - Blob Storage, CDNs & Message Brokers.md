@@ -219,10 +219,10 @@ User in New York, origin in Mumbai — loading 15 assets:
 
 ### How CDN Routing Works — GeoDNS
 
-**WITHOUT CDN:**
+**Without CDN:**
 DNS always returns same IP → Mumbai server for everyone
 
-**WITH CDN (GeoDNS):**
+**With CDN (GeoDNS):**
   User in Mumbai  → DNS returns Mumbai PoP IP
   User in New York → DNS returns New York PoP IP
   User in Tokyo   → DNS returns Tokyo PoP IP
@@ -249,20 +249,20 @@ Each user hits the geographically closest edge server.
 
 ### TTL Strategy — Balancing Freshness vs Performance
 
-**STATIC ASSETS (content hash in filename):**
+**Static assets (content hash in filename):**
 - main.a3f8b2c1.js
 - Cache-Control: public, max-age=31536000, immutable
 - New deploy = new filename = automatic cache bust
 
-**PRODUCT IMAGES:**
+**Product images:**
 - Cache-Control: public, max-age=86400  (24 hours)
 - Or ?v=2 query string for immediate bust
 
-**USER-GENERATED / SENSITIVE:**
+**User-generated / sensitive:**
 - Cache-Control: private, max-age=3600
 - Or no-store / pre-signed URLs
 
-DYNAMIC / PERSONALIZED:
+**Dynamic / personalized:**
   Cache-Control: no-store or no-cache
   no-cache = revalidate with origin before serving
   no-store  = never cache at all
@@ -379,10 +379,10 @@ app.post('/orders', async (req, res) => {
 });
 ```
 
-**PROBLEM 1:** Server restart → in-flight email task lost
-**PROBLEM 2:** No retry on SendGrid failure
-**PROBLEM 3:** No visibility (pending/failed counts)
-**PROBLEM 4:** 50k orders → 50k simultaneous HTTP calls → rate limit failures
+**Problem 1:** Server restart → in-flight email task lost
+**Problem 2:** No retry on SendGrid failure
+**Problem 3:** No visibility (pending/failed counts)
+**Problem 4:** 50k orders → 50k simultaneous HTTP calls → rate limit failures
 
 A message broker fixes all four.
 

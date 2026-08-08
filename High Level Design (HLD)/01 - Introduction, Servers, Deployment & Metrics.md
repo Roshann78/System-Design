@@ -30,7 +30,7 @@ flowchart TD
 - Backend talks to the Database to fetch/store data
 - Backend sends a response back to the Client
 
-This is called a **MONOLITHIC** or **SIMPLE 3-TIER ARCHITECTURE**.
+This is called a **monolithic** or **simple 3-tier architecture**.
 
 For a college project or prototype with 10–100 users → This works perfectly fine.
 
@@ -66,7 +66,7 @@ Real companies like Google, Amazon, Netflix, and Uber have massive engineering t
 
 ### 1.4 What Is a "Client"?
 
-In system design diagrams, **"Client"** means **ANY** device or application that is sending requests to your system. It is **NOT** limited to a web browser.
+In system design diagrams, **"Client"** means **any** device or application that is sending requests to your system. It is **not** limited to a web browser.
 
 **Client can be:**
 
@@ -81,7 +81,7 @@ In system design diagrams, **"Client"** means **ANY** device or application that
 > [!IMPORTANT]
 > When we draw a "Client" box in system design, we mean: *"Whatever the end user is using to interact with our system."*
 
-The client does **NOT** contain your business logic. It just sends requests and displays responses. All the heavy lifting happens on the server side.
+The client does **not** contain your business logic. It just sends requests and displays responses. All the heavy lifting happens on the server side.
 
 ---
 
@@ -89,14 +89,14 @@ The client does **NOT** contain your business logic. It just sends requests and 
 
 ### 2.1 Definition
 
-A **SERVER** is simply a computer (machine) that:
+A **server** is simply a computer (machine) that:
 
 1. Has your application code running on it
 2. Is connected to a network (internet or intranet)
 3. Listens for incoming requests and responds to them
 4. Runs 24 hours a day, 7 days a week (ideally)
 
-There is **NOTHING magical** about a server. It is physically the same hardware as your laptop — it has a CPU, RAM, disk storage, and a network card.
+There is **nothing magical** about a server. It is physically the same hardware as your laptop — it has a CPU, RAM, disk storage, and a network card.
 
 | Your laptop | A server |
 |-------------|----------|
@@ -114,10 +114,10 @@ Server running on http://localhost:8080
 
 #### What is localhost?
 
-- **"localhost"** is a special hostname that **ALWAYS** refers to **YOUR OWN MACHINE**.
+- **"localhost"** is a special hostname that **always** refers to **your own machine**.
 - It is not an external address. Nobody else on the internet can reach it.
 - `localhost` → resolves to IP address → **127.0.0.1**
-- This IP (127.0.0.1) is called the **LOOPBACK ADDRESS**. It always means "this machine itself."
+- This IP (127.0.0.1) is called the **loopback address**. It always means "this machine itself."
 
 #### What is an IP address?
 
@@ -135,7 +135,7 @@ Server running on http://localhost:8080
 
 | Type | Scope | Examples |
 |------|-------|----------|
-| **Private IP** | Only within your local network (home/office WiFi) | 192.168.x.x, 10.x.x.x, 172.16.x.x–172.31.x.x. **NOT** reachable from the internet. |
+| **Private IP** | Only within your local network (home/office WiFi) | 192.168.x.x, 10.x.x.x, 172.16.x.x–172.31.x.x. **Not** reachable from the internet. |
 | **Public IP** | Assigned by ISP; reachable worldwide | Every website/server you visit has a public IP. |
 
 > [!TIP]
@@ -143,11 +143,11 @@ Server running on http://localhost:8080
 
 ### 2.3 What Is a Port?
 
-A server machine can run **MANY** applications simultaneously — just like your laptop can run Chrome, Spotify, and VS Code at the same time.
+A server machine can run **many** applications simultaneously — just like your laptop can run Chrome, Spotify, and VS Code at the same time.
 
-So when a request arrives at IP address `35.154.33.64`, **HOW** does the server know **WHICH** application should handle it?
+So when a request arrives at IP address `35.154.33.64`, **how** does the server know **which** application should handle it?
 
-**Answer: PORTS.**
+**Answer: Ports.**
 
 - A **Port** is a number (0–65535) that identifies a specific application/service running on a machine.
 - Think of it as a door number inside an apartment building.
@@ -184,18 +184,18 @@ When you type `https://google.com`, your browser automatically uses port **443**
 **DNS** = Domain Name System
 
 - **Problem:** IP addresses like `142.250.77.46` are hard to remember.
-- **Solution:** DNS is like the **PHONE BOOK** of the internet. You give DNS a domain name → It gives you back an IP address.
+- **Solution:** DNS is like the **phone book** of the internet. You give DNS a domain name → It gives you back an IP address.
 
 #### How DNS resolution works (step-by-step)
 
 1. You type `https://abc.com` in your browser and hit Enter.
-2. Your browser checks its own **DNS CACHE**. (It may already know the IP from a previous visit.) If found → skip to step 6.
+2. Your browser checks its own **DNS cache**. (It may already know the IP from a previous visit.) If found → skip to step 6.
 3. If not cached, your OS checks its local DNS cache and the **hosts file** (`/etc/hosts` on Linux/Mac, `C:\Windows\System32\drivers\etc\hosts` on Windows). If found → skip to step 6.
-4. If still not found, your OS sends the query to a **DNS RESOLVER** (usually ISP or public: Google `8.8.8.8`, Cloudflare `1.1.1.1`).
+4. If still not found, your OS sends the query to a **DNS resolver** (usually ISP or public: Google `8.8.8.8`, Cloudflare `1.1.1.1`).
 5. The DNS Resolver goes through a hierarchy:
-   - **ROOT NAME SERVERS** → Know where `.com`, `.in`, `.org` etc. servers are
-   - **TLD NAME SERVERS** → `.com` servers know where `abc.com`'s nameserver is
-   - **AUTHORITATIVE NAME SERVER** → Has the actual IP address for `abc.com`
+   - **Root name servers** → Know where `.com`, `.in`, `.org` etc. servers are
+   - **TLD name servers** → `.com` servers know where `abc.com`'s nameserver is
+   - **Authoritative name server** → Has the actual IP address for `abc.com`
 6. The IP address (e.g., `35.154.33.64`) is returned to your browser.
 7. Browser connects to `35.154.33.64:443` and requests the page.
 
@@ -280,7 +280,7 @@ Let's trace **exactly** what happens when you visit `https://abc.com`:
 
 ### 3.1 The Problem with Hosting Yourself
 
-Theoretically, you **COULD** host your app on your own laptop and expose it to the internet. But here's why nobody does this for production:
+Theoretically, you **could** host your app on your own laptop and expose it to the internet. But here's why nobody does this for production:
 
 - **Static public IP** — Most home/college connections have a dynamic IP. It changes when you reconnect. Domain breaks constantly. Static IP costs extra.
 - **Always on** — Laptop sleeps, shuts down, moves → app goes offline. Servers need 24/7/365.
@@ -291,7 +291,7 @@ Theoretically, you **COULD** host your app on your own laptop and expose it to t
 
 ### 3.2 Cloud Providers — The Solution
 
-Cloud providers own **MASSIVE** data centers with thousands of physical servers. They rent you a slice of that infrastructure (called a **VIRTUAL MACHINE**).
+Cloud providers own **massive** data centers with thousands of physical servers. They rent you a slice of that infrastructure (called a **virtual machine**).
 
 #### Major cloud providers
 
@@ -316,7 +316,7 @@ Cloud providers own **MASSIVE** data centers with thousands of physical servers.
 
 ### 3.3 What Is a Virtual Machine (VM)?
 
-A **Virtual Machine** is software that simulates a physical computer. The cloud provider runs a **HYPERVISOR** on their physical servers. The hypervisor divides one physical machine into many virtual machines.
+A **virtual machine** is software that simulates a physical computer. The cloud provider runs a **hypervisor** on their physical servers. The hypervisor divides one physical machine into many virtual machines.
 
 ```
 Physical Server (e.g., 128 CPU cores, 512GB RAM)
@@ -333,15 +333,15 @@ Physical Server (e.g., 128 CPU cores, 512GB RAM)
 
 - Each VM is **isolated** from others. You get full OS access and root control.
 - You can install anything — Node.js, Python, Java, databases, etc.
-- AWS calls their VMs: **EC2 INSTANCES**. EC2 = Elastic Compute Cloud ("Elastic" = can scale dynamically)
+- AWS calls their VMs: **EC2 instances**. EC2 = Elastic Compute Cloud ("Elastic" = can scale dynamically)
 
 ### 3.4 What Is Deployment?
 
-**DEPLOYMENT** = The process of making your application accessible to users by running it on a server (usually in the cloud).
+**Deployment** = The process of making your application accessible to users by running it on a server (usually in the cloud).
 
 #### Simplified Deployment Steps
 
-1. Write code on your **LOCAL** machine (laptop)
+1. Write code on your **local** machine (laptop)
 2. Test it locally (`localhost:8080`)
 3. Push code to version control (GitHub/GitLab)
 4. Connect to your cloud VM (via SSH)
@@ -350,7 +350,7 @@ Physical Server (e.g., 128 CPU cores, 512GB RAM)
 7. Start the application on the VM (`node app.js` / `python app.py`)
 8. Configure a domain name to point to the VM's public IP (DNS A record)
 9. (Optional) Set up HTTPS with SSL certificate (Let's Encrypt)
-10. App is now **LIVE** and accessible worldwide!
+10. App is now **live** and accessible worldwide!
 
 #### Modern Deployment Approaches
 
@@ -362,9 +362,9 @@ Physical Server (e.g., 128 CPU cores, 512GB RAM)
 
 ### 3.5 Local vs Production Environment
 
-- **LOCAL (Development)** — Runs on laptop; only you can access (`localhost`); easy to test/debug; not optimized for performance.
-- **STAGING** — Copy of production for testing before going live; same setup as production but test data; QA finds bugs before release.
-- **PRODUCTION** — Live environment real users use; must be highly available, fast, secure; mistakes impact users; changes deployed carefully (often with rollback plans).
+- **Local (Development)** — Runs on laptop; only you can access (`localhost`); easy to test/debug; not optimized for performance.
+- **Staging** — Copy of production for testing before going live; same setup as production but test data; QA finds bugs before release.
+- **Production** — Live environment real users use; must be highly available, fast, secure; mistakes impact users; changes deployed carefully (often with rollback plans).
 
 ---
 
@@ -376,7 +376,7 @@ These are the two most fundamental performance metrics in every system design di
 
 #### Definition
 
-**Latency** is the **TIME** it takes for a **SINGLE** request to travel from the client to the server, get processed, and return a response back to the client.
+**Latency** is the **time** it takes for a **single** request to travel from the client to the server, get processed, and return a response back to the client.
 
 Think of it as: *"How fast does ONE thing get done?"*
 
@@ -451,7 +451,7 @@ $ ping google.com
 
 #### Definition
 
-**Throughput** is the **NUMBER** of requests (or operations) a system can successfully handle **PER SECOND** (or per unit of time).
+**Throughput** is the **number** of requests (or operations) a system can successfully handle **per second** (or per unit of time).
 
 Think of it as: *"How MANY things can get done per second?"*
 
@@ -466,7 +466,7 @@ Think of it as: *"How MANY things can get done per second?"*
 
 #### What limits throughput?
 
-Every system has a **BOTTLENECK** — the slowest component that caps throughput.
+Every system has a **bottleneck** — the slowest component that caps throughput.
 
 1. **CPU speed & cores** — More cores → more parallel processing.
 2. **Memory (RAM)** — Out of RAM → swap to disk (100x slower than RAM) → throughput drops.
@@ -497,7 +497,7 @@ Every system has a **BOTTLENECK** — the slowest component that caps throughput
 
 ### 4.3 The Relationship Between Latency and Throughput
 
-These two are **RELATED** but **DIFFERENT**, and can sometimes **conflict**.
+These two are **related** but **different**, and can sometimes **conflict**.
 
 #### Little's Law (fundamental theorem of queuing systems)
 
@@ -557,7 +557,7 @@ Low load zone        Saturation point
 
 ### 4.5 Percentile Latency (p50, p95, p99)
 
-In production, you **NEVER** just look at **average** latency. Averages hide terrible experiences for some users.
+In production, you **never** just look at **average** latency. Averages hide terrible experiences for some users.
 
 | Percentile | Meaning |
 |------------|---------|
@@ -576,7 +576,7 @@ In production, you **NEVER** just look at **average** latency. Averages hide ter
 | p99 | 800ms |
 | p99.9 | 3000ms — slowest 0.1% wait up to 3s |
 
-**p99 and p99.9** = **TAIL LATENCIES**. At scale:
+**p99 and p99.9** = **tail latencies**. At scale:
 
 - 10 million requests/day → 1% = 100,000 requests @ 800ms
 - 0.1% = 10,000 requests @ 3 second latency
@@ -617,7 +617,7 @@ flowchart TD
 <details>
 <summary><b>Q: What is the difference between latency and throughput?</b></summary>
 
-**A:** Latency measures how long **ONE** request takes (speed). Throughput measures how **MANY** requests can be handled per second (capacity).
+**A:** Latency measures how long **one** request takes (speed). Throughput measures how **many** requests can be handled per second (capacity).
 
 </details>
 

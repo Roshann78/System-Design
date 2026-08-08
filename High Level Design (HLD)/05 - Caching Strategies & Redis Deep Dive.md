@@ -51,13 +51,13 @@ Now imagine 10,000 users hit `/blogs` every minute. That's 10,000 times your dat
 
 This is the problem caching solves. You compute the result ONCE, store it somewhere ultra-fast, and serve all 10,000 users from that fast store. The database doesn't even know the other 9,999 requests happened.
 
-**WITHOUT CACHING:**
+**Without Caching:**
 10,000 requests/minute
 → 10,000 database queries/minute
 → Database at 80% load
 → 360ms response time for everyone
 
-**WITH CACHING:**
+**With Caching:**
 10,000 requests/minute
 → 1 database query (first request only, or after cache expires)
 → 9,999 requests served from Redis
@@ -188,15 +188,15 @@ Long TTL (hours to days):
 
 Instead of waiting for TTL to expire, you actively delete or update the cache the moment the underlying data changes.
 
-**SCENARIO:** New blog post published.
+**Scenario:** New blog post published.
 
-**WITHOUT ACTIVE INVALIDATION:**
+**Without Active Invalidation:**
   - New blog saved to database
   - Cache still has old blog list ← STALE
   - Users see old list until TTL expires (could be 23 hours!)
   - "Where's my new blog? I just published it!" — author is confused
 
-**WITH ACTIVE INVALIDATION:**
+**With Active Invalidation:**
   - New blog saved to database
   - Server immediately: DEL blogData (deletes from Redis)
   - Next user to request /blogs → Cache MISS → fetches fresh data with new blog
@@ -348,7 +348,7 @@ This is what most people mean when they say "caching" in a backend context. Data
 
 A CDN is a globally distributed network of servers (called "edge servers" or "Points of Presence" — PoPs) that cache your content close to your users geographically.
 
-**WITHOUT CDN:**
+**Without CDN:**
 User in Chennai wants to watch a video hosted on servers in Mumbai.
 
 - Journey: Chennai user → Internet → Mumbai Data Center → back to Chennai
@@ -361,7 +361,7 @@ User in Chennai wants to watch a video hosted on servers in Mumbai.
 - Entire file travels 1300 km from Mumbai
 - If Mumbai is under load (lots of users): slowdowns, buffering
 
-**WITH CDN:**
+**With CDN:**
 User in Chennai wants to watch the same video.
 
 **First user from Chennai to watch this video:**
@@ -384,7 +384,7 @@ doesn't have the content yet.
 
 **What gets cached at CDN vs what doesn't:**
 
-**CACHE AT CDN (static content that doesn't change per user):**
+**Cache at CDN (static content that doesn't change per user):**
 - Images (product photos, logos, banners)
 - Videos
 - CSS, JavaScript bundles
@@ -392,7 +392,7 @@ doesn't have the content yet.
 - Static HTML pages
 - PDF files, downloadable content
 
-**DO NOT CACHE AT CDN (dynamic content specific to a user):**
+**Do not cache at CDN (dynamic content specific to a user):**
 - User's dashboard ("Hello, Rahul! Your orders: ...")
 - Shopping cart contents
 - Authentication tokens or session data

@@ -889,12 +889,12 @@ Monolith:      Pay for the maximum any single module needs, applied to ALL.
 
 **Scenario:** The Recommendation Service has a memory leak bug.
 
-**WITH MICROSERVICES:**
+**With Microservices:**
 - **t=0** — Recommendation Service crashes.
     User, Product, Order, Payment services: still running.
     Impact: "You might also like..." missing — site still works.
 
-**WITH MONOLITH:**
+**With Monolith:**
 - **t=0** — Recommendation module leaks memory → entire app crashes.
     Login, products, checkout, payments: all down.
 
@@ -913,7 +913,7 @@ Monolith:      Pay for the maximum any single module needs, applied to ALL.
 
 #### The Problem Without an API Gateway
 
-**WITHOUT API GATEWAY:**
+**Without API Gateway:**
 
 **Mobile App must know:**
 - User Service:           http://192.168.24.32:3001
@@ -1005,6 +1005,7 @@ Traffic: Hundreds of users
 
 Benefit at this stage: Near zero. Start monolith. Ship fast.
 
+> [!IMPORTANT]
 > **Conway's Law:** Organizations design systems that mirror their communication structure. **Microservice boundaries should align with team boundaries.**
 
 If you have 1 team of 5 people        → Monolith is fine
@@ -1198,6 +1199,7 @@ flowchart TD
 | Legacy sticky sessions | Hash (user_id > IP) |
 | Modern stateless + Redis | Round Robin or Least Connections |
 
+> [!TIP]
 > **Production default:** Least Connections for app traffic; Weighted Round Robin for DB read replicas.
 
 ---

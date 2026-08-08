@@ -116,11 +116,11 @@ SCENARIO:
   500,000 active drivers
   Each sends GPS update every 2 seconds
 
-**WRITES PER SECOND:**
+**Writes per second:**
 - 500,000 / 2 = 250,000 writes/sec
 - Per hour: 900 million writes
 
-**POSTGRESQL DIRECTLY:**
+**PostgreSQL directly:**
 - Strong server: ~10,000–50,000 writes/sec max
 - Required: 250,000/sec → saturated and crashing
 
@@ -361,7 +361,7 @@ PUBLISHER:
   Returns: number of subscribers who received it NOW
   Zero subscribers → returns 0. Message gone forever.
 
-**SUBSCRIBER:**
+**Subscriber:**
 - SUBSCRIBE chat:room:42
 - Connection enters subscribe mode — waits for pushes
 
