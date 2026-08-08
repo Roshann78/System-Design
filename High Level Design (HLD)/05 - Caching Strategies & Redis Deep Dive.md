@@ -231,18 +231,16 @@ If cache delete fails, cache is stale until TTL expires.
 
 Write to the cache AND the database simultaneously on every write operation. Cache is always up-to-date.
 
-```
-The Codeforces Example from the notes:
-
-User submits a competitive programming solution.
-Server does TWO writes simultaneously:
-  Write 1: UPDATE leaderboard in PostgreSQL database
-  Write 2: SET leaderboard:live <new_ranking_data> in Redis
+**The Codeforces Example:**
+- User submits a competitive programming solution.
+- Server performs two writes simultaneously:
+  - Write 1: `UPDATE leaderboard in PostgreSQL database`
+  - Write 2: `SET leaderboard:live <new_ranking_data> in Redis`
 
 **When 100,000 users refresh the leaderboard:**
-→ All served from Redis
-→ Redis always has the most current data
-→ Database write happened, Redis write happened at the same time
+- All requests served directly from Redis
+- Redis always has the most current data
+- Database write and Redis write occurred concurrently
 
 This is write-through caching.
 
