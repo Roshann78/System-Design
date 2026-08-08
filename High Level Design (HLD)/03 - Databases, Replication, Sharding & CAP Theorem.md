@@ -842,24 +842,12 @@ Scenario where lag is a REAL problem:
   They reload again 2 seconds later → now it's there
   (replication caught up)
 
-This "read your own write" problem is a classic 
-replication lag issue.
+This "read your own write" problem is a classic replication lag issue.
 
-SOLUTIONS:
-1. "Read your own writes" guarantee:
-  After a user WRITES something, route their next reads
-  to the MASTER for the next few seconds.
-  "I just wrote as user_123, so for the next 5 seconds,
-  reads from user_123 go to master."
-  
-2. Session consistency:
-  After any write, store a "read-from-master-until" timestamp.
-  Any read within that window goes to master.
-  
-3. Stale reads are acceptable:
-  For non-critical reads (like counts, recommendations),
-  just accept the slight staleness. Nobody cares if the 
-  "1,247 likes" is actually 1,249 for a few milliseconds.
+**Solutions:**
+1. **"Read your own writes" guarantee:** After a user writes something, route their next reads to the Master for the next few seconds (e.g., 5 seconds).
+2. **Session consistency:** After any write, store a `read-from-master-until` timestamp in the user session. Any read within that window goes to Master.
+3. **Accept stale reads:** For non-critical reads (like view counts or post likes), accept slight eventual consistency lag.
 
 #### What Happens When Master Fails — Failover
 
@@ -1190,21 +1178,13 @@ user_id = 7,500,000  → Shard 1 (1 to 10M)
 user_id = 15,000,000 → Shard 2 (10M to 20M)
 user_id = 25,000,000 → Shard 3 (20M to 30M)
 
-RANGE SCANS (the big advantage):
-"Get all users who registered in 2023" 
-(user_ids 5,000,000 to 8,000,000 for that year)
-→ All go to Shard 1. No cross-shard needed.
+**Range Scans (The Major Advantage):**
+"Get all users who registered in 2023" (user IDs 5,000,000 to 8,000,000 for that year) → All go to Shard 1. No cross-shard queries needed.
 
-THE HOT SHARD PROBLEM:
-Your system just launched. New users sign up.
-New user IDs: 20,000,001, 20,000,002, 20,000,003...
-All new signups go to Shard 3.
-Shard 1 and 2 are barely touched (old, mostly-inactive users).
-Shard 3 is hammered with all new user activity.
-This is a "hot shard" — one shard takes disproportionate load.
+**The Hot Shard Problem:**
+Your system just launched. New users sign up with new user IDs (20,000,001, 20,000,002, 20,000,003...). All new signups go to Shard 3, while Shards 1 and 2 sit mostly idle. This is a "hot shard" where one machine takes disproportionate load.
 
-SOLUTION: Design ranges based on activity, not just ID.
-Or use hash-based sharding instead.
+**Solution:** Design ranges based on activity/hash, or use hash-based sharding instead.
 
 **2. Hash-Based Sharding**
 
@@ -1221,25 +1201,15 @@ user_id = 7890  → HASH(7890) = 456,789,012 → 456,789,012 % 4 = 0 → Shard 0
 Distribution is statistically uniform.
 No hot shards when your hash function is good (MD5, SHA-1, MurmurHash).
 
-THE REBALANCING NIGHTMARE:
-Your system grows. 4 shards are now too few. You add a 5th shard.
-Formula changes: HASH(user_id) % 5
+**The Rebalancing Problem:**
+When your system grows and 4 shards are no longer enough, you add a 5th shard:
+- Previously: `HASH(user_id) % 4` (e.g. `user_id = 1234` → Shard 2)
+- Now: `HASH(user_id) % 5` (`user_id = 1234` → `HASH(1234) % 5 = 4` → Shard 4)
 
-user_id = 1234 previously → Shard 2
-user_id = 1234 now        → HASH(1234) % 5 = 4 → Shard 4 ← DIFFERENT!
+Almost every existing record now hashes to a different shard. Rebalancing requires moving massive amounts of data across shards while taking downtime.
 
-EVERY SINGLE record needs to be moved to potentially a different shard.
-If you have 1 billion records, you need to move most of them.
-During this move:
-- Your system can't serve requests (or serves wrong data)
-- This move takes hours or days
-- Extremely disruptive
-
-THE SOLUTION: Consistent Hashing
-(An advanced technique where adding a new shard only
- requires moving 1/n of the data, not nearly all of it.
- Used by systems like Cassandra and DynamoDB.
- Worth learning separately as a deep topic.)
+**The Solution: Consistent Hashing**
+Consistent hashing ensures that when a new shard/node is added, only `1/N` of the keys need to be remapped and moved rather than the entire dataset (used by Cassandra and DynamoDB).
 
 **3. Geographic/Entity-Based Sharding**
 
@@ -1249,30 +1219,16 @@ Shard 2: Users from USA
 Shard 3: Users from Europe
 Shard 4: Rest of world
 
-BENEFITS:
-- Data locality: Indian users' data is in India (low latency for reads)
-- Compliance: GDPR requires European user data to stay in Europe
-            Achieved automatically with this sharding strategy
-- Regional isolation: An outage in US Shard doesn't affect Indian users
+**Benefits:**
+- **Data locality:** Indian users' data lives in Indian data centers (low latency reads/writes).
+- **Compliance (GDPR):** European regulations require EU citizen data to remain in Europe.
+- **Regional fault isolation:** An outage in the US shard does not impact Indian users.
 
-ROUTING:
-When creating a user account, store their country.
-When querying, use their country code to determine shard.
+**Routing:**
+Store the user's country on registration. When querying `SELECT * FROM users WHERE id = 123`, the app checks user 123's region and routes to the India shard.
 
-SELECT * FROM users WHERE id = 123
-→ Application knows user_123 is from India
-→ Routes to India Shard
-
-THE HOT SHARD PROBLEM (again, differently):
-India has 1.4 billion people. Europe has 450 million.
-If usage correlates with population:
-India shard: 3× more traffic than Europe shard
-India shard might need to be further sub-sharded.
-
-Also: User traveling from India to USA.
-Their data is in India Shard.
-All their requests now cross the ocean to India Shard.
-Higher latency. No easy solution without data migration.
+**The Hot Shard Problem (Geographic Imbalance):**
+India has 1.4 billion people while smaller regions have fewer users. The India shard may receive 3× more traffic, requiring it to be sub-sharded. Additionally, users traveling cross-region experience higher latency because their primary data resides in their home region shard.
 
 **4. Directory-Based Sharding**
 
@@ -1364,13 +1320,8 @@ PROBLEMS:
 - Network round trips: 2 (one per shard) vs 1 (single DB)
 - Total latency: potentially seconds vs milliseconds
 
-THE GOLDEN RULE OF SHARDING:
-Design your sharding key such that your most common queries
-stay within a single shard (no cross-shard JOINs).
-
-For Twitter: shard tweets by user_id (not tweet_id).
-Then "get all tweets by user X" goes to exactly one shard.
-The common query pattern stays within one shard.
+> [!IMPORTANT]
+> **Golden Rule of Sharding:** Always design your sharding key so that your most frequent query patterns execute within a single shard, avoiding cross-shard JOINs. For example, sharding tweets by `user_id` instead of `tweet_id` allows "get user tweets" to hit a single shard.
 ```
 
 ```mermaid
@@ -1494,6 +1445,45 @@ flowchart TD
     style S1Y fill:#efe,stroke:#060
     style S6Y fill:#fee,stroke:#c00
 ```
+
+---
+
+### Common Interview Questions on These Topics
+
+<details>
+<summary><b>Q: Why can't a distributed system achieve CA (Consistency + Availability) during a partition?</b></summary>
+
+**A:** During a network partition, isolated nodes cannot communicate. To maintain Consistency (C), nodes must reject incoming reads/writes that cannot be verified against the cluster (sacrificing Availability). To maintain Availability (A), nodes must accept requests and return local data that may be stale or conflicting (sacrificing Consistency).
+
+</details>
+
+<details>
+<summary><b>Q: What is the core difference between Table Partitioning and Database Sharding?</b></summary>
+
+**A:** Partitioning divides a large table into smaller physical chunks on the *same database server*, and query routing is transparently handled by the database engine (partition pruning). Sharding distributes table chunks across *multiple independent database servers*, requiring the application layer or a dedicated proxy to route queries.
+
+</details>
+
+<details>
+<summary><b>Q: How do you solve the "Read Your Own Writes" problem with asynchronous replication?</b></summary>
+
+**A:** Route subsequent reads from the updating user/client to the Master database for a short cooldown window (e.g., 5 seconds) or track a write timestamp cookie/token in the user session so reads only hit replicas once their binary log position has caught up.
+
+</details>
+
+<details>
+<summary><b>Q: Why are cross-shard JOINs discouraged in sharded architectures?</b></summary>
+
+**A:** Cross-shard JOINs require fetching large datasets from multiple independent databases over the network into application memory, executing client-side joining and sorting, which causes high network latency, CPU overhead, and potential query timeouts.
+
+</details>
+
+<details>
+<summary><b>Q: How does Consistent Hashing prevent massive data rebalancing?</b></summary>
+
+**A:** In standard modulo hashing (`hash(key) % N`), changing `N` invalidates almost all key placements. Consistent Hashing maps both nodes and keys onto a circular hash ring (0 to $2^{32}-1$), ensuring that adding or removing a node only migrates keys from its immediate neighbor (`1/N` of keys on average).
+
+</details>
 
 ---
 

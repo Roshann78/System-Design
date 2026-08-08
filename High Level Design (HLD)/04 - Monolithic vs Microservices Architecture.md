@@ -523,69 +523,69 @@ Why is NoSQL easier to shard? Because NoSQL doesn't have JOINs or foreign keys a
 
 ### When to Use Which — The Real Framework
 
-Don't think of this as a simple checklist. Think about it as a series of questions you ask about your specific use case.
+<details>
+<summary><strong>Interview Q&A: SQL vs NoSQL</strong></summary>
+
+*   **Q: When should you choose NoSQL over SQL?**
+    A: When your schema is highly dynamic, you need to scale horizontally across many servers, or you have massive write volumes (like IoT data) that exceed what a single relational database can handle.
+*   **Q: Can you perform joins in NoSQL?**
+    A: Most NoSQL databases do not support JOINs. You are expected to model your data so that related items are embedded within the same document or denormalized to avoid the need for joins.
+</details>
 
 **Question 1: Is your data structured or unstructured?**
 
-```
-STRUCTURED (fixed, well-defined schema) → SQL
+**Structured (fixed, well-defined schema) → SQL:**
 
-Bank accounts:
-  Every account always has: account_number, holder_name, 
-  balance, account_type, branch_code, IFSC
-  The schema is clear. It won't change unexpectedly.
-  Use SQL (PostgreSQL/MySQL).
+- Bank accounts:
+  - Every account always has: `account_number`, `holder_name`, `balance`, `account_type`, `branch_code`, `IFSC`.
+  - The schema is clear and strictly defined.
+  - Use SQL (PostgreSQL/MySQL).
 
-**Customer records in e-commerce:**
-- Every customer always has: name, email, address, phone
-- Use SQL.
+- Customer records in e-commerce:
+  - Every customer always has: name, email, address, phone.
+  - Use SQL.
 
-UNSTRUCTURED / FLEXIBLE SCHEMA → NoSQL
+**Unstructured / Flexible Schema → NoSQL:**
 
-**Product catalog on Amazon:**
-- A book has: ISBN, author, page_count, publisher
-- A shoe has: size, color, material, gender
-- An electronic has: processor, battery, display_resolution
-- Different product categories have completely different attributes.
-- Use MongoDB (Document DB) — each product document has its own fields.
+- Product catalog on Amazon:
+  - A book has: ISBN, author, page_count, publisher.
+  - A shoe has: size, color, material, gender.
+  - Electronics have: processor, battery, display_resolution.
+  - Different product categories have completely different attributes.
+  - Use MongoDB (Document DB) — each product document has its own fields.
 
-User activity logs:
-  Some logs have location, some don't.
-  Some have device type, some don't.
-  Schema varies per event type.
-  Use MongoDB or Cassandra.
-```
+- User activity logs:
+  - Some logs have location, some don't.
+  - Schema varies per event type.
+  - Use MongoDB or Cassandra.
 
 **Question 2: Do you need ACID guarantees?**
 
-```
-YES — Data integrity is non-negotiable → SQL
+**Yes — Data integrity is non-negotiable → SQL:**
 
-**Financial transactions (banking, payments, stock trading):**
-- "Deduct from account A AND add to account B" must be atomic.
-- You CANNOT have money disappear in the middle of a transfer.
-- PostgreSQL with transactions is the right choice.
+- Financial transactions (banking, payments, stock trading):
+  - "Deduct from account A AND add to account B" must be atomic.
+  - You cannot have money disappear in the middle of a transfer.
+  - PostgreSQL with transactions is the right choice.
 
-**Order and inventory management:**
-- "Reserve stock AND create order" must be atomic.
-- If creating the order fails, stock must be unreserved.
-- Use SQL.
+- Order and inventory management:
+  - "Reserve stock AND create order" must be atomic.
+  - If creating the order fails, stock must be unreserved.
+  - Use SQL.
 
-**Medical records:**
-- Partial writes to a patient record could be life-threatening.
-- Use SQL.
+- Medical records:
+  - Partial writes to a patient record could be life-threatening.
+  - Use SQL.
 
-NO — Eventual consistency is acceptable → NoSQL is viable
+**No — Eventual consistency is acceptable → NoSQL is viable:**
 
-Social media feed:
-  If someone's like count shows 1,247 for one user and 1,249 
-  for another user for 50 milliseconds, nobody is harmed.
-  Use Cassandra or DynamoDB.
+- Social media feed:
+  - If someone's like count shows 1,247 for one user and 1,249 for another user for 50 milliseconds, nobody is harmed.
+  - Use Cassandra or DynamoDB.
 
-Product recommendations:
-  Slightly stale recommendations are fine.
-  Use Redis or DynamoDB.
-```
+- Product recommendations:
+  - Slightly stale recommendations are fine.
+  - Use Redis or DynamoDB.
 
 **Question 3: What is the read/write pattern and scale?**
 
@@ -868,22 +868,17 @@ flowchart TB
 
 #### Independent Scaling — The Biggest Win
 
-DIWALI SALE TRAFFIC:
+**Diwali Sale Traffic Scenario:**
+- User Service: 5× traffic needed → Run 2 instances
+- Product Service: 100× traffic needed → Run 80 instances (only this scales big)
+- Order Service: 20× traffic needed → Run 16 instances
+- Payment Service: 20× traffic needed → Run 16 instances
+- Notification Service: 30× traffic needed → Run 24 instances
+- Recommendation Service: 80× traffic needed → Run 64 instances
 
-- User Service:     5x traffic needed  → Run 2 instances
-- Product Service:  100x traffic needed → Run 80 instances ← Only this scales big
-- Order Service:    20x traffic needed  → Run 16 instances
-- Payment Service:  20x traffic needed  → Run 16 instances
-- Notification:     30x traffic needed  → Run 24 instances
-- Recommendation:   80x traffic needed  → Run 64 instances
-
-VS MONOLITH:
-You'd need to run 80 instances of EVERYTHING
-because the Product Service needs 80.
-Even User Service runs at 80 instances when 2 is enough.
-
-Microservices: Pay for exactly what each service needs.
-Monolith:      Pay for the maximum any single module needs, applied to ALL.
+**Comparison vs Monolith:**
+- **Microservices:** Provision and pay for exactly what each service needs.
+- **Monolith:** Provision and pay for the maximum any single module needs, applied globally across the entire monolith.
 
 #### Fault Isolation — Failures Stay Contained
 
@@ -921,12 +916,12 @@ Monolith:      Pay for the maximum any single module needs, applied to ALL.
 - Order Service:          http://192.168.24.45:3003
 - ...
 
-PROBLEMS:
-1. Hardcoded IPs — new deployment = new app release
-2. Auth duplicated in every service
-3. Rate limiting duplicated everywhere
-4. SSL on every service
-5. Debugging spans 6 log formats
+**Problems Without an API Gateway:**
+1. **Hardcoded IPs:** New service deployments require updating and releasing client applications.
+2. **Duplicated Auth:** Every microservice must implement JWT validation logic.
+3. **Duplicated Rate Limiting:** Each service independently tracks limits.
+4. **SSL Overhead:** SSL termination must be configured per service.
+5. **Fragmented Logging:** Debugging requires aggregating multiple log formats across services.
 
 #### What the API Gateway Does
 
@@ -993,17 +988,11 @@ The gateway talks to each service's load balancer — it doesn't need to know in
 
 #### Start With a Monolith
 
-EARLY-STAGE STARTUP:
-
-Team size: 2-3 developers
-Traffic: Hundreds of users
-
-**Microservices overhead before business logic:**
-- 6 repos, 6 CI/CD pipelines, 6 databases
-- API Gateway, service discovery, distributed tracing
-- Weeks of infrastructure work
-
-Benefit at this stage: Near zero. Start monolith. Ship fast.
+**Early-Stage Startup Context:**
+- **Team size:** 2–3 developers
+- **Traffic:** Hundreds of users
+- **Microservices overhead:** 6 repos, 6 CI/CD pipelines, 6 databases, API Gateway, service discovery, distributed tracing.
+- **Verdict:** Near-zero benefit at this stage. Start monolithic, ship fast, and refactor later.
 
 > [!IMPORTANT]
 > **Conway's Law:** Organizations design systems that mirror their communication structure. **Microservice boundaries should align with team boundaries.**
@@ -1201,6 +1190,45 @@ flowchart TD
 
 > [!TIP]
 > **Production default:** Least Connections for app traffic; Weighted Round Robin for DB read replicas.
+
+---
+
+### Common Interview Questions on These Topics
+
+<details>
+<summary><b>Q: What are the core trade-offs between SQL and NoSQL?</b></summary>
+
+**A:** SQL provides strong ACID guarantees, structured schemas, and robust relational JOIN support at the cost of horizontal scaling complexity. NoSQL offers horizontal scalability, high write throughput, and flexible schemas at the cost of eventual consistency, lack of cross-document ACID transactions, and limited query expressiveness.
+
+</details>
+
+<details>
+<summary><b>Q: What is Polyglot Persistence and why is it used?</b></summary>
+
+**A:** Polyglot Persistence is the practice of utilizing multiple specialized database technologies in a single architecture (e.g. PostgreSQL for orders, Redis for caching/sessions, MongoDB for product catalogs, Cassandra for telemetry). It optimizes data storage for specific access patterns rather than forcing all workloads into one database engine.
+
+</details>
+
+<details>
+<summary><b>Q: When is it appropriate to migrate from a monolith to microservices?</b></summary>
+
+**A:** Migration makes sense when team scaling bottlenecks occur (multiple teams tripping over one codebase), different components have vastly asymmetric scaling/resource requirements (e.g., video processing vs user profiles), or different sub-domains require independent deployment cadences and isolated failure domains.
+
+</details>
+
+<details>
+<summary><b>Q: What core responsibilities belong in an API Gateway?</b></summary>
+
+**A:** An API Gateway acts as the reverse proxy front door, handling centralized authentication/authorization (JWT validation), rate limiting, request routing, SSL termination, response caching, cross-cutting telemetry (distributed trace IDs), and protocol translation.
+
+</details>
+
+<details>
+<summary><b>Q: Why is Least Connections preferred over Round Robin for dynamic web APIs?</b></summary>
+
+**A:** Round Robin distributes requests uniformly without considering processing duration. If some requests are computationally expensive (e.g. video processing or heavy reporting), Round Robin can overload a busy server while others sit idle. Least Connections dynamically routes new requests to servers with the lowest active workload.
+
+</details>
 
 ---
 

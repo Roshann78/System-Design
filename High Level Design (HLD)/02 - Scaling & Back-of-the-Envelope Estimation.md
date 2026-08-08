@@ -772,15 +772,13 @@ Total photo storage per day:
 
 ##### Combined Storage per Day
 
-```
 Total = text storage + photo storage
       = 0.5 TB       + 200 TB
       = 200.5 TB
       ≈ 200 TB per day
 
-Note: We dropped the 0.5 TB because 0.5 TB is only 0.25% of 200 TB.
-At this scale, it doesn't matter. This is correct approximation practice.
-```
+> [!TIP]
+> **Approximation Practice:** We dropped the 0.5 TB because 0.5 TB is only 0.25% of 200 TB. At this scale, rounding to 200 TB per day is standard estimation practice.
 
 ##### Storage for 5 Years
 
@@ -841,15 +839,11 @@ Each server has 4 CPU cores (assumption)
 
 Number of servers = 100 cores ÷ 4 cores/server = 25 servers
 
-Conclusion:
-You need 25 servers with 4 CPU cores each, 
-sitting behind a load balancer,
-to handle Twitter's write traffic of 10,000 requests/second.
+**Conclusion:**
+You need 25 servers with 4 CPU cores each, sitting behind a load balancer, to handle Twitter's write traffic of 10,000 requests/second.
 
-Buffer: In practice, you'd provision 30-35% extra capacity
-      because CPU usage shouldn't max out — you want headroom
-      for spikes and to avoid triggering auto-scaling constantly.
-      
+**Buffer:** In practice, you provision 30–35% extra capacity because CPU usage shouldn't max out — you want headroom for spikes and to avoid triggering auto-scaling constantly.
+
 So realistic answer: ~35 servers.
 
 ```mermaid
@@ -861,6 +855,45 @@ flowchart LR
 
     W --> CPU --> SRV --> BUF
 ```
+
+---
+
+### Common Interview Questions on These Topics
+
+<details>
+<summary><b>Q: When should you scale vertically vs horizontally?</b></summary>
+
+**A:** Scale vertically for simpler architectures, monolithic apps, or relational databases where complex distributed transactions and cross-node JOINs would add excessive latency. Scale horizontally for stateless API servers, web tiers, and massive-scale distributed systems where single-machine hardware limits (the vertical ceiling) are reached.
+
+</details>
+
+<details>
+<summary><b>Q: How does a load balancer handle server failures?</b></summary>
+
+**A:** The load balancer runs periodic health checks (e.g. pinging `/health` every 5 seconds). If a backend server fails to respond within the timeout, the load balancer marks it unhealthy and stops routing incoming requests to it until it passes consecutive health checks again.
+
+</details>
+
+<details>
+<summary><b>Q: Why scale out fast but scale in slow in Auto Scaling?</b></summary>
+
+**A:** Sudden traffic spikes cause queue buildup, high latency, and request drops, so you must scale out immediately to prevent downtime. Scaling in should be conservative (evaluating metrics over 10–15 minutes) to avoid thrashing (spinning servers up and down repeatedly) if traffic fluctuates.
+
+</details>
+
+<details>
+<summary><b>Q: Why is the Read/Write ratio critical in Back-of-the-Envelope estimation?</b></summary>
+
+**A:** A high read-to-write ratio (e.g. 100:1 for Twitter) indicates the system is read-heavy. This immediately dictates architectural choices: prioritizing aggressive in-memory caching (Redis/Memcached), read replicas, and CDNs rather than complex distributed write pipelines.
+
+</details>
+
+<details>
+<summary><b>Q: Why do we approximate 1 day as 100,000 seconds in interviews?</b></summary>
+
+**A:** 1 day is actually 86,400 seconds. Approximating it as 100,000 seconds (10^5) makes mental arithmetic fast and clean during interviews while slightly overestimating load, which naturally builds in a safe engineering buffer.
+
+</details>
 
 ---
 

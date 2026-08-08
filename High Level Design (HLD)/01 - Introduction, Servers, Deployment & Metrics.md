@@ -538,7 +538,7 @@ Low load zone        Saturation point
 (latency stable)     (latency explodes)
 ```
 
-#### Ideal Goal Optimize **both**:
+#### Ideal Goal: Optimize Both
 
 - Low latency → Each user gets a fast response
 - High throughput → Many users served simultaneously

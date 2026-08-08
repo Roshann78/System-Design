@@ -57,11 +57,10 @@ KAFKA CLUSTER (3 brokers):
 │  └─────────────┘  └─────────────┘  └─────────────┘ │
 └───────────────────────────────────────────────────┘
 
-WHY MULTIPLE BROKERS?
-
-1. Replication: partition data copied across brokers — Broker 1 dies, Broker 2 has copy
-2. Parallelism: different brokers serve different partitions simultaneously
-3. Fault tolerance: one broker down, cluster keeps working
+**Why Multiple Brokers?**
+1. **Replication:** Partition data is replicated across brokers — if Broker 1 crashes, Broker 2 serves requests.
+2. **Parallelism:** Different brokers serve distinct partitions concurrently.
+3. **Fault Tolerance:** If any single broker fails, the remaining cluster continues operating seamlessly.
 ```
 
 | Kafka | Database analogy |
@@ -224,28 +223,20 @@ Topic with 4 partitions, 3 consumers in group `"email-workers"`:
 Each consumer owns its partitions exclusively.
 Horizontal scaling: 3 consumers ≈ 3× throughput.
 
-WHY can't two consumers in the SAME group read the same partition?
+**Why can't two consumers in the same group read the same partition?**
 
-  Same message would be processed twice.
-  "Send welcome email to rahul@gmail.com"
-  Consumer-1 sends it. Consumer-2 sends it again. Duplicate.
-
-Kafka assigns each partition to at most one consumer per group.
+Because the same message would be processed twice by competing workers (e.g. sending two duplicate welcome emails to one user). Kafka enforces that each partition is assigned to at most one consumer per consumer group.
 
 **More consumers than partitions:**
+- 4 partitions with 5 consumers in the same group:
+  - Consumer-1 → Partition-0
+  - Consumer-2 → Partition-1
+  - Consumer-3 → Partition-2
+  - Consumer-4 → Partition-3
+  - Consumer-5 → **Idle** (no assigned partition)
 
-4 partitions, 5 consumers in same group:
-
-  Consumer-1 → P0
-  Consumer-2 → P1
-  Consumer-3 → P2
-  Consumer-4 → P3
-  Consumer-5 → IDLE (no partition)
-
-RULE: Active consumers ≤ partitions in a group.
-
-LESSON: Need N parallel workers → create at least N partitions upfront.
-      (Adding partitions later changes HASH % N — affects key ordering)
+> [!IMPORTANT]
+> **Partition Sizing Rule:** Active consumers in a group $\le$ number of partitions. To support $N$ parallel consumers, provision at least $N$ partitions when creating the topic.
 
 #### Kafka Rebalancing
 
@@ -545,50 +536,57 @@ flowchart TB
 ```
 
 ```
-INFRASTRUCTURE:
-  - Load Balancer (WebSocket connections)
-  - 5 WebSocket servers
-  - Redis Pub/Sub per room channel
-  - Kafka topic "chat-messages"
-  - PostgreSQL / Cassandra for history
-  - Elasticsearch for search
+**Infrastructure Setup:**
+- Load Balancer (WebSocket connections)
+- 5 WebSocket server instances
+- Redis Pub/Sub per room channel
+- Kafka topic `chat-messages`
+- PostgreSQL / Cassandra for chat history
+- Elasticsearch for full-text search
 
-Rahul (Delhi) → Load Balancer → Server-1 → joins room 42
-Shivam (Mumbai) → Load Balancer → Server-3 → joins room 42
-
-Rahul sends: "Kya haal hai bhai?"
-
-  Step 1: WebSocket → Server-1
-
-**Step 2: Server-1 simultaneously:**
-1. a) PUBLISH Redis "chat:room:42"     (real-time)
-2. b) PRODUCE Kafka "chat-messages"    (durable)
-
-**Step 3a — Redis path (~5ms):**
-1. Redis → all servers subscribed to room 42
-2. Server-1 → Rahul's socket
-3. Server-3 → Shivam's socket
-
-**Step 3b — Kafka path:**
-1. Persisted to disk
-2. Consumer "persistence" → Cassandra
-3. Consumer "search-indexer" → Elasticsearch
-4. Consumer "notification" → push if Shivam offline
-
-**Shivam offline 2 hours, then opens app:**
-- GET /api/chat/room/42/messages → Cassandra history
-- WebSocket reconnects for new messages
-
-WHY BOTH?
-
-Redis Pub/Sub: speed — deliver to everyone connected RIGHT NOW
-Kafka:         reliability — persist, fan-out, replay, notifications
-
-Redis handles speed. Kafka handles durability.
-Different tools. Different strengths. Together.
+**Why Both?**
+- **Redis Pub/Sub:** Real-time speed — delivers ephemeral messages to actively connected clients with sub-millisecond latency.
+- **Kafka:** Durability and decoupled fan-out — persists messages, coordinates offline push notifications, and feeds asynchronous Cassandra & Elasticsearch indexers.
 ```
 
 ---
+
+### Common Interview Questions on These Topics
+
+<details>
+<summary><b>Q: How does Kafka guarantee strict message ordering?</b></summary>
+
+**A:** Kafka guarantees strict ordering **within a single partition** by appending records to an immutable sequential log. When producers specify a message key (e.g. `driver_id` or `user_id`), Kafka hashes the key (`HASH(key) % num_partitions`) to guarantee that all messages for that entity always route to the exact same partition in sequential order.
+
+</details>
+
+<details>
+<summary><b>Q: What causes a Kafka consumer group rebalance?</b></summary>
+
+**A:** A rebalance is triggered when a new consumer joins a consumer group, an existing consumer gracefully leaves, a consumer crashes, or a consumer fails to send heartbeats within the configured `session.timeout.ms`. Kafka reassigns partition ownership across the active group members.
+
+</details>
+
+<details>
+<summary><b>Q: Why is Redis Pub/Sub essential when scaling WebSockets horizontally?</b></summary>
+
+**A:** When WebSockets scale across multiple backend servers, two users in the same chat room may connect to different servers. Because Server A does not hold the socket connection for a user on Server B, Redis Pub/Sub acts as a cross-server broadcast bus: Server A publishes the event to Redis, which fans out the message to Server B and all other subscribed instances.
+
+</details>
+
+<details>
+<summary><b>Q: What are the key trade-offs between Kafka and Redis Pub/Sub?</b></summary>
+
+**A:** Redis Pub/Sub is an ephemeral push model with sub-millisecond latency and zero persistence (messages sent while a subscriber is offline are permanently lost). Kafka is a durable pull model where messages are written sequentially to disk and retained over time, supporting message replay, multiple independent consumer offsets, and high-throughput batching.
+
+</details>
+
+<details>
+<summary><b>Q: How does Kafka achieve massive write throughput on disk?</b></summary>
+
+**A:** Kafka achieves millions of writes/sec by using append-only sequential disk I/O (which avoids costly random seek operations), leveraging OS page cache aggressively, employing zero-copy network data transfer (`sendfile`), and batching message writes across producers and brokers.
+
+</details>
 
 ## Quick Reference — Chapter 7
 

@@ -136,7 +136,8 @@ The first request after a cache miss (or after cache expiry) always pays the ful
 
 ### Cache Invalidation — The Hardest Problem in Caching
 
-There's a famous quote in computer science by Phil Karlton: *"There are only two hard things in Computer Science: cache invalidation and naming things."*
+> [!NOTE]
+> *"There are only two hard things in Computer Science: cache invalidation and naming things."* — Phil Karlton
 
 Cache invalidation means: **deciding when cached data is stale and needs to be refreshed.**
 
@@ -245,19 +246,13 @@ Server does TWO writes simultaneously:
 
 This is write-through caching.
 
-ADVANTAGE: Cache is always perfectly in sync with database.
-           No staleness ever.
+**Advantage:** Cache is always perfectly in sync with the database. No staleness.
 
-DISADVANTAGE: Every single write operation hits BOTH the database 
-              AND Redis. Write latency is higher.
-              Also, if you write data that nobody ever reads,
-              you're wasting Redis memory caching it for no reason.
-              (Write-through caches data whether it's popular or not)
-```
+**Disadvantage:** Every single write operation hits both the database and Redis, increasing write latency. Also, rarely-read records consume valuable Redis memory.
 
 ##### Pattern: Write-Back (Write-Behind) Cache
 
-The riskiest but fastest pattern. Write to cache FIRST, database LATER (asynchronously).
+The fastest but riskiest pattern. Write to cache first, then persist to the database asynchronously.
 
 ```
 User action: Update profile photo.
@@ -268,19 +263,11 @@ Write-back flow:
 2. In the background, a separate job periodically:
    Reads all pending writes from Redis
    Writes them to the actual database
-
-ADVANTAGE: Extremely fast writes. Database isn't in the critical path.
-
-MASSIVE RISK: If Redis crashes BEFORE the background job 
-              flushes to the database:
-              ALL pending writes are LOST.
-              User's profile update? Gone.
-              
-Use only when: You can tolerate data loss for this particular data,
-               AND write performance is critical.
-               Example: View counts, click counts — losing 
-               a few views is acceptable vs. perfect write performance.
 ```
+
+**Advantage:** Extremely fast writes; database operations are removed from the critical path.
+
+**Massive Risk:** If Redis crashes before the background job flushes to disk/database, pending in-memory writes are lost. Use only when data loss is tolerable (e.g. video view counters, click analytics).
 
 ---
 
@@ -761,6 +748,45 @@ Priority order for caching:
 7. Single-record lookups
 
 That's caching from first principles through production patterns: hit/miss, invalidation, Redis structures, failure modes, and operational considerations.
+
+---
+
+### Common Interview Questions on These Topics
+
+<details>
+<summary><b>Q: How does Cache-Aside handle cache invalidation on writes?</b></summary>
+
+**A:** In the Cache-Aside pattern, application code first writes updates directly to the primary database, and then explicitly invalidates (deletes) the corresponding key from the cache. The next read operation triggers a cache miss, pulling the fresh data from the database and repopulating the cache.
+
+</details>
+
+<details>
+<summary><b>Q: What are the trade-offs between Write-Through and Write-Back caching?</b></summary>
+
+**A:** Write-Through writes synchronously to both the cache and the database before confirming success, ensuring zero staleness at the cost of higher write latency. Write-Back writes to the cache immediately and batches asynchronous writes to the database in the background, achieving high write performance at the risk of losing uncommitted data if the cache fails.
+
+</details>
+
+<details>
+<summary><b>Q: What is a Cache Stampede (Thundering Herd) and how do you prevent it?</b></summary>
+
+**A:** A Cache Stampede happens when a high-traffic cached key expires, causing thousands of concurrent requests to experience a cache miss and hit the database simultaneously. Mitigations include mutex locking (`SET NX EX`) so only one thread recomputes the cache, probabilistic early expiration (XFetch algorithm), or adding randomized TTL jitter.
+
+</details>
+
+<details>
+<summary><b>Q: How do Bloom Filters mitigate Cache Penetration?</b></summary>
+
+**A:** Cache Penetration occurs when malicious requests query keys that exist neither in the cache nor the database, forcing every request to query disk. A Bloom Filter sits in front of the cache as a space-efficient probabilistic data structure; if the Bloom filter indicates the key does not exist, the request is rejected immediately without touching the cache or database.
+
+</details>
+
+<details>
+<summary><b>Q: What is the difference between Redis RDB and AOF persistence?</b></summary>
+
+**A:** RDB (Redis Database) takes point-in-time compact snapshots of memory to disk at specified intervals (fast restarts, slight data loss window). AOF (Append-Only File) logs every write command sequentially to an append-only log file (minimal data loss, larger file size, slower replay on restart). Most production setups use both.
+
+</details>
 
 ---
 

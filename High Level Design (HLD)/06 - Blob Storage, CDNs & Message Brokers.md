@@ -90,16 +90,16 @@ S3 (Simple Storage Service) is Amazon's blob storage service.
 
 #### The Fundamental Data Model: Buckets and Objects
 
+**Bucket:** A named container (globally unique name)
+- Lives in a specific AWS region (`ap-south-1`, `us-east-1`, etc.)
+
+**Object:** A file stored in a bucket
+- **Key:** `"videos/tutorials/redis-tutorial.mp4"`
+- **Value:** The actual binary file bytes
+- **Metadata:** Content-Type, file size, custom tags
+- **ETag:** MD5 checksum hash for data integrity verification
+
 ```
-BUCKET: A named container (globally unique name)
-  - Lives in a specific AWS region (ap-south-1, us-east-1, etc.)
-
-OBJECT: A file stored in a bucket
-  - KEY:    "videos/tutorials/redis-tutorial.mp4"
-  - VALUE:  the actual binary content
-  - METADATA: content-type, size, custom tags
-  - ETag:   checksum for integrity
-
 Structure:
 my-company-bucket/
 ├── videos/tutorials/redis-tutorial.mp4
@@ -341,28 +341,29 @@ Email sending does **not** need to block the response. If email service is down,
 
 ### The Spectrum of Asynchronous Tasks
 
-**MUST BE SYNCHRONOUS (user waits):**
-- Validating user input
-- Checking stock
-- Processing payment
-- Creating order record
-- Returning confirmation
+**Must Be Synchronous (Blocking Operations):**
+- Validating user input and authentication
+- Checking live stock inventory
+- Processing payment transactions
+- Creating order records in the primary database
+- Returning confirmation responses to the client
 
-**CAN BE ASYNCHRONOUS (background):**
-- Confirmation email / SMS
-- Recommendation model update
-- Invoice PDF generation
-- Warehouse notification
-- Analytics writes
+**Can Be Asynchronous (Background Tasks):**
+- Sending confirmation emails / SMS receipts
+- Updating recommendation models and telemetry
+- Generating PDF invoices
+- Dispatching warehouse packing notifications
+- Writing analytics events
 
-**MUST BE ASYNCHRONOUS (too long synchronously):**
-- Video transcoding (30+ minutes)
-- Large report generation
-- ML training
-- Bulk email (100k recipients)
-- Large file parsing/indexing
+**Must Be Asynchronous (Long-Running Workloads):**
+- Video transcoding and compression (multi-resolution 360p–4K)
+- Generating large asynchronous CSV/PDF reports
+- Machine learning model batch training
+- Bulk notification dispatching (e.g. 100k push notifications)
+- Full-text search index re-indexing
 
-**Key question:** *Does the user need this result before they can continue?* If no → async candidate.
+> [!TIP]
+> **Async Decision Rule:** *Does the user need the exact result to complete their immediate journey?* If no, make it an asynchronous background job.
 
 ### The Problem With Naive Async (No Broker)
 
@@ -586,22 +587,60 @@ flowchart TB
     APP --> DB
 ```
 
-UPLOAD:
-1. Client asks App Server for upload URL
-2. App Server returns S3 pre-signed URL
-3. Client uploads 2GB directly to S3
-4. S3 event → App Server → publish to Kafka "video-uploads"
-5. Consumer groups: transcode, captions, thumbnails, notify user
-6. On "video-ready" event → update DB status + URLs
+**Upload Flow:**
+1. Client requests an upload URL from App Server.
+2. App Server generates and returns an S3 pre-signed URL.
+3. Client uploads the 2GB video file directly to S3.
+4. S3 fires an `ObjectCreated` event → App Server publishes a message to Kafka topic `video-uploads`.
+5. Consumer groups concurrently process the message: transcoding, caption generation, thumbnail extraction, and user notification.
+6. Upon receiving a "video-ready" event, the system updates PostgreSQL video metadata and status.
 
-WATCH:
-1. HTML references cdn.example.com/videos/789/720p.mp4
-2. CDN edge: miss → fetch from S3, cache
-3. Next viewers in region: CDN hit, S3 untouched
+**Watch/Streaming Flow:**
+1. Web client requests video stream: `https://cdn.example.com/videos/789/720p.mp4`.
+2. CDN edge checks local cache: on cache miss, fetches the chunk from private S3 and caches it.
+3. Subsequent viewers in the same geographic region are served directly from the CDN edge cache with zero origin traffic.
 
-Blob storage for files. CDN for global delivery. Kafka for async pipeline. Redis for hot metadata. PostgreSQL for structured data. REST for synchronous user-facing operations.
+> [!NOTE]
+> Blob storage stores opaque media, CDNs deliver assets globally at the edge, Kafka orchestrates asynchronous decoupled pipelines, Redis handles hot session state, and PostgreSQL enforces transactional integrity.
 
-Each tool solves one problem. Together they scale to millions of users.
+---
+
+### Common Interview Questions on These Topics
+
+<details>
+<summary><b>Q: Why should binary files (blobs) never be stored directly in relational databases?</b></summary>
+
+**A:** Storing large binary files in SQL databases consumes massive buffer pool RAM on queries, saturates database network bandwidth during record transfers, bloats table storage causing B-Tree index inefficiencies, and makes database backups and replication extremely slow and expensive.
+
+</details>
+
+<details>
+<summary><b>Q: How do S3 Pre-Signed URLs eliminate application server bottlenecks?</b></summary>
+
+**A:** A pre-signed URL grants temporary, cryptographically signed permission for a client to upload (`PUT`) or download (`GET`) an object directly to/from S3. This completely bypasses the backend app servers, preventing large file payloads from consuming application server RAM, CPU, and network bandwidth.
+
+</details>
+
+<details>
+<summary><b>Q: How does GeoDNS routing work in CDNs?</b></summary>
+
+**A:** When a client queries the DNS for a CDN domain (e.g. `cdn.example.com`), the authoritative GeoDNS nameserver inspects the client's resolver IP address and resolves the domain to the IP address of the geographically closest CDN Point of Presence (PoP) edge server, minimizing round-trip physical fiber latency.
+
+</details>
+
+<details>
+<summary><b>Q: What is the core architectural difference between a Message Queue and an Event Stream?</b></summary>
+
+**A:** In a Message Queue (e.g. RabbitMQ, SQS), messages are processed by competing consumers where each message is delivered to exactly one consumer and deleted upon acknowledgment. In an Event Stream (e.g. Kafka), messages are appended to an immutable, time-retained commit log that multiple independent consumer groups can read and replay concurrently at their own independent offsets.
+
+</details>
+
+<details>
+<summary><b>Q: What is a Dead Letter Queue (DLQ) and why is it used?</b></summary>
+
+**A:** A DLQ is a secondary holding queue where messages that repeatedly fail consumer processing (exceeding maximum retry thresholds) are redirected. It isolates poison-pill messages from blocking normal message flow, enabling engineers to inspect, debug, and safely replay failed messages.
+
+</details>
 
 ---
 
